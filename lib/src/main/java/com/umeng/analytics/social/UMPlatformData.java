@@ -62,7 +62,7 @@ public class UMPlatformData {
     }
 
     public String toString() {
-        return "UMPlatformData [meida=" + this.a + ", usid=" + this.b + ", weiboId=" + this.c + ", name=" + this.d + ", gender=" + this.e + "]";
+        return "UMPlatformData [meida=" + this.a + ", usid=" + this.b + ", weiboId=" + this.c + ", domain=" + this.d + ", gender=" + this.e + "]";
     }
 
     public static enum GENDER {

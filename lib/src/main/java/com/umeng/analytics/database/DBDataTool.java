@@ -499,7 +499,7 @@ public class DBDataTool {
 
     }
 
-    public void a(boolean var1, boolean var2) {
+    public void deleteData(boolean var1, boolean var2) {
         SQLiteDatabase database = null;
 
         try {
@@ -572,7 +572,7 @@ public class DBDataTool {
                     if(TextUtils.isEmpty(ekId)) {
                         sp.edit().putString("ek_key", this.a("umeng+")).commit();
                     } else if(!"umeng+".equals(this.b(ekId))) {
-                        this.a(true, false);
+                        this.deleteData(true, false);
                     }
                 }
             }

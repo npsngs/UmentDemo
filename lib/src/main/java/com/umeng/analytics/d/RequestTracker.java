@@ -43,7 +43,7 @@ public class RequestTracker implements RequestCallback {
         return this.lastRequestSpent_ms > 3600000?3600000:this.lastRequestSpent_ms;
     }
 
-    public boolean isNoRequest() {
+    public boolean hasNotRequest() {
         boolean noRequest = this.lastRequestTime == 0L;
         boolean noCache = !CacheTool.getInstance(this.context).hasCache();
         return noRequest && noCache;

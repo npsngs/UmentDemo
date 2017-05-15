@@ -5,8 +5,6 @@
 
 package a.a.a.b;
 
-import a.a.a.b.d;
-
 public final class l {
     public final byte a;
     public final int b;

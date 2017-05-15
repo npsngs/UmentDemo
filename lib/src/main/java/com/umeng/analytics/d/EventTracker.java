@@ -86,7 +86,7 @@ public class EventTracker {
 
             jsonObject.put("__i", SessionHelper.getSessionID(this.context));
             jsonObject.put("_umpname", ActivityObserver.activityName);
-            this.executeReport.a(jsonObject);
+            this.executeReport.report(jsonObject);
         } catch (Throwable t) {
         }
 
@@ -109,7 +109,7 @@ public class EventTracker {
             var6.put(id, id_value == null?"":id_value);
             var6.put("__i", SessionHelper.getSessionID(this.context));
             var6.put("_umpname", ActivityObserver.activityName);
-            this.executeReport.a(var6);
+            this.executeReport.report(var6);
         } catch (Throwable t) {
         }
 
@@ -142,7 +142,7 @@ public class EventTracker {
             }
 
             json.put("__i", SessionHelper.getSessionID(this.context));
-            this.executeReport.a(json);
+            this.executeReport.report(json);
         } catch (Throwable t) {
         }
 
@@ -234,8 +234,8 @@ public class EventTracker {
 
     private void isValidEventID() {
         try {
-            if(!TextUtils.isEmpty(this.preReport.a)) {
-                String[] var1 = this.preReport.a.split("!");
+            if(!TextUtils.isEmpty(this.preReport.track_list)) {
+                String[] var1 = this.preReport.track_list.split("!");
                 JSONObject tmpJson = new JSONObject();
                 if(this.jsonObject != null) {
                     for(int i = 0; i < var1.length; ++i) {
@@ -259,7 +259,7 @@ public class EventTracker {
                 }
 
                 this.isValidEventLabel(this.context);
-                this.preReport.a = null;
+                this.preReport.track_list = null;
             }
         } catch (Exception e) {
         }

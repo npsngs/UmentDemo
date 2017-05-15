@@ -5,13 +5,11 @@
 
 package a.a.a.d;
 
-import a.a.a.d.c;
-
 public class e {
     public e() {
     }
 
-    public c a(c var1) {
+    public IOStream a(IOStream var1) {
         return var1;
     }
 }

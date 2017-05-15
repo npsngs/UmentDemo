@@ -7,13 +7,15 @@ package com.umeng.analytics.e;
 
 import android.content.Context;
 import com.umeng.analytics.AnalyticsConfig;
-import com.umeng.analytics.c.h.Option;
-import com.umeng.analytics.d.l;
+import com.umeng.analytics.c.ImprintTool;
+import com.umeng.analytics.c.ImprintTool.Option;
+import com.umeng.analytics.c.UMEnvelopeData;
+import com.umeng.analytics.d.OptionSetter;
 import com.umeng.analytics.d.RequestTracker;
 import com.umeng.tool.CacheTool;
 import com.umeng.tool.StringTool;
 
-public class c implements l {
+public class c implements OptionSetter {
     private final long a = 1296000000L;
     private final long b = 129600000L;
     private final int c = 1800000;
@@ -30,7 +32,7 @@ public class c implements l {
     public static synchronized c a(Context var0, RequestTracker var1) {
         if(l == null) {
             l = new c(var0, var1);
-            l.a(com.umeng.analytics.c.h.getInstance(var0).getOption());
+            l.setOption(ImprintTool.getInstance(var0).getOption());
         }
 
         return l;
@@ -45,12 +47,12 @@ public class c implements l {
     public boolean a() {
         if(this.e.hasCache()) {
             return false;
-        } else if(this.f.isNoRequest()) {
+        } else if(this.f.hasNotRequest()) {
             return false;
         } else {
             long var1 = System.currentTimeMillis() - this.f.getLastReq();
             if(var1 > this.g) {
-                String var3 = com.umeng.analytics.c.c.a(this.k);
+                String var3 = UMEnvelopeData.getCachedSignature(this.k);
                 this.i = (long) StringTool.a(this.h, var3);
                 this.j = var1;
                 return true;
@@ -72,7 +74,7 @@ public class c implements l {
         return this.j;
     }
 
-    public void a(Option var1) {
+    public void setOption(Option var1) {
         this.g = var1.a(1296000000L);
         int var2 = var1.b(0);
         if(var2 == 0) {

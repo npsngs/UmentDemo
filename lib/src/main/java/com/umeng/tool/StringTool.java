@@ -25,58 +25,58 @@ public class StringTool {
     public StringTool() {
     }
 
-    public static byte[] a(String var0) {
-        if(var0 == null) {
+    public static byte[] hex2Byte(String hex) {
+        if(hex == null) {
             return null;
         } else {
-            int var1 = var0.length();
-            if(var1 % 2 != 0) {
+            int strLen = hex.length();
+            if(strLen % 2 != 0) {
                 return null;
             } else {
-                byte[] var2 = new byte[var1 / 2];
+                byte[] ret = new byte[strLen / 2];
 
-                for(int var3 = 0; var3 < var1; var3 += 2) {
-                    var2[var3 / 2] = (byte)Integer.valueOf(var0.substring(var3, var3 + 2), 16).intValue();
+                for(int i = 0; i < strLen; i += 2) {
+                    ret[i / 2] = (byte)Integer.valueOf(hex.substring(i, i + 2), 16).intValue();
                 }
 
-                return var2;
+                return ret;
             }
         }
     }
 
-    public static boolean a(Context var0, byte[] var1) {
-        long var2 = (long)var1.length;
-        if(var2 > UMConst.y) {
-            CacheTool.getInstance(var0).g();
-            AggTool.getInstance(var0).a(var2, System.currentTimeMillis(), "__data_size_of");
+    public static boolean isTooLong(Context context, byte[] data) {
+        long length = (long)data.length;
+        if(length > UMConst.MAX_SIZE) {
+            CacheTool.getInstance(context).clearData();
+            AggTool.getInstance(context).insertToSystemTable(length, System.currentTimeMillis(), "__data_size_of");
             return true;
         } else {
             return false;
         }
     }
 
-    public static String a(byte[] var0) {
-        if(var0 == null) {
+    public static String byte2Hex(byte[] data) {
+        if(data == null) {
             return null;
         } else {
-            StringBuffer var1 = new StringBuffer();
+            StringBuffer sb = new StringBuffer();
 
-            for(int var2 = 0; var2 < var0.length; ++var2) {
-                var1.append(String.format("%02X", new Object[]{Byte.valueOf(var0[var2])}));
+            for(int i = 0; i < data.length; ++i) {
+                sb.append(String.format("%02X", new Object[]{Byte.valueOf(data[i])}));
             }
 
-            return var1.toString().toLowerCase(Locale.US);
+            return sb.toString().toLowerCase(Locale.US);
         }
     }
 
-    public static byte[] b(byte[] var0) {
+    public static byte[] md5(byte[] input) {
         try {
-            MessageDigest var1 = MessageDigest.getInstance("MD5");
-            var1.reset();
-            var1.update(var0);
-            return var1.digest();
-        } catch (Exception var2) {
-            var2.printStackTrace();
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.reset();
+            messageDigest.update(input);
+            return messageDigest.digest();
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -157,27 +157,27 @@ public class StringTool {
         return var1 + demain + var2;
     }
 
-    public static String c(String var0) {
-        MessageDigest var1 = null;
-        String var2 = null;
-        byte[] var3 = var0.getBytes();
+    public static String sha1(String source) {
+        MessageDigest messageDigest;
+        String ret;
+        byte[] data = source.getBytes();
 
         try {
-            var1 = MessageDigest.getInstance("SHA1");
-            var1.update(var3);
-            var2 = c(var1.digest());
-            return var2;
-        } catch (Exception var5) {
+            messageDigest = MessageDigest.getInstance("SHA1");
+            messageDigest.update(data);
+            ret = toHexStr(messageDigest.digest());
+            return ret;
+        } catch (Exception e) {
             return null;
         }
     }
 
-    static String c(byte[] var0) {
+    static String toHexStr(byte[] data) {
         String var1 = "";
-        String var2 = null;
+        String var2;
 
-        for(int var3 = 0; var3 < var0.length; ++var3) {
-            var2 = Integer.toHexString(var0[var3] & 255);
+        for(int i = 0; i < data.length; ++i) {
+            var2 = Integer.toHexString(data[i] & 255);
             if(var2.length() == 1) {
                 var1 = var1 + "0";
             }

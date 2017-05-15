@@ -163,29 +163,24 @@ public class EncodeUtil {
         writeToFile(file, str.getBytes());
     }
 
-    public static String b(File var0) {
-        FileInputStream var1 = null;
-        String var2 = null;
-
-        Object var3;
+    public static String readStr(File file) {
+        FileInputStream fis = null;
+        String ret = null;
         try {
-            if(var0.exists()) {
-                var1 = new FileInputStream(var0);
-                byte[] var10 = new byte[var1.available()];
-                var1.read(var10);
-                var2 = new String(var10);
-                return var2;
+            if(file.exists()) {
+                fis = new FileInputStream(file);
+                byte[] buffer = new byte[fis.available()];
+                fis.read(buffer);
+                ret = new String(buffer);
+                return ret;
             }
-
-            var3 = var2;
         } catch (Throwable var8) {
-            Object var4 = var2;
-            return (String)var4;
+            return ret;
         } finally {
-            close(var1);
+            close(fis);
         }
 
-        return (String)var3;
+        return ret;
     }
 
     public static void close(InputStream is) {

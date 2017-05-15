@@ -10,12 +10,12 @@ import android.content.Context;
 import com.umeng.analytics.aggregate.result.OpResult;
 import com.umeng.analytics.aggregate.tool.AggTool;
 import com.umeng.analytics.database.DBDataTool;
-import com.umeng.analytics.c.h;
-import com.umeng.analytics.d.l;
+import com.umeng.analytics.c.ImprintTool;
+import com.umeng.analytics.d.OptionSetter;
 import com.umeng.analytics.d.SessionHelper;
 import org.json.JSONObject;
 
-public class b implements l {
+public class b implements OptionSetter {
     private static final int a_int = 0;
     private static final int b = 1;
     private static final int c = 2;
@@ -30,7 +30,7 @@ public class b implements l {
     public static synchronized b a(Context context) {
         if(instance == null) {
             instance = new b();
-            int defCon = h.getInstance(context).getOption().getDefCon(0);
+            int defCon = ImprintTool.getInstance(context).getOption().getDefCon(0);
             instance.setDefCon(defCon);
         }
 
@@ -46,8 +46,8 @@ public class b implements l {
             jsonObject.remove("ekv");
             jsonObject.remove("gkv");
             jsonObject.remove("cc");
-            DBDataTool.getInstance(context).a(false, true);
-            AggTool.getInstance(context).b(new OpResult());
+            DBDataTool.getInstance(context).deleteData(false, true);
+            AggTool.getInstance(context).cleatData(new OpResult());
         } else if(this.defCon == 2) {
             jsonObject.remove("sessions");
 
@@ -61,16 +61,16 @@ public class b implements l {
             jsonObject.remove("ekv");
             jsonObject.remove("gkv");
             jsonObject.remove("cc");
-            DBDataTool.getInstance(context).a(false, true);
-            AggTool.getInstance(context).b(new OpResult());
+            DBDataTool.getInstance(context).deleteData(false, true);
+            AggTool.getInstance(context).cleatData(new OpResult());
         } else if(this.defCon == 3) {
             jsonObject.remove("sessions");
             jsonObject.remove("error");
             jsonObject.remove("ekv");
             jsonObject.remove("gkv");
             jsonObject.remove("cc");
-            DBDataTool.getInstance(context).a(false, true);
-            AggTool.getInstance(context).b(new OpResult());
+            DBDataTool.getInstance(context).deleteData(false, true);
+            AggTool.getInstance(context).cleatData(new OpResult());
         }
 
     }
@@ -120,7 +120,7 @@ public class b implements l {
         return this.defCon != 0;
     }
 
-    public void a(h.Option var1) {
+    public void setOption(ImprintTool.Option var1) {
         this.setDefCon(var1.getDefCon(0));
     }
 }

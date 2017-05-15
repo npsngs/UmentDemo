@@ -31,6 +31,8 @@ import android.view.WindowManager;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.UMConst;
 import com.umeng.analytics.MobclickAgent.EScenarioType;
+import com.umeng.analytics.c.ImprintTool;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -55,7 +57,7 @@ public class SystemUtil {
     public static final String c = "2G/3G";
     public static final String d = "Wi-Fi";
     public static final int e = 8;
-    private static final String f_str = "ro.miui.ui.version.name";
+    private static final String f_str = "ro.miui.ui.version.domain";
 
     public SystemUtil() {
     }
@@ -220,7 +222,7 @@ public class SystemUtil {
                     bufferedReader.close();
                     fileReader.close();
                 } catch (Throwable throwable) {
-                    ULog.e(tag, "Could not read from file /proc/cpuinfo", throwable);
+                    ULog.e(tag, "Could not readByteBuffer from file /proc/cpuinfo", throwable);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -244,7 +246,7 @@ public class SystemUtil {
         return EncodeUtil.getMD5(getDeviceId(context));
     }
 
-    public static String getProperties(Context context) {
+    public static String getMobileCode(Context context) {
         if(getSubscribeID(context) == null) {
             return null;
         } else {
@@ -377,7 +379,7 @@ public class SystemUtil {
     }
 
     public static boolean isInChina(Context context) {
-        String country = com.umeng.analytics.c.h.getInstance(context).getOption().getCountry("");
+        String country = ImprintTool.getInstance(context).getOption().getCountry("");
         if(!TextUtils.isEmpty(country)) {
             return country.equals("cn");
         } else {
@@ -440,7 +442,7 @@ public class SystemUtil {
                 locale = configuration.locale;
             }
         } catch (Throwable throwable) {
-            ULog.c(tag, new Object[]{"fail to read user config locale"});
+            ULog.c(tag, new Object[]{"fail to readByteBuffer user config locale"});
         }
 
         if(locale == null) {
@@ -463,7 +465,7 @@ public class SystemUtil {
                 ULog.c(tag, new Object[]{"getAppkey failed. the applicationinfo is null!"});
             }
         } catch (Throwable throwable) {
-            ULog.e(tag, "Could not read UMENG_APPKEY meta-data from AndroidManifest.xml.", throwable);
+            ULog.e(tag, "Could not readByteBuffer UMENG_APPKEY meta-data from AndroidManifest.xml.", throwable);
         }
 
         return null;
@@ -764,7 +766,7 @@ public class SystemUtil {
         Properties properties = getProperties();
 
         try {
-            systemName = properties.getProperty("ro.miui.ui.version.name");
+            systemName = properties.getProperty("ro.miui.ui.version.domain");
             if(TextUtils.isEmpty(systemName)) {
                 if(hasSmartBar()) {
                     systemName = "Flyme";
@@ -786,7 +788,7 @@ public class SystemUtil {
         Properties properties = getProperties();
 
         try {
-            osVersion = properties.getProperty("ro.miui.ui.version.name");
+            osVersion = properties.getProperty("ro.miui.ui.version.domain");
             if(TextUtils.isEmpty(osVersion)) {
                 if(hasSmartBar()) {
                     try {

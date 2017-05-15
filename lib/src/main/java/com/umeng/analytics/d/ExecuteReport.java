@@ -9,18 +9,18 @@ import android.content.Context;
 import com.umeng.tool.TaskExecutor;
 import com.umeng.tool.SafeRunnable;
 
-public final class ExecuteReport implements g {
-    private g a;
+public final class ExecuteReport implements Reporter {
+    private Reporter reporter;
     private Context context;
     private static ExecuteReport instance;
 
     private ExecuteReport(Context context) {
         this.context = context;
-        this.a = new LogPreReport(this.context);
+        this.reporter = new LogPreReport(this.context);
     }
 
     public synchronized LogPreReport getPreReport(Context context) {
-        return (LogPreReport)this.a;
+        return (LogPreReport)this.reporter;
     }
 
     public static synchronized ExecuteReport getInstance(Context context) {
@@ -31,30 +31,30 @@ public final class ExecuteReport implements g {
         return instance;
     }
 
-    public void getPreReport(g var1) {
-        this.a = var1;
+    public void getPreReport(Reporter var1) {
+        this.reporter = var1;
     }
 
-    public void a(final Object var1) {
+    public void report(final Object var1) {
         TaskExecutor.scheduleExecute(new SafeRunnable() {
             public void safeRun() {
-                ExecuteReport.this.a.a(var1);
+                ExecuteReport.this.reporter.report(var1);
             }
         });
     }
 
-    public void a() {
+    public void report() {
         TaskExecutor.scheduleExecute(new SafeRunnable() {
             public void safeRun() {
-                ExecuteReport.this.a.a();
+                ExecuteReport.this.reporter.report();
             }
         });
     }
 
-    public void b() {
+    public void packData() {
         TaskExecutor.submit(new SafeRunnable() {
             public void safeRun() {
-                ExecuteReport.this.a.b();
+                ExecuteReport.this.reporter.packData();
             }
         });
     }

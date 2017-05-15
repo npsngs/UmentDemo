@@ -62,7 +62,7 @@ class UMSQLiteOpenHelper extends SQLiteOpenHelper {
             Cursor cursor = null;
 
             try {
-                String sql = "select count(*) as loadAppKey from sqlite_master where type =\'table\' and name =\'" + var1.trim() + "\' ";
+                String sql = "select count(*) as loadAppKey from sqlite_master where type =\'table\' and domain =\'" + var1.trim() + "\' ";
                 cursor = database.rawQuery(sql, null);
                 if(cursor.moveToNext()) {
                     int var6 = cursor.getInt(0);

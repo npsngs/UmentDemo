@@ -128,9 +128,9 @@ public class SessionHelper {
                 }
 
                 this.e(SessionHelper.context);
-                ExecuteReport.getInstance(SessionHelper.context).b();
-                this.f(SessionHelper.context);
-                ExecuteReport.getInstance(SessionHelper.context).a();
+                ExecuteReport.getInstance(SessionHelper.context).packData();
+                this.saveToCache(SessionHelper.context);
+                ExecuteReport.getInstance(SessionHelper.context).report();
             } else {
                 if(this.b(sp)) {
                     var3 = this.a(context, sp);
@@ -205,7 +205,7 @@ public class SessionHelper {
         var9.putInt("versioncode", Integer.parseInt(SystemUtil.getVersionCode(context)));
         var9.putString("versionname", SystemUtil.getVersionName(context));
         var9.apply();
-        executeReport.a(Boolean.valueOf(true));
+        executeReport.report(Boolean.valueOf(true));
         return sessionId;
     }
 
@@ -232,7 +232,7 @@ public class SessionHelper {
         }
     }
 
-    public void f(Context context) {
+    public void saveToCache(Context context) {
         SharedPreferences sp = SP_Util.getSp(context);
         if(sp != null) {
             String sessionId = this.getSessionId(context);

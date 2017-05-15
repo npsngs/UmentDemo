@@ -199,7 +199,7 @@ public class AggTool {
         this.mainFestTimestamp = sp.getLong("main_fest_timestamp", 0L);
     }
 
-    public JSONObject b() {
+    public JSONObject getAG() {
         JSONObject var1 = this.dataTool.uploadAggData();
         JSONObject var2 = new JSONObject();
         if(var1 != null && var1.length() > 0) {
@@ -222,7 +222,7 @@ public class AggTool {
         }
     }
 
-    public JSONObject c() {
+    public JSONObject getVe_mate() {
         if(this.aggDataManager.getDataMap().size() > 0) {
             this.dataTool.saveToSystemTable(new OpResult() {
                 public void setResult(Object var1, boolean var2) {
@@ -238,7 +238,7 @@ public class AggTool {
         return var1;
     }
 
-    public void b(OpResult opResult) {
+    public void cleatData(OpResult opResult) {
         boolean var2 = false;
         if(this.mainFestMode) {
             if(this.mainFestTimestamp == 0L) {
@@ -290,14 +290,13 @@ public class AggTool {
         }, "__ag_of");
     }
 
-    public void a(long var1, long var3, String var5) {
-        this.dataTool.a(new OpResult() {
-            public void setResult(Object var1, boolean var2) {
-                if(var1.equals("success")) {
+    public void insertToSystemTable(long count, long timeStamp, String key) {
+        this.dataTool.insertToSystemTable(new OpResult() {
+            public void setResult(Object o, boolean var2) {
+                if(o.equals("success")) {
                 }
-
             }
-        }, var5, var1, var3);
+        }, key, count, timeStamp);
     }
 
     private void converyMemoryToDataTable() {

@@ -16,12 +16,12 @@ import java.util.TreeSet;
 import java.util.Map.Entry;
 
 public final class e_j {
-    private static final Comparator a = new e_j.a();
+    private static final Comparator COMPARATOR = new MYComparator();
 
     private e_j() {
     }
 
-    public static int a(Object var0, Object var1) {
+    public static int compare(Object var0, Object var1) {
         if(var0 instanceof Comparable) {
             return a((Comparable)var0, (Comparable)var1);
         } else if(var0 instanceof List) {
@@ -91,7 +91,7 @@ public final class e_j {
             return var2;
         } else {
             for(int var3 = 0; var3 < var0.size(); ++var3) {
-                var2 = a.compare(var0.get(var3), var1.get(var3));
+                var2 = COMPARATOR.compare(var0.get(var3), var1.get(var3));
                 if(var2 != 0) {
                     return var2;
                 }
@@ -106,15 +106,15 @@ public final class e_j {
         if(var2 != 0) {
             return var2;
         } else {
-            TreeSet var3 = new TreeSet(a);
+            TreeSet var3 = new TreeSet(COMPARATOR);
             var3.addAll(var0);
-            TreeSet var4 = new TreeSet(a);
+            TreeSet var4 = new TreeSet(COMPARATOR);
             var4.addAll(var1);
             Iterator var5 = var3.iterator();
             Iterator var6 = var4.iterator();
 
             while(var5.hasNext() && var6.hasNext()) {
-                var2 = a.compare(var5.next(), var6.next());
+                var2 = COMPARATOR.compare(var5.next(), var6.next());
                 if(var2 != 0) {
                     return var2;
                 }
@@ -129,22 +129,22 @@ public final class e_j {
         if(var2 != 0) {
             return var2;
         } else {
-            TreeMap var3 = new TreeMap(a);
+            TreeMap var3 = new TreeMap(COMPARATOR);
             var3.putAll(var0);
             Iterator var4 = var3.entrySet().iterator();
-            TreeMap var5 = new TreeMap(a);
+            TreeMap var5 = new TreeMap(COMPARATOR);
             var5.putAll(var1);
             Iterator var6 = var5.entrySet().iterator();
 
             while(var4.hasNext() && var6.hasNext()) {
                 Entry var7 = (Entry)var4.next();
                 Entry var8 = (Entry)var6.next();
-                var2 = a.compare(var7.getKey(), var8.getKey());
+                var2 = COMPARATOR.compare(var7.getKey(), var8.getKey());
                 if(var2 != 0) {
                     return var2;
                 }
 
-                var2 = a.compare(var7.getValue(), var8.getValue());
+                var2 = COMPARATOR.compare(var7.getValue(), var8.getValue());
                 if(var2 != 0) {
                     return var2;
                 }
@@ -219,22 +219,22 @@ public final class e_j {
         }
     }
 
-    public static byte[] a(byte[] var0) {
-        if(var0 == null) {
+    public static byte[] arraycopy(byte[] src) {
+        if(src == null) {
             return null;
         } else {
-            byte[] var1 = new byte[var0.length];
-            System.arraycopy(var0, 0, var1, 0, var0.length);
-            return var1;
+            byte[] dest = new byte[src.length];
+            System.arraycopy(src, 0, dest, 0, src.length);
+            return dest;
         }
     }
 
-    private static class a implements Comparator {
-        private a() {
+    private static class MYComparator implements Comparator {
+        private MYComparator() {
         }
 
-        public int compare(Object var1, Object var2) {
-            return var1 == null && var2 == null?0:(var1 == null?-1:(var2 == null?1:(var1 instanceof List?e_j.a((List)var1, (List)var2):(var1 instanceof Set?e_j.a((Set)var1, (Set)var2):(var1 instanceof Map?e_j.a((Map)var1, (Map)var2):(var1 instanceof byte[]?e_j.a((byte[])((byte[])var1), (byte[])((byte[])var2)):((Comparable)var1).compareTo((Comparable)var2)))))));
+        public int compare(Object o1, Object o2) {
+            return o1 == null && o2 == null ?0:(o1 == null?-1:(o2 == null?1:(o1 instanceof List?e_j.a((List)o1, (List)o2):(o1 instanceof Set?e_j.a((Set)o1, (Set)o2):(o1 instanceof Map?e_j.a((Map)o1, (Map)o2):(o1 instanceof byte[]?e_j.a((byte[])((byte[])o1), (byte[])((byte[])o2)):((Comparable)o1).compareTo((Comparable)o2)))))));
         }
     }
 }

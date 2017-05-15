@@ -1,0 +1,472 @@
+//
+// Source code recreated from setRequestCallback .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
+package com.umeng.analytics.f;
+
+import a.a.a.UMField;
+import a.a.a.a_j;
+import a.a.a.b.TField_c;
+import a.a.a.b.UMBeanCoderEngine;
+import a.a.a.UMBean;
+import a.a.a.UMException;
+import a.a.a.a.g;
+import a.a.a.b.UMBeanCoder;
+import a.a.a.b.UMBeanCoder_b;
+import a.a.a.b.UMMsgException;
+import a.a.a.b.Name;
+import a.a.a.b.UMBeanCoder_n;
+import a.a.a.c.BeanTransferGetter;
+import a.a.a.c.UMBeanTransfer;
+import a.a.a.c.UMBeanTransfer_c;
+import a.a.a.c.UMBeanTransfer_d;
+import a.a.a.d.UMIOStream;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
+public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, Cloneable {
+    private static final long serialNumber = 2846460275012375038L;
+    private static final Name f = new Name("Imprint");
+    private static final TField_c g = new TField_c("property", (byte) 13, (short) 1);
+    private static final TField_c h = new TField_c("version", (byte)8, (short)2);
+    private static final TField_c i = new TField_c("checksum", (byte)11, (short)3);
+    private static final Map<Class<? extends UMBeanTransfer>, BeanTransferGetter> j = new HashMap();
+    public Map<String, ImprintValue> property;
+    public int version;
+    public String checksum;
+    private byte l;
+    public static final Map<e_enum, a.a.a.a.b> d;
+
+    public Imprint() {
+        this.l = 0;
+    }
+
+    public Imprint(Map<String, ImprintValue> var1, int var2, String var3) {
+        this();
+        this.property = var1;
+        this.version = var2;
+        this.b(true);
+        this.checksum = var3;
+    }
+
+    public Imprint(Imprint imprint) {
+        this.l = imprint.l;
+        if(imprint.hasProperty()) {
+            HashMap hashMap = new HashMap();
+            Iterator iterator = imprint.property.entrySet().iterator();
+
+            while(iterator.hasNext()) {
+                Entry entry = (Entry)iterator.next();
+                String key = (String)entry.getKey();
+                ImprintValue imprintValue = (ImprintValue)entry.getValue();
+                ImprintValue imprintValue1 = new ImprintValue(imprintValue);
+                hashMap.put(key, imprintValue1);
+            }
+
+            this.property = hashMap;
+        }
+
+        this.version = imprint.version;
+        if(imprint.hasCheckSum()) {
+            this.checksum = imprint.checksum;
+        }
+
+    }
+
+    public Imprint copyOne() {
+        return new Imprint(this);
+    }
+
+    public void reset() {
+        this.property = null;
+        this.b(false);
+        this.version = 0;
+        this.checksum = null;
+    }
+
+    public int c() {
+        return this.property == null?0:this.property.size();
+    }
+
+    public void putValue(String key, ImprintValue value) {
+        if(this.property == null) {
+            this.property = new HashMap();
+        }
+
+        this.property.put(key, value);
+    }
+
+    public Map<String, ImprintValue> getProperty() {
+        return this.property;
+    }
+
+    public Imprint setProperty(Map<String, ImprintValue> property) {
+        this.property = property;
+        return this;
+    }
+
+    public void e() {
+        this.property = null;
+    }
+
+    public boolean hasProperty() {
+        return this.property != null;
+    }
+
+    public void a(boolean var1) {
+        if(!var1) {
+            this.property = null;
+        }
+
+    }
+
+    public int getVersion() {
+        return this.version;
+    }
+
+    public Imprint a(int var1) {
+        this.version = var1;
+        this.b(true);
+        return this;
+    }
+
+    public void h() {
+        this.l = a_j.b(this.l, 0);
+    }
+
+    public boolean i() {
+        return a_j.a(this.l, 0);
+    }
+
+    public void b(boolean var1) {
+        this.l = a_j.a(this.l, 0, var1);
+    }
+
+    public String getCheckSum() {
+        return this.checksum;
+    }
+
+    public Imprint setCheckSum(String checkSum) {
+        this.checksum = checkSum;
+        return this;
+    }
+
+    public void clearCheckSum() {
+        this.checksum = null;
+    }
+
+    public boolean hasCheckSum() {
+        return this.checksum != null;
+    }
+
+    public void c(boolean var1) {
+        if(!var1) {
+            this.checksum = null;
+        }
+
+    }
+
+    public e_enum getUMField(int var1) {
+        return e_enum.a(var1);
+    }
+
+    public void unpackFrom(UMBeanCoder umBeanCoder) throws UMException {
+        j.get(umBeanCoder.getBeanTransferClass()).getBeanTransfer().pack(umBeanCoder, this);
+    }
+
+    public void packTo(UMBeanCoder var1) throws UMException {
+        j.get(var1.getBeanTransferClass()).getBeanTransfer().unpack(var1, this);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Imprint(");
+        boolean var2 = true;
+        sb.append("property:");
+        if(this.property == null) {
+            sb.append("null");
+        } else {
+            sb.append(this.property);
+        }
+
+        var2 = false;
+        if(!var2) {
+            sb.append(", ");
+        }
+
+        sb.append("version:");
+        sb.append(this.version);
+        var2 = false;
+        if(!var2) {
+            sb.append(", ");
+        }
+
+        sb.append("checksum:");
+        if(this.checksum == null) {
+            sb.append("null");
+        } else {
+            sb.append(this.checksum);
+        }
+
+        sb.append(")");
+        return sb.toString();
+    }
+
+    public void assertValid() throws UMException {
+        if(this.property == null) {
+            throw new UMMsgException("Required field \'property\' was not present! Struct: " + this.toString());
+        } else if(this.checksum == null) {
+            throw new UMMsgException("Required field \'checksum\' was not present! Struct: " + this.toString());
+        }
+    }
+
+    private void unpackFrom(ObjectOutputStream oos) throws IOException {
+        try {
+            this.packTo(new UMBeanCoder_b(new UMIOStream(oos)));
+        } catch (UMException var3) {
+            throw new IOException(var3.getMessage());
+        }
+    }
+
+    private void packTo(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        try {
+            this.l = 0;
+            this.unpackFrom(new UMBeanCoder_b(new UMIOStream(ois)));
+        } catch (UMException var3) {
+            throw new IOException(var3.getMessage());
+        }
+    }
+
+    static {
+        j.put(UMBeanTransfer_c.class, new Imprint.b());
+        j.put(UMBeanTransfer_d.class, new Imprint.d());
+        EnumMap var0 = new EnumMap(e_enum.class);
+        var0.put(e_enum.PROPERTY, new a.a.a.a.b("property", (byte)1, new a.a.a.a.e((byte)13, new a.a.a.a.c((byte)11), new g((byte)12, ImprintValue.class))));
+        var0.put(e_enum.VERSION, new a.a.a.a.b("version", (byte)1, new a.a.a.a.c((byte)8)));
+        var0.put(e_enum.CHECKSUM, new a.a.a.a.b("checksum", (byte)1, new a.a.a.a.c((byte)11)));
+        d = Collections.unmodifiableMap(var0);
+        a.a.a.a.b b = new a.a.a.a.b(null, (byte) 1, null);
+        b.a(Imprint.class, d);
+    }
+
+    private static class c extends UMBeanTransfer_d<Imprint> {
+        private c() {
+        }
+
+        public void unpack(UMBeanCoder var1, Imprint var2) throws UMException {
+            UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
+            var3.writeUnsignedInt(var2.property.size());
+            Iterator var4 = var2.property.entrySet().iterator();
+
+            while(var4.hasNext()) {
+                Entry var5 = (Entry)var4.next();
+                var3.writeString((String)var5.getKey());
+                ((ImprintValue)var5.getValue()).packTo(var3);
+            }
+
+            var3.writeUnsignedInt(var2.version);
+            var3.writeString(var2.checksum);
+        }
+
+        public void pack(UMBeanCoder var1, Imprint var2) throws UMException {
+            UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
+            a.a.a.b.e var4 = new a.a.a.b.e((byte)11, (byte)12, var3.readSignedInt());
+            var2.property = new HashMap(2 * var4.size);
+
+            for(int var5 = 0; var5 < var4.size; ++var5) {
+                String var6 = var3.readString();
+                ImprintValue var7 = new ImprintValue();
+                var7.unpackFrom(var3);
+                var2.property.put(var6, var7);
+            }
+
+            var2.a(true);
+            var2.version = var3.readSignedInt();
+            var2.b(true);
+            var2.checksum = var3.readString();
+            var2.c(true);
+        }
+    }
+
+    private static class d implements BeanTransferGetter {
+        private d() {
+        }
+
+        public Imprint.c getBeanTransfer() {
+            return new Imprint.c();
+        }
+    }
+
+    private static class a extends UMBeanTransfer_c<Imprint> {
+        private a() {
+        }
+
+        public void unpack(UMBeanCoder umBeanCoder, Imprint imprint) throws UMException {
+            umBeanCoder.startUnpack();
+
+            while(true) {
+                TField_c tField = umBeanCoder.readTField();
+                if(tField.type == 0) {
+                    umBeanCoder.k();
+                    if(!imprint.i()) {
+                        throw new UMMsgException("Required field \'version\' was not found in serialized data! Struct: " + this.toString());
+                    }
+
+                    imprint.assertValid();
+                    return;
+                }
+
+                switch(tField.id) {
+                    case 1:
+                        if(tField.type != 13) {
+                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            break;
+                        }
+
+                        a.a.a.b.e var4 = umBeanCoder.n();
+                        imprint.property = new HashMap(2 * var4.size);
+
+                        for(int i = 0; i < var4.size; ++i) {
+                            String var6 = umBeanCoder.readString();
+                            ImprintValue imprintValue = new ImprintValue();
+                            imprintValue.unpackFrom(umBeanCoder);
+                            imprint.property.put(var6, imprintValue);
+                        }
+
+                        umBeanCoder.o();
+                        imprint.a(true);
+                        break;
+                    case 2:
+                        if(tField.type == 8) {
+                            imprint.version = umBeanCoder.readSignedInt();
+                            imprint.b(true);
+                        } else {
+                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                        }
+                        break;
+                    case 3:
+                        if(tField.type == 11) {
+                            imprint.checksum = umBeanCoder.readString();
+                            imprint.c(true);
+                        } else {
+                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                        }
+                        break;
+                    default:
+                        UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                }
+
+                umBeanCoder.m();
+            }
+        }
+
+        public void pack(UMBeanCoder var1, Imprint var2) throws UMException {
+            var2.assertValid();
+            var1.startPack(Imprint.f);
+            if(var2.property != null) {
+                var1.writeTField(Imprint.g);
+                var1.a(new a.a.a.b.e((byte)11, (byte)12, var2.property.size()));
+                Iterator var3 = var2.property.entrySet().iterator();
+
+                while(var3.hasNext()) {
+                    Entry var4 = (Entry)var3.next();
+                    var1.writeString((String)var4.getKey());
+                    ((ImprintValue)var4.getValue()).packTo(var1);
+                }
+
+                var1.e();
+                var1.c();
+            }
+
+            var1.writeTField(Imprint.h);
+            var1.writeUnsignedInt(var2.version);
+            var1.c();
+            if(var2.checksum != null) {
+                var1.writeTField(Imprint.i);
+                var1.writeString(var2.checksum);
+                var1.c();
+            }
+
+            var1.d();
+            var1.b();
+        }
+    }
+
+    private static class b implements BeanTransferGetter {
+        private b() {
+        }
+
+        public Imprint.a getBeanTransfer() {
+            return new Imprint.a();
+        }
+    }
+
+    public static enum e_enum implements UMField {
+        PROPERTY((byte)1, "property"),
+        VERSION((byte)2, "version"),
+        CHECKSUM((byte)3, "checksum");
+
+        private static final Map<String, Imprint.e_enum> d = new HashMap();
+        private final short e;
+        private final String f;
+
+        public static Imprint.e_enum a(int var0) {
+            switch(var0) {
+                case 1:
+                    return PROPERTY;
+                case 2:
+                    return VERSION;
+                case 3:
+                    return CHECKSUM;
+                default:
+                    return null;
+            }
+        }
+
+        public static Imprint.e_enum b(int var0) {
+            Imprint.e_enum var1 = a(var0);
+            if(var1 == null) {
+                throw new IllegalArgumentException("Field " + var0 + " doesn\'getPackageName exist!");
+            } else {
+                return var1;
+            }
+        }
+
+        public static Imprint.e_enum a(String var0) {
+            return d.get(var0);
+        }
+
+        private e_enum(short var3, String var4) {
+            this.e = var3;
+            this.f = var4;
+        }
+
+        public short getFieldId() {
+            return this.e;
+        }
+
+        public String getFieldName() {
+            return this.f;
+        }
+
+        static {
+            Iterator var0 = EnumSet.allOf(Imprint.e_enum.class).iterator();
+
+            while(var0.hasNext()) {
+                Imprint.e_enum var1 = (Imprint.e_enum)var0.next();
+                d.put(var1.getFieldName(), var1);
+            }
+
+        }
+    }
+}

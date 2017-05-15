@@ -119,11 +119,11 @@ public final class CacheTool {
         return sp != null?sp.getInt("vt", 0):0;
     }
 
-    public void g() {
+    public void clearData() {
         context.deleteFile(this.getAgentName());
-        context.deleteFile(this.m());
-        DBDataTool.getInstance(context).a(true, false);
-        AggTool.getInstance(context).b(new OpResult() {
+        context.deleteFile(this.getAgentFullName());
+        DBDataTool.getInstance(context).deleteData(true, false);
+        AggTool.getInstance(context).cleatData(new OpResult() {
             public void setResult(Object var1, boolean var2) {
                 if(var1.equals("success")) {
                 }
@@ -152,30 +152,30 @@ public final class CacheTool {
         return "mobclick_agent_header_" + packageName;
     }
 
-    private String m() {
+    private String getAgentFullName() {
         SharedPreferences sp = SP_Util.getSp(context);
-        String var2;
+        String fullname;
         if(sp != null) {
             int versioncode = sp.getInt("versioncode", 0);
             int newVersionCode = Integer.parseInt(SystemUtil.getVersionCode(context));
             if(versioncode != 0 && newVersionCode != versioncode) {
-                var2 = "mobclick_agent_cached_" + packageName + versioncode;
+                fullname = "mobclick_agent_cached_" + packageName + versioncode;
             } else {
-                var2 = "mobclick_agent_cached_" + packageName + SystemUtil.getVersionCode(context);
+                fullname = "mobclick_agent_cached_" + packageName + SystemUtil.getVersionCode(context);
             }
         } else {
-            var2 = "mobclick_agent_cached_" + packageName + SystemUtil.getVersionCode(context);
+            fullname = "mobclick_agent_cached_" + packageName + SystemUtil.getVersionCode(context);
         }
 
-        return var2;
+        return fullname;
     }
 
-    public interface b {
-        void a(File file);
+    public interface SendFile {
+        void preSend(File file);
 
-        boolean b(File file);
+        boolean send(File file);
 
-        void c(File file);
+        void afterSend(File file);
     }
 
     public static class FileCache {
@@ -204,7 +204,7 @@ public final class CacheTool {
             return subFiles != null && subFiles.length > 0;
         }
 
-        public void a(CacheTool.b var1) {
+        public void send(SendFile sendFile) {
             File[] listFiles = this.cacheDir.listFiles(this.filenameFilter);
             int i;
             if(listFiles != null && listFiles.length >= 10) {
@@ -213,7 +213,7 @@ public final class CacheTool {
                 TaskExecutor.scheduleExecute(new Runnable() {
                     public void run() {
                         if(len > 0) {
-                            AggTool.getInstance(CacheTool.context).a((long)len, System.currentTimeMillis(), "__evp_file_of");
+                            AggTool.getInstance(CacheTool.context).insertToSystemTable((long)len, System.currentTimeMillis(), "__evp_file_of");
                         }
 
                     }
@@ -225,14 +225,14 @@ public final class CacheTool {
             }
 
             if(listFiles != null && listFiles.length > 0) {
-                var1.a(this.cacheDir);
+                sendFile.preSend(this.cacheDir);
                 i = listFiles.length;
 
                 for(int j = 0; j < i; ++j) {
                     boolean var12 = false;
 
                     try {
-                        var12 = var1.b(listFiles[j]);
+                        var12 = sendFile.send(listFiles[j]);
                     } catch (Throwable throwable) {
                         var12 = true;
                     } finally {
@@ -243,7 +243,7 @@ public final class CacheTool {
                     }
                 }
 
-                var1.c(this.cacheDir);
+                sendFile.afterSend(this.cacheDir);
             }
 
         }

@@ -8,7 +8,7 @@ package com.umeng.analytics.c;
 import android.content.Context;
 import com.umeng.tool.SystemUtil;
 
-public class m extends a {
+public class m extends UMProperty {
     private static final String a = "idmd5";
     private Context b;
 
@@ -17,7 +17,7 @@ public class m extends a {
         this.b = var1;
     }
 
-    public String f() {
+    public String getValue() {
         return SystemUtil.get5DeviceIdInMD5(this.b);
     }
 }

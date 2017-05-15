@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Build.VERSION;
 import android.text.TextUtils;
 
+import com.umeng.analytics.c.ImprintTool;
 import com.umeng.tool.StringTool;
 import com.umeng.tool.SystemUtil;
 import com.umeng.tool.ULog;
@@ -62,8 +63,8 @@ public class HttpSender {
     }
 
     private void initUrl() {
-        String domain_p = com.umeng.analytics.c.h.getInstance(this.context).getOption().getDomainP("");
-        String domain_s = com.umeng.analytics.c.h.getInstance(this.context).getOption().getDomain_s("");
+        String domain_p = ImprintTool.getInstance(this.context).getOption().getDomainP("");
+        String domain_s = ImprintTool.getInstance(this.context).getOption().getDomain_s("");
         if(!TextUtils.isEmpty(domain_p)) {
             UMConst.url_p = StringTool.getUrl(domain_p);
         }
@@ -85,12 +86,12 @@ public class HttpSender {
     }
 
     public byte[] send(byte[] data) {
-        byte[] var2 = null;
+        byte[] resp = null;
         this.initUrl();
 
         for(int i = 0; i < UMConst.urls.length; ++i) {
-            var2 = this.send(data, UMConst.urls[i]);
-            if(var2 != null) {
+            resp = this.send(data, UMConst.urls[i]);
+            if(resp != null) {
                 if(this.requestCallback != null) {
                     this.requestCallback.requstSuccess();
                 }
@@ -102,7 +103,7 @@ public class HttpSender {
             }
         }
 
-        return var2;
+        return resp;
     }
 
     private boolean isNeedProxy() {

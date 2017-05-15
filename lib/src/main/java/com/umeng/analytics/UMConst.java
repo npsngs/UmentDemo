@@ -30,7 +30,7 @@ public class UMConst {
     public static final String v = "__data_size_of";
     public static final String w = "__evp_file_of";
     public static final String x = "__meta_ve_of";
-    public static long y;
+    public static long MAX_SIZE;
     public static final String z = "body";
     public static final String A = "header";
     public static final String B = "versioncode";
@@ -42,6 +42,6 @@ public class UMConst {
 
     static {
         urls = new String[]{url_p, url_s};
-        y = 2097152L;
+        MAX_SIZE = 2097152L;
     }
 }

@@ -5,8 +5,8 @@
 
 package a.a.a.a;
 
-import a.a.a.d_interface;
-import a.a.a.k;
+import a.a.a.UMBean;
+import a.a.a.UMField;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class b implements Serializable {
     public final String a;
     public final byte b;
     public final c c;
-    private static Map<Class<? extends d_interface>, Map<? extends k, b>> d = new HashMap();
+    private static Map<Class<? extends UMBean>, Map<? extends UMField, b>> d = new HashMap();
 
     public b(String var1, byte var2, c var3) {
         this.a = var1;
@@ -24,11 +24,11 @@ public class b implements Serializable {
         this.c = var3;
     }
 
-    public static void a(Class<? extends d_interface> var0, Map<? extends k, b> var1) {
+    public static void a(Class<? extends UMBean> var0, Map<? extends UMField, b> var1) {
         d.put(var0, var1);
     }
 
-    public static Map<? extends k, b> a(Class<? extends d_interface> var0) {
+    public static Map<? extends UMField, b> a(Class<? extends UMBean> var0) {
         if(!d.containsKey(var0)) {
             try {
                 var0.newInstance();

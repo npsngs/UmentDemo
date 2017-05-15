@@ -20,7 +20,7 @@ public abstract class d {
     protected static final String l = "channel";
     protected static final String m = "data";
     protected static final String n = "gender";
-    protected static final String o = "name";
+    protected static final String o = "domain";
     protected static final String p = "imei";
     protected static final String q = "mac";
     protected static final String r = "android_id";

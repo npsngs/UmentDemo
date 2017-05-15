@@ -8,13 +8,15 @@ package com.umeng.analytics.e;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.umeng.analytics.c.ImprintTool;
+import com.umeng.analytics.c.UMEnvelopeData;
 import com.umeng.tool.ULog;
-import com.umeng.analytics.d.l;
+import com.umeng.analytics.d.OptionSetter;
 
-public class a implements l {
+public class a implements OptionSetter {
     private boolean a = false;
-    private int b = -1;
-    private int c = -1;
+    private int policy = -1;
+    private int interval = -1;
     private int d = -1;
     private float e = 0.0F;
     private float f = 0.0F;
@@ -22,12 +24,12 @@ public class a implements l {
     private Context h = null;
     private static a i = null;
 
-    public static synchronized a a(Context var0) {
+    public static synchronized a a(Context context) {
         if(i == null) {
-            com.umeng.analytics.c.h.Option var1 = com.umeng.analytics.c.h.getInstance(var0).getOption();
+            ImprintTool.Option var1 = ImprintTool.getInstance(context).getOption();
             String var2 = var1.f((String)null);
             int var3 = var1.d(0);
-            i = new a(var0, var2, var3);
+            i = new a(context, var2, var3);
         }
 
         return i;
@@ -50,8 +52,8 @@ public class a implements l {
     }
 
     public void a(String var1, int var2) {
-        this.c = var2;
-        String var3 = com.umeng.analytics.c.c.a(this.h);
+        this.interval = var2;
+        String var3 = UMEnvelopeData.getCachedSignature(this.h);
         if(!TextUtils.isEmpty(var3) && !TextUtils.isEmpty(var1)) {
             try {
                 this.e = this.b(var3, 12);
@@ -166,7 +168,7 @@ public class a implements l {
                     this.a = true;
                     this.d = var6 + 1;
                     if(var10 != null) {
-                        this.b = var10[var6];
+                        this.policy = var10[var6];
                     }
                 } else {
                     this.a = false;
@@ -223,7 +225,7 @@ public class a implements l {
                     this.a = true;
                     this.d = var4;
                     if(var5 != null) {
-                        this.b = var5[var4 - 1];
+                        this.policy = var5[var4 - 1];
                     }
                 } else {
                     this.a = false;
@@ -238,11 +240,11 @@ public class a implements l {
     }
 
     public int b() {
-        return this.b;
+        return this.policy;
     }
 
     public int c() {
-        return this.c;
+        return this.interval;
     }
 
     public int d() {
@@ -257,7 +259,7 @@ public class a implements l {
         return this.g;
     }
 
-    public void a(com.umeng.analytics.c.h.Option var1) {
+    public void setOption(ImprintTool.Option var1) {
         this.a(var1.f((String)null), var1.d(0));
     }
 
@@ -268,9 +270,9 @@ public class a implements l {
         var1.append(" p07:");
         var1.append(this.f);
         var1.append(" policy:");
-        var1.append(this.b);
+        var1.append(this.policy);
         var1.append(" interval:");
-        var1.append(this.c);
+        var1.append(this.interval);
         return var1.toString();
     }
 }

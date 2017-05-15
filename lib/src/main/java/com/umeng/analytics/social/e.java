@@ -146,7 +146,7 @@ public abstract class e {
                 if(var6 != null || !TextUtils.isEmpty(var7)) {
                     JSONObject var8 = new JSONObject();
                     var8.put("gender", var6 == null?"":String.valueOf(var6.value));
-                    var8.put("name", var7 == null?"":String.valueOf(var7));
+                    var8.put("domain", var7 == null?"":String.valueOf(var7));
                     var1.put(var5.getMeida().toString(), var8);
                 }
             } catch (Exception var9) {

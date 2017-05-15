@@ -5,10 +5,7 @@
 
 package a.a.a.d;
 
-import a.a.a.d.c;
-import a.a.a.d.d;
-
-public final class b extends c {
+public final class b extends IOStream {
     private byte[] a;
     private int b;
     private int c;
@@ -38,44 +35,44 @@ public final class b extends c {
         this.a = null;
     }
 
-    public void c() {
+    public void close() {
     }
 
     public boolean a() {
         return true;
     }
 
-    public void b() throws d {
+    public void b() throws UMErrCodeException {
     }
 
-    public int a(byte[] var1, int var2, int var3) throws d {
-        int var4 = this.h();
+    public int read(byte[] var1, int var2, int var3) throws UMErrCodeException {
+        int var4 = this.getBufferSize();
         int var5 = var3 > var4?var4:var3;
         if(var5 > 0) {
             System.arraycopy(this.a, this.b, var1, var2, var5);
-            this.a(var5);
+            this.offset(var5);
         }
 
         return var5;
     }
 
-    public void b(byte[] var1, int var2, int var3) throws d {
+    public void write(byte[] var1, int var2, int var3) throws UMErrCodeException {
         throw new UnsupportedOperationException("No writing allowed!");
     }
 
-    public byte[] f() {
+    public byte[] getBuffer() {
         return this.a;
     }
 
-    public int g() {
+    public int getBufferOffset() {
         return this.b;
     }
 
-    public int h() {
+    public int getBufferSize() {
         return this.c - this.b;
     }
 
-    public void a(int var1) {
+    public void offset(int var1) {
         this.b += var1;
     }
 }

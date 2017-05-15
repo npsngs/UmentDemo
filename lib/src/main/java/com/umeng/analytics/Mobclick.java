@@ -252,7 +252,7 @@ public class Mobclick implements ExceptionHandler {
                 this.init(context);
             }
 
-            this.executeReport.a();
+            this.executeReport.report();
         } catch (Throwable t) {
         }
 
@@ -357,9 +357,9 @@ public class Mobclick implements ExceptionHandler {
                     if(au == null || !au_p.equals(au[0]) || !au_u.equals(au[1])) {
                         Mobclick.this.executeReport.getPreReport(Mobclick.this.context).saveData(Mobclick.this.context);
                         boolean var2x = Mobclick.this.getSessionHelper().e(Mobclick.this.context);
-                        ExecuteReport.getInstance(Mobclick.this.context).b();
+                        ExecuteReport.getInstance(Mobclick.this.context).packData();
                         if(var2x) {
-                            Mobclick.this.getSessionHelper().f(Mobclick.this.context);
+                            Mobclick.this.getSessionHelper().saveToCache(Mobclick.this.context);
                         }
                         AU.saveAU(Mobclick.this.context, au_p, au_u);
                     }
@@ -381,9 +381,9 @@ public class Mobclick implements ExceptionHandler {
                     if(var1 != null && !TextUtils.isEmpty(var1[0]) && !TextUtils.isEmpty(var1[1])) {
                         Mobclick.this.executeReport.getPreReport(Mobclick.this.context).saveData(Mobclick.this.context);
                         boolean var2 = Mobclick.this.getSessionHelper().e(Mobclick.this.context);
-                        ExecuteReport.getInstance(Mobclick.this.context).b();
+                        ExecuteReport.getInstance(Mobclick.this.context).packData();
                         if(var2) {
-                            Mobclick.this.getSessionHelper().f(Mobclick.this.context);
+                            Mobclick.this.getSessionHelper().saveToCache(Mobclick.this.context);
                         }
 
                         AU.clearAU(Mobclick.this.context);

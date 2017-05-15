@@ -5,9 +5,9 @@
 
 package a.a.a.b;
 
-import a.a.a.d.c;
+import a.a.a.d.IOStream;
 import java.io.Serializable;
 
 public interface j extends Serializable {
-    h a(c var1);
+    UMBeanCoder a(IOStream var1);
 }

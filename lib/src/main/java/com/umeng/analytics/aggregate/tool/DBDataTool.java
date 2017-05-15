@@ -119,7 +119,7 @@ public class DBDataTool {
 
     }
 
-    public void a(OpResult opResult, String key, long count, long timeStamp) {
+    public void insertToSystemTable(OpResult opResult, String key, long count, long timeStamp) {
         SQLiteDatabase database;
         try {
             database = DBUtil.getInstance(context).getWritableDatabase();
