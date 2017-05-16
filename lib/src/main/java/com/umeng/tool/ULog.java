@@ -13,7 +13,7 @@ import java.util.Locale;
  * Log类
  */
 public class ULog {
-    public static boolean isLogOn = false;
+    public static boolean isDebugMode = false;
     private static String tag = "MobclickAgent";
     private static int h = 2000;
 
@@ -226,35 +226,35 @@ public class ULog {
     }
 
     public static void a(String var0, String var1, Throwable var2) {
-        if(isLogOn) {
+        if(isDebugMode) {
             a(1, var0, var1, var2);
         }
 
     }
 
     public static void b(String var0, String var1, Throwable var2) {
-        if(isLogOn) {
+        if(isDebugMode) {
             a(2, var0, var1, var2);
         }
 
     }
 
     public static void c(String var0, String var1, Throwable var2) {
-        if(isLogOn) {
+        if(isDebugMode) {
             a(3, var0, var1, var2);
         }
 
     }
 
     public static void d(String var0, String var1, Throwable var2) {
-        if(isLogOn) {
+        if(isDebugMode) {
             a(4, var0, var1, var2);
         }
 
     }
 
     public static void e(String var0, String var1, Throwable var2) {
-        if(isLogOn) {
+        if(isDebugMode) {
             a(5, var0, var1, var2);
         }
 

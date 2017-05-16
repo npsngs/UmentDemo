@@ -7,10 +7,10 @@ package a.a.a.a;
 
 import a.a.a.UMBean;
 
-public class g extends c {
+public class G_g_a extends C_c {
     public final Class<? extends UMBean> a;
 
-    public g(byte var1, Class<? extends UMBean> var2) {
+    public G_g_a(byte var1, Class<? extends UMBean> var2) {
         super(var1);
         this.a = var2;
     }

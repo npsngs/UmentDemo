@@ -7,7 +7,7 @@ package a.a.a;
 
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMBeanCoder_b;
-import a.a.a.b.j;
+import a.a.a.b.UMBeanCoderBuilder;
 import a.a.a.d.UMIOStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -18,13 +18,13 @@ public class UMBeanPacker {
     private UMBeanCoder umBeanCoder;
 
     public UMBeanPacker() {
-        this(new UMBeanCoder_b.a());
+        this(new UMBeanCoder_b.UMBeanCoder_b_Inner());
     }
 
-    public UMBeanPacker(j var1) {
+    public UMBeanPacker(UMBeanCoderBuilder var1) {
         this.baos = new ByteArrayOutputStream();
         this.umioStream = new UMIOStream(this.baos);
-        this.umBeanCoder = var1.a(this.umioStream);
+        this.umBeanCoder = var1.build(this.umioStream);
     }
 
     public byte[] pack2Bytes(UMBean umBean) throws UMException {

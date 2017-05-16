@@ -5,6 +5,8 @@
 
 package com.umeng.analytics.g;
 import a.a.a.UMField;
+import a.a.a.a.B_b;
+import a.a.a.a.C_c;
 import a.a.a.b.TField_c;
 import a.a.a.b.UMBeanCoder_b;
 import a.a.a.c.BeanTransferGetter;
@@ -64,7 +66,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
     private static final int B = 3;
     private byte C;
     private e_enum[] D;
-    public static final Map<e_enum, a.a.a.a.b> k_map;
+    public static final Map<e_enum, B_b> k_map;
 
     public UMEnvelope() {
         this.C = 0;
@@ -389,16 +391,16 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
     }
 
     public void unpackFrom(UMBeanCoder umBeanCoder) throws UMException {
-        x.get(umBeanCoder.getBeanTransferClass()).getBeanTransfer().pack(umBeanCoder, this);
+        x.get(umBeanCoder.getBeanTransferClass()).getBeanTransfer().unpack(umBeanCoder, this);
     }
 
     public void packTo(UMBeanCoder umBeanCoder) throws UMException {
-        x.get(umBeanCoder.getBeanTransferClass()).getBeanTransfer().unpack(umBeanCoder, this);
+        x.get(umBeanCoder.getBeanTransferClass()).getBeanTransfer().pack(umBeanCoder, this);
     }
 
     public String toString() {
         StringBuilder var1 = new StringBuilder("UMEnvelope(");
-        boolean var2 = true;
+        boolean var2;
         var1.append("version:");
         if(this.version == null) {
             var1.append("null");
@@ -539,18 +541,18 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
         x.put(UMBeanTransfer_c.class, new UMEnvelope.b());
         x.put(UMBeanTransfer_d.class, new UMEnvelope.d());
         EnumMap var0 = new EnumMap(e_enum.class);
-        var0.put(e_enum.a, new a.a.a.a.b("version", (byte)1, new a.a.a.a.c((byte)11)));
-        var0.put(e_enum.b, new a.a.a.a.b("address", (byte)1, new a.a.a.a.c((byte)11)));
-        var0.put(e_enum.c, new a.a.a.a.b("signature", (byte)1, new a.a.a.a.c((byte)11)));
-        var0.put(e_enum.d, new a.a.a.a.b("serial_num", (byte)1, new a.a.a.a.c((byte)8)));
-        var0.put(e_enum.e, new a.a.a.a.b("ts_secs", (byte)1, new a.a.a.a.c((byte)8)));
-        var0.put(e_enum.f, new a.a.a.a.b("length", (byte)1, new a.a.a.a.c((byte)8)));
-        var0.put(e_enum.g, new a.a.a.a.b("entity", (byte)1, new a.a.a.a.c((byte)11, true)));
-        var0.put(e_enum.h, new a.a.a.a.b("guid", (byte)1, new a.a.a.a.c((byte)11)));
-        var0.put(e_enum.i, new a.a.a.a.b("checksum", (byte)1, new a.a.a.a.c((byte)11)));
-        var0.put(e_enum.j, new a.a.a.a.b("codex", (byte)2, new a.a.a.a.c((byte)8)));
+        var0.put(e_enum.a, new B_b("version", (byte)1, new C_c((byte)11)));
+        var0.put(e_enum.b, new B_b("address", (byte)1, new C_c((byte)11)));
+        var0.put(e_enum.c, new B_b("signature", (byte)1, new C_c((byte)11)));
+        var0.put(e_enum.d, new B_b("serial_num", (byte)1, new C_c((byte)8)));
+        var0.put(e_enum.e, new B_b("ts_secs", (byte)1, new C_c((byte)8)));
+        var0.put(e_enum.f, new B_b("length", (byte)1, new C_c((byte)8)));
+        var0.put(e_enum.g, new B_b("entity", (byte)1, new C_c((byte)11, true)));
+        var0.put(e_enum.h, new B_b("guid", (byte)1, new C_c((byte)11)));
+        var0.put(e_enum.i, new B_b("checksum", (byte)1, new C_c((byte)11)));
+        var0.put(e_enum.j, new B_b("codex", (byte)2, new C_c((byte)8)));
         k_map = Collections.unmodifiableMap(var0);
-        a.a.a.a.b b = new a.a.a.a.b(null,(byte)1,null);
+        B_b b = new B_b(null,(byte)1,null);
         b.a(UMEnvelope.class, k_map);
     }
 

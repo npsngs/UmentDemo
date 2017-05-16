@@ -15,7 +15,7 @@ import com.umeng.analytics.d.OptionSetter;
 import com.umeng.analytics.d.SessionHelper;
 import org.json.JSONObject;
 
-public class b implements OptionSetter {
+public class OptionSetter_b implements OptionSetter {
     private static final int a_int = 0;
     private static final int b = 1;
     private static final int c = 2;
@@ -25,11 +25,11 @@ public class b implements OptionSetter {
     private static final long g = 86400000L;
     private int defCon = 0;
     private final long i = 60000L;
-    private static b instance = null;
+    private static OptionSetter_b instance = null;
 
-    public static synchronized b a(Context context) {
+    public static synchronized OptionSetter_b a(Context context) {
         if(instance == null) {
-            instance = new b();
+            instance = new OptionSetter_b();
             int defCon = ImprintTool.getInstance(context).getOption().getDefCon(0);
             instance.setDefCon(defCon);
         }
@@ -37,7 +37,7 @@ public class b implements OptionSetter {
         return instance;
     }
 
-    private b() {
+    private OptionSetter_b() {
     }
 
     public void a(JSONObject jsonObject, Context context) {
@@ -116,11 +116,11 @@ public class b implements OptionSetter {
 
     }
 
-    public boolean d() {
+    public boolean isDiscardOnFail() {
         return this.defCon != 0;
     }
 
-    public void setOption(ImprintTool.Option var1) {
-        this.setDefCon(var1.getDefCon(0));
+    public void setOption(ImprintTool.Option option) {
+        this.setDefCon(option.getDefCon(0));
     }
 }

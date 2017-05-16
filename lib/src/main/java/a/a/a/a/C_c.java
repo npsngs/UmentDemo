@@ -7,24 +7,24 @@ package a.a.a.a;
 
 import java.io.Serializable;
 
-public class c implements Serializable {
+public class C_c implements Serializable {
     public final byte b;
     private final boolean a;
     private final String c;
     private final boolean d;
 
-    public c(byte var1, boolean var2) {
+    public C_c(byte var1, boolean var2) {
         this.b = var1;
         this.a = false;
         this.c = null;
         this.d = var2;
     }
 
-    public c(byte var1) {
+    public C_c(byte var1) {
         this(var1, false);
     }
 
-    public c(byte var1, String var2) {
+    public C_c(byte var1, String var2) {
         this.b = var1;
         this.a = true;
         this.c = var2;

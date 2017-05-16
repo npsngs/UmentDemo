@@ -7,6 +7,8 @@ package com.umeng.analytics.f;
 
 import a.a.a.UMBean;
 import a.a.a.UMField;
+import a.a.a.a.B_b;
+import a.a.a.a.C_c;
 import a.a.a.a_j;
 import a.a.a.UMException;
 import a.a.a.b.TField_c;
@@ -44,7 +46,7 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
     public long ts;
     public int version;
     private byte m;
-    public static final Map<e_enum, a.a.a.a.b> d;
+    public static final Map<e_enum, B_b> d;
 
     public IdSnapshot_c() {
         this.m = 0;
@@ -132,8 +134,8 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
         return this.version;
     }
 
-    public IdSnapshot_c a(int var1) {
-        this.version = var1;
+    public IdSnapshot_c setVersion(int version) {
+        this.version = version;
         this.c(true);
         return this;
     }
@@ -155,11 +157,11 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
     }
 
     public void unpackFrom(UMBeanCoder var1) throws UMException {
-        ((BeanTransferGetter)j.get(var1.getBeanTransferClass())).getBeanTransfer().pack(var1, this);
+        ((BeanTransferGetter)j.get(var1.getBeanTransferClass())).getBeanTransfer().unpack(var1, this);
     }
 
     public void packTo(UMBeanCoder var1) throws UMException {
-        ((BeanTransferGetter)j.get(var1.getBeanTransferClass())).getBeanTransfer().unpack(var1, this);
+        ((BeanTransferGetter)j.get(var1.getBeanTransferClass())).getBeanTransfer().pack(var1, this);
     }
 
     public String toString() {
@@ -218,11 +220,11 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
         j.put(UMBeanTransfer_c.class, new IdSnapshot_c.b());
         j.put(UMBeanTransfer_d.class, new IdSnapshot_c.d());
         EnumMap var0 = new EnumMap(e_enum.class);
-        var0.put(e_enum.a, new a.a.a.a.b("identity", (byte)1, new a.a.a.a.c((byte)11)));
-        var0.put(e_enum.b, new a.a.a.a.b("ts", (byte)1, new a.a.a.a.c((byte)10)));
-        var0.put(e_enum.c, new a.a.a.a.b("version", (byte)1, new a.a.a.a.c((byte)8)));
+        var0.put(e_enum.a, new B_b("identity", (byte)1, new C_c((byte)11)));
+        var0.put(e_enum.b, new B_b("ts", (byte)1, new C_c((byte)10)));
+        var0.put(e_enum.c, new B_b("version", (byte)1, new C_c((byte)8)));
         d = Collections.unmodifiableMap(var0);
-        a.a.a.a.b a = new a.a.a.a.b(null, (byte)1, null);
+        B_b a = new B_b(null, (byte)1, null);
         a.a(IdSnapshot_c.class, d);
     }
 

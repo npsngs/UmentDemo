@@ -6,7 +6,7 @@
 package a.a.a.a;
 import a.a.a.h;
 
-public class a extends c {
+public class a extends C_c {
     public final Class<? extends h> a;
 
     public a(byte var1, Class<? extends h> var2) {

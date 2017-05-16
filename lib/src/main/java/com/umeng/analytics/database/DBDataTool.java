@@ -252,43 +252,43 @@ public class DBDataTool {
 
     }
 
-    public JSONObject a() {
-        JSONObject var1 = new JSONObject();
+    public JSONObject selectAll() {
+        JSONObject ret = new JSONObject();
         JSONObject body = new JSONObject();
         this.selectFromSd(body);
-        this.b(body);
-        this.a(body);
+        this.selectFromER(body);
+        this.selectFromET(body);
 
         try {
             if(body.length() > 0) {
-                var1.put("body", body);
+                ret.put("body", body);
             }
         } catch (Throwable t) {
         }
 
-        return var1;
+        return ret;
     }
 
-    private void a(JSONObject var1) {
-        SQLiteDatabase var2 = null;
-        Cursor var3 = null;
+    private void selectFromET(JSONObject outJson) {
+        SQLiteDatabase database = null;
+        Cursor cursor = null;
 
         try {
-            var2 = DBUtil.getInstance(context).getWritableDatabase();
-            var2.beginTransaction();
+            database = DBUtil.getInstance(context).getWritableDatabase();
+            database.beginTransaction();
             String var4 = "select *  from __et";
-            var3 = var2.rawQuery(var4, (String[])null);
-            if(var3 != null) {
+            cursor = database.rawQuery(var4, (String[])null);
+            if(cursor != null) {
                 JSONObject var5 = null;
                 JSONArray var6 = null;
                 JSONObject var7 = new JSONObject();
                 JSONObject var8 = new JSONObject();
 
                 String var11;
-                while(var3.moveToNext()) {
-                    int var9 = var3.getInt(var3.getColumnIndex("__t"));
-                    String var10 = var3.getString(var3.getColumnIndex("__i"));
-                    var11 = var3.getString(var3.getColumnIndex("__s"));
+                while(cursor.moveToNext()) {
+                    int var9 = cursor.getInt(cursor.getColumnIndex("__t"));
+                    String var10 = cursor.getString(cursor.getColumnIndex("__i"));
+                    var11 = cursor.getString(cursor.getColumnIndex("__s"));
                     if("".equals(var10)) {
                         var10 = SessionHelper.getSessionID();
                     }
@@ -343,7 +343,7 @@ public class DBDataTool {
                     }
 
                     if(var19.length() > 0) {
-                        var1.put("ekv", var19);
+                        outJson.put("ekv", var19);
                     }
                 }
 
@@ -363,7 +363,7 @@ public class DBDataTool {
                     }
 
                     if(var19.length() > 0) {
-                        var1.put("gkv", var19);
+                        outJson.put("gkv", var19);
                     }
                 }
 
@@ -373,55 +373,55 @@ public class DBDataTool {
                 var8 = null;
             }
 
-            var2.setTransactionSuccessful();
+            database.setTransactionSuccessful();
         } catch (Throwable var17) {
             ;
         } finally {
-            if(var3 != null) {
-                var3.close();
+            if(cursor != null) {
+                cursor.close();
             }
 
-            var2.endTransaction();
+            database.endTransaction();
             DBUtil.getInstance(context).closeDB();
         }
 
     }
 
-    private void b(JSONObject var1) {
-        SQLiteDatabase var2 = null;
-        Cursor var3 = null;
+    private void selectFromER(JSONObject outJson) {
+        SQLiteDatabase database = null;
+        Cursor cursor = null;
 
         try {
-            var2 = DBUtil.getInstance(context).getWritableDatabase();
-            var2.beginTransaction();
+            database = DBUtil.getInstance(context).getWritableDatabase();
+            database.beginTransaction();
             String var4 = "select *  from __er";
-            var3 = var2.rawQuery(var4, (String[])null);
-            if(var3 != null) {
+            cursor = database.rawQuery(var4, (String[])null);
+            if(cursor != null) {
                 JSONArray var5 = new JSONArray();
 
-                while(var3.moveToNext()) {
-                    String var6 = var3.getString(var3.getColumnIndex("__a"));
+                while(cursor.moveToNext()) {
+                    String var6 = cursor.getString(cursor.getColumnIndex("__a"));
                     if(!TextUtils.isEmpty(var6)) {
                         var5.put(new JSONObject(this.b(var6)));
                     }
                 }
 
                 if(var5.length() > 0) {
-                    var1.put("error", var5);
+                    outJson.put("error", var5);
                 }
 
                 var5 = null;
             }
 
-            var2.setTransactionSuccessful();
+            database.setTransactionSuccessful();
         } catch (Throwable var10) {
             ;
         } finally {
-            if(var3 != null) {
-                var3.close();
+            if(cursor != null) {
+                cursor.close();
             }
 
-            var2.endTransaction();
+            database.endTransaction();
             DBUtil.getInstance(context).closeDB();
         }
 

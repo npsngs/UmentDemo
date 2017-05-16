@@ -46,7 +46,7 @@ public class Mobclick implements ExceptionHandler {
     private EventTracker eventTracker = null;
     private ExecuteReport executeReport = null;
     private ActivityObserver activityObserver = null;
-    private AggTool i = null;
+    private AggTool aggTool = null;
     private boolean isToolsInit = false;
     private boolean isDataLoaded = false;
     private boolean isInitActivityObserver = false;
@@ -71,14 +71,14 @@ public class Mobclick implements ExceptionHandler {
                 this.eventTracker = new EventTracker(this.context);
                 this.executeReport = ExecuteReport.getInstance(this.context);
                 this.isToolsInit = true;
-                if(this.i == null) {
-                    this.i = AggTool.getInstance(this.context);
+                if(this.aggTool == null) {
+                    this.aggTool = AggTool.getInstance(this.context);
                 }
 
                 if(!this.isDataLoaded) {
                     TaskExecutor.scheduleExecute(new SafeRunnable() {
                         public void safeRun() {
-                            Mobclick.this.i.loadAggData(new OpResult() {
+                            Mobclick.this.aggTool.loadAggData(new OpResult() {
                                 public void setResult(Object o, boolean var2) {
                                     Mobclick.this.isDataLoaded = true;
                                 }
@@ -134,7 +134,7 @@ public class Mobclick implements ExceptionHandler {
 
                 TaskExecutor.execute(new SafeRunnable() {
                     public void safeRun() {
-                        Mobclick.this.h(context.getApplicationContext());
+                        Mobclick.this.resumeSession(context.getApplicationContext());
                     }
                 });
             } catch (Exception e) {
@@ -159,11 +159,11 @@ public class Mobclick implements ExceptionHandler {
                 TaskExecutor.execute(new SafeRunnable() {
                     public void safeRun() {
                         Mobclick.this.saveData(context.getApplicationContext());
-                        Mobclick.this.i.f();
+                        Mobclick.this.aggTool.f();
                     }
                 });
             } catch (Exception e) {
-                if(ULog.isLogOn) {
+                if(ULog.isDebugMode) {
                     ULog.e("Exception occurred in Mobclick.onRause(). ", e);
                 }
             }
@@ -183,7 +183,7 @@ public class Mobclick implements ExceptionHandler {
 
             this.eventTracker.reportEvent(var2, var3);
         } catch (Exception var5) {
-            if(ULog.isLogOn) {
+            if(ULog.isDebugMode) {
                 ULog.e(var5);
             }
         }
@@ -206,7 +206,7 @@ public class Mobclick implements ExceptionHandler {
                     var3.put("context", contextStr);
                     DBDataTool.getInstance(this.context).insertToEr(SessionHelper.getSessionID(), var3.toString(), 2);
                 } catch (Exception e) {
-                    if(ULog.isLogOn) {
+                    if(ULog.isDebugMode) {
                         ULog.e(e);
                     }
                 }
@@ -220,19 +220,22 @@ public class Mobclick implements ExceptionHandler {
             try {
                 this.reportError(context, StringTool.readStrFromThrowable(throwable));
             } catch (Exception e) {
-                if(ULog.isLogOn) {
+                if(ULog.isDebugMode) {
                     ULog.e(e);
                 }
             }
         }
     }
 
-    private void h(Context context) {
-        this.sessionHelper.c(context);
+    private void resumeSession(Context context) {
+
+        this.sessionHelper.resumeSession(context);
+
+
+
         if(this.b != null) {
             this.b.a();
         }
-
     }
 
     private void saveData(Context context) {
@@ -266,7 +269,7 @@ public class Mobclick implements ExceptionHandler {
 
             this.eventTracker.isValidEventID(cklist, var3, var4);
         } catch (Exception e) {
-            if(ULog.isLogOn) {
+            if(ULog.isDebugMode) {
                 ULog.e(e);
             }
         }
@@ -280,9 +283,9 @@ public class Mobclick implements ExceptionHandler {
             }
 
             this.eventTracker.reportEvent(var2, label, var4, var6);
-        } catch (Exception var8) {
-            if(ULog.isLogOn) {
-                ULog.e(var8);
+        } catch (Exception e) {
+            if(ULog.isDebugMode) {
+                ULog.e(e);
             }
         }
 
@@ -296,7 +299,7 @@ public class Mobclick implements ExceptionHandler {
 
             this.eventTracker.reportEvent(var2, inputMap, var4);
         } catch (Exception var7) {
-            if(ULog.isLogOn) {
+            if(ULog.isDebugMode) {
                 ULog.e(var7);
             }
         }
@@ -312,10 +315,10 @@ public class Mobclick implements ExceptionHandler {
             this.pageTracker.leaveLastPage();
             this.saveData(context);
             SP_Util.getSp(context).edit().apply();
-            this.i.d();
-            i.a();
+            this.aggTool.d();
+            aggTool.a();
         } catch (Exception e) {
-            if(ULog.isLogOn) {
+            if(ULog.isDebugMode) {
                 e.printStackTrace();
             }
         }
@@ -334,15 +337,15 @@ public class Mobclick implements ExceptionHandler {
                     DBDataTool.getInstance(this.context).insertToEr(SessionHelper.getSessionID(), jsonObject.toString(), 1);
                 }
 
-                this.i.e();
+                this.aggTool.e();
                 this.activityObserver.a(this.context);
                 this.saveData(this.context);
                 SP_Util.getSp(this.context).edit().apply();
             }
 
-            i.a();
+            aggTool.a();
         } catch (Exception e) {
-            if(ULog.isLogOn) {
+            if(ULog.isDebugMode) {
                 ULog.e("Exception in onAppCrash", e);
             }
         }
@@ -356,7 +359,7 @@ public class Mobclick implements ExceptionHandler {
                     String[] au = AU.getAU(Mobclick.this.context);
                     if(au == null || !au_p.equals(au[0]) || !au_u.equals(au[1])) {
                         Mobclick.this.executeReport.getPreReport(Mobclick.this.context).saveData(Mobclick.this.context);
-                        boolean var2x = Mobclick.this.getSessionHelper().e(Mobclick.this.context);
+                        boolean var2x = Mobclick.this.getSessionHelper().pause(Mobclick.this.context);
                         ExecuteReport.getInstance(Mobclick.this.context).packData();
                         if(var2x) {
                             Mobclick.this.getSessionHelper().saveToCache(Mobclick.this.context);
@@ -366,7 +369,7 @@ public class Mobclick implements ExceptionHandler {
                 }
             });
         } catch (Exception e) {
-            if(ULog.isLogOn) {
+            if(ULog.isDebugMode) {
                 ULog.e(" Excepthon  in  onProfileSignIn", e);
             }
         }
@@ -380,7 +383,7 @@ public class Mobclick implements ExceptionHandler {
                     String[] var1 = AU.getAU(Mobclick.this.context);
                     if(var1 != null && !TextUtils.isEmpty(var1[0]) && !TextUtils.isEmpty(var1[1])) {
                         Mobclick.this.executeReport.getPreReport(Mobclick.this.context).saveData(Mobclick.this.context);
-                        boolean var2 = Mobclick.this.getSessionHelper().e(Mobclick.this.context);
+                        boolean var2 = Mobclick.this.getSessionHelper().pause(Mobclick.this.context);
                         ExecuteReport.getInstance(Mobclick.this.context).packData();
                         if(var2) {
                             Mobclick.this.getSessionHelper().saveToCache(Mobclick.this.context);
@@ -392,7 +395,7 @@ public class Mobclick implements ExceptionHandler {
                 }
             });
         } catch (Exception e) {
-            if(ULog.isLogOn) {
+            if(ULog.isDebugMode) {
                 ULog.e(" Excepthon  in  onProfileSignOff", e);
             }
         }
@@ -421,7 +424,7 @@ public class Mobclick implements ExceptionHandler {
     }
 
     void setDebugMode(boolean isDebugMode) {
-        ULog.isLogOn = isDebugMode;
+        ULog.isDebugMode = isDebugMode;
     }
 
     void enableEncrypt(boolean encrypt) {

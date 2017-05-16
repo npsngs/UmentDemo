@@ -6,12 +6,16 @@
 package com.umeng.analytics.f;
 
 import a.a.a.UMField;
+import a.a.a.a.B_b;
+import a.a.a.a.C_c;
+import a.a.a.a.E_e_a;
 import a.a.a.a_j;
+import a.a.a.b.E_e;
 import a.a.a.b.TField_c;
 import a.a.a.b.UMBeanCoderEngine;
 import a.a.a.UMBean;
 import a.a.a.UMException;
-import a.a.a.a.g;
+import a.a.a.a.G_g_a;
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMBeanCoder_b;
 import a.a.a.b.UMMsgException;
@@ -46,7 +50,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
     public int version;
     public String checksum;
     private byte l;
-    public static final Map<e_enum, a.a.a.a.b> d;
+    public static final Map<e_enum, B_b> d;
 
     public Imprint() {
         this.l = 0;
@@ -182,11 +186,11 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
     }
 
     public void unpackFrom(UMBeanCoder umBeanCoder) throws UMException {
-        j.get(umBeanCoder.getBeanTransferClass()).getBeanTransfer().pack(umBeanCoder, this);
+        j.get(umBeanCoder.getBeanTransferClass()).getBeanTransfer().unpack(umBeanCoder, this);
     }
 
-    public void packTo(UMBeanCoder var1) throws UMException {
-        j.get(var1.getBeanTransferClass()).getBeanTransfer().unpack(var1, this);
+    public void packTo(UMBeanCoder umBeanCoder) throws UMException {
+        j.get(umBeanCoder.getBeanTransferClass()).getBeanTransfer().pack(umBeanCoder, this);
     }
 
     public String toString() {
@@ -250,12 +254,12 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
     static {
         j.put(UMBeanTransfer_c.class, new Imprint.b());
         j.put(UMBeanTransfer_d.class, new Imprint.d());
-        EnumMap var0 = new EnumMap(e_enum.class);
-        var0.put(e_enum.PROPERTY, new a.a.a.a.b("property", (byte)1, new a.a.a.a.e((byte)13, new a.a.a.a.c((byte)11), new g((byte)12, ImprintValue.class))));
-        var0.put(e_enum.VERSION, new a.a.a.a.b("version", (byte)1, new a.a.a.a.c((byte)8)));
-        var0.put(e_enum.CHECKSUM, new a.a.a.a.b("checksum", (byte)1, new a.a.a.a.c((byte)11)));
-        d = Collections.unmodifiableMap(var0);
-        a.a.a.a.b b = new a.a.a.a.b(null, (byte) 1, null);
+        EnumMap enumMap = new EnumMap(e_enum.class);
+        enumMap.put(e_enum.PROPERTY, new B_b("property", (byte)1, new E_e_a((byte)13, new C_c((byte)11), new G_g_a((byte)12, ImprintValue.class))));
+        enumMap.put(e_enum.VERSION, new B_b("version", (byte)1, new C_c((byte)8)));
+        enumMap.put(e_enum.CHECKSUM, new B_b("checksum", (byte)1, new C_c((byte)11)));
+        d = Collections.unmodifiableMap(enumMap);
+        B_b b = new B_b(null, (byte) 1, null);
         b.a(Imprint.class, d);
     }
 
@@ -280,7 +284,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
 
         public void pack(UMBeanCoder var1, Imprint var2) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
-            a.a.a.b.e var4 = new a.a.a.b.e((byte)11, (byte)12, var3.readSignedInt());
+            E_e var4 = new E_e((byte)11, (byte)12, var3.readSignedInt());
             var2.property = new HashMap(2 * var4.size);
 
             for(int var5 = 0; var5 < var4.size; ++var5) {
@@ -333,7 +337,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
                             break;
                         }
 
-                        a.a.a.b.e var4 = umBeanCoder.n();
+                        E_e var4 = umBeanCoder.n();
                         imprint.property = new HashMap(2 * var4.size);
 
                         for(int i = 0; i < var4.size; ++i) {
@@ -375,7 +379,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
             var1.startPack(Imprint.f);
             if(var2.property != null) {
                 var1.writeTField(Imprint.g);
-                var1.a(new a.a.a.b.e((byte)11, (byte)12, var2.property.size()));
+                var1.a(new E_e((byte)11, (byte)12, var2.property.size()));
                 Iterator var3 = var2.property.entrySet().iterator();
 
                 while(var3.hasNext()) {

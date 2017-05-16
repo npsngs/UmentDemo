@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import org.json.JSONObject;
 
+import a.a.a.UMBeanUnpacker;
 import a.a.a.UMBeanPacker;
 import a.a.a.b.UMBeanCoder_a;
 
@@ -43,7 +44,7 @@ public class LogReportor {
     private HttpSender httpSender;
     private JSONObject jsonLog;
     private boolean isCodex = false;
-    private boolean l;
+    private boolean isDiscardOnFail;
 
     public LogReportor(Context context, RequestTracker requestTracker) {
         this.uMengItCache = UMengItCache.getInstance(context);
@@ -62,15 +63,15 @@ public class LogReportor {
         this.isCodex = isCodex;
     }
 
-    public void b(boolean var1) {
-        this.l = var1;
+    public void setDiscardOnFail(boolean isDiscardOnFail) {
+        this.isDiscardOnFail = isDiscardOnFail;
     }
 
     public void setOptionSetter(OptionSetter optionSetter) {
         this.imprintTool.setOptionSetter(optionSetter);
     }
 
-    public void a() {
+    public void report() {
         try {
             if(this.jsonLog != null) {
                 this.reportJson();
@@ -84,31 +85,31 @@ public class LogReportor {
             if(SystemUtil.isCurrentWifiConnect(context)) {
                 SharedPreferences sp = SP_Util.getSp(context);
                 if(sp != null) {
-                    String var2 = sp.getString("uopdta", "");
-                    long var3 = CalendarUtil.getDurationDays(System.currentTimeMillis());
-                    if(TextUtils.isEmpty(var2)) {
+                    String uopdta = sp.getString("uopdta", "");
+                    long dta = CalendarUtil.getDurationDays(System.currentTimeMillis());
+                    if(TextUtils.isEmpty(uopdta)) {
                         long var5 = sp.getLong("uopdte", -1L);
-                        int var7 = sp.getInt("uopcnt", 0);
+                        int uopcnt = sp.getInt("uopcnt", 0);
                         Editor editor;
                         if(var5 == -1L) {
                             editor = sp.edit();
-                            ++var7;
-                            editor.putInt("uopcnt", var7).commit();
+                            ++uopcnt;
+                            editor.putInt("uopcnt", uopcnt).apply();
                             this.httpSender.send();
-                        } else if(var3 != var5) {
+                        } else if(dta != var5) {
                             byte var10 = 0;
                             editor = sp.edit();
-                            var7 = var10 + 1;
-                            editor.putInt("uopcnt", var7).commit();
+                            uopcnt = var10 + 1;
+                            editor.putInt("uopcnt", uopcnt).apply();
                             this.httpSender.send();
-                        } else if(var7 < 2) {
+                        } else if(uopcnt < 2) {
                             editor = sp.edit();
-                            ++var7;
-                            editor.putInt("uopcnt", var7).commit();
+                            ++uopcnt;
+                            editor.putInt("uopcnt", uopcnt).apply();
                             this.httpSender.send();
                         }
 
-                        sp.edit().putLong("uopdte", var3).commit();
+                        sp.edit().putLong("uopdte", dta).apply();
                     }
                 } else {
                     this.httpSender.send();
@@ -144,7 +145,7 @@ public class LogReportor {
                         resp_code = LogReportor.this.setRequestCallback(respData);
                     }
 
-                    return LogReportor.this.l?true:resp_code != 1;
+                    return LogReportor.this.isDiscardOnFail ?true:resp_code != 1;
                 } catch (Exception e) {
                     return false;
                 }
@@ -158,7 +159,7 @@ public class LogReportor {
 
     private void reportJson() {
         try {
-            this.uMengItCache.a();
+            this.uMengItCache.invalidate();
 
             try {
                 IdTracking idTracking = this.uMengItCache.getIdTracking();
@@ -200,7 +201,7 @@ public class LogReportor {
 
             switch(resp_code) {
                 case 1:
-                    if(!this.l) {
+                    if(!this.isDiscardOnFail) {
                         CacheTool.getInstance(context).saveToCache(enveloped_data);
                     }
                     break;
@@ -218,16 +219,16 @@ public class LogReportor {
 
     private int setRequestCallback(byte[] respData) {
         Response response = new Response();
-        a.a.a.g var3 = new a.a.a.g(new UMBeanCoder_a.a_inner());
+        UMBeanUnpacker beanUnpacker = new UMBeanUnpacker(new UMBeanCoder_a.a_inner());
 
         try {
-            var3.a(response, respData);
+            beanUnpacker.unpack(response, respData);
             if(response.respCode == 1) {
                 this.imprintTool.b(response.getImprint());
                 this.imprintTool.writeToCache();
             }
 
-            ULog.c("setRequestCallback log:" + response.f());
+            ULog.c("setRequestCallback log:" + response.getMsg());
         } catch (Throwable t) {
         }
 

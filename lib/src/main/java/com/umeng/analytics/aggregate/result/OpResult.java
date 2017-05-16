@@ -11,7 +11,7 @@ public class OpResult implements OnResult {
     public OpResult() {
     }
 
-    public void setResult(Object var1, boolean isSuccess) {
+    public void setResult(Object o, boolean isSuccess) {
         this.isSuccess = isSuccess;
     }
 

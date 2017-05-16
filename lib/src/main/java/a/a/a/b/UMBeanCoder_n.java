@@ -68,11 +68,11 @@ public final class UMBeanCoder_n extends UMBeanCoder_b {
         return var2;
     }
 
-    public static class a implements a.a.a.b.j {
-        public a() {
+    public static class UMBeanCoder_n_Inner implements UMBeanCoderBuilder {
+        public UMBeanCoder_n_Inner() {
         }
 
-        public UMBeanCoder a(IOStream var1) {
+        public UMBeanCoder build(IOStream var1) {
             return new UMBeanCoder_n(var1);
         }
     }

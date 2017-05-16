@@ -18,7 +18,7 @@ public final class l {
         this.b = var2;
     }
 
-    public l(d var1) {
+    public l(D_d var1) {
         this(var1.a, var1.b);
     }
 }

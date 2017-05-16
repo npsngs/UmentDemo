@@ -21,9 +21,9 @@ public class Uop extends UMProperty {
 
     public String getValue() {
         String var1 = "";
-        SharedPreferences var2 = SP_Util.getSp(this.b);
-        if(var2 != null) {
-            var1 = var2.getString("uopdta", "");
+        SharedPreferences sp = SP_Util.getSp(this.b);
+        if(sp != null) {
+            var1 = sp.getString("uopdta", "");
         }
 
         return var1;

@@ -5,6 +5,7 @@
 
 package com.umeng.analytics.c;
 
+import a.a.a.UMBeanUnpacker;
 import a.a.a.UMBeanPacker;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -39,6 +40,7 @@ public class UMengItCache {
         this.h.b();
     }
 
+
     public static synchronized UMengItCache getInstance(Context context) {
         if(instance == null) {
             instance = new UMengItCache(context);
@@ -68,6 +70,7 @@ public class UMengItCache {
         return instance;
     }
 
+
     public boolean addProperty(UMProperty property) {
         return this.h.a(property.getName())?this.properties.add(property):false;
     }
@@ -76,7 +79,7 @@ public class UMengItCache {
         this.interval = interval;
     }
 
-    public void a() {
+    public void invalidate() {
         long currentTimeMillis = System.currentTimeMillis();
         if(currentTimeMillis - this.lastTimeInMills >= this.interval) {
             boolean var3 = false;
@@ -204,7 +207,7 @@ public class UMengItCache {
                 fis = new FileInputStream(this.file);
                 byte[] data = EncodeUtil.readData(fis);
                 IdTracking idTracking = new IdTracking();
-                (new a.a.a.g()).a(idTracking, data);
+                (new UMBeanUnpacker()).unpack(idTracking, data);
                 return idTracking;
             } catch (Exception e) {
                 e.printStackTrace();

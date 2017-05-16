@@ -15,7 +15,7 @@ import com.umeng.analytics.d.RequestTracker;
 import com.umeng.tool.CacheTool;
 import com.umeng.tool.StringTool;
 
-public class c implements OptionSetter {
+public class OptionSetter_c implements OptionSetter {
     private final long a = 1296000000L;
     private final long b = 129600000L;
     private final int c = 1800000;
@@ -27,18 +27,18 @@ public class c implements OptionSetter {
     private long i = 0L;
     private long j = 0L;
     private Context k;
-    private static c l = null;
+    private static OptionSetter_c l = null;
 
-    public static synchronized c a(Context var0, RequestTracker var1) {
+    public static synchronized OptionSetter_c a(Context var0, RequestTracker var1) {
         if(l == null) {
-            l = new c(var0, var1);
+            l = new OptionSetter_c(var0, var1);
             l.setOption(ImprintTool.getInstance(var0).getOption());
         }
 
         return l;
     }
 
-    private c(Context var1, RequestTracker var2) {
+    private OptionSetter_c(Context var1, RequestTracker var2) {
         this.k = var1;
         this.e = CacheTool.getInstance(var1);
         this.f = var2;

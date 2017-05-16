@@ -6,7 +6,7 @@
 package a.a.a.b;
 
 import a.a.a.UMException;
-import a.a.a.b.UMBeanCoder_b.a;
+import a.a.a.b.UMBeanCoder_b.UMBeanCoder_b_Inner;
 
 public class UMBeanCoderEngine {
     private static int skip = Integer.MAX_VALUE;
@@ -66,7 +66,7 @@ public class UMBeanCoderEngine {
                         beanCoder.m();
                     }
                 case 13:
-                    e var3 = beanCoder.n();
+                    E_e var3 = beanCoder.n();
 
                     for(int var8 = 0; var8 < var3.size; ++var8) {
                         read(beanCoder, var3.a, skip - 1);
@@ -85,7 +85,7 @@ public class UMBeanCoderEngine {
                     beanCoder.s();
                     break;
                 case 15:
-                    d var5 = beanCoder.p();
+                    D_d var5 = beanCoder.p();
 
                     for(int i = 0; i < var5.b; ++i) {
                         read(beanCoder, var5.a, skip - 1);
@@ -97,7 +97,7 @@ public class UMBeanCoderEngine {
         }
     }
 
-    public static a.a.a.b.j read(byte[] var0, a.a.a.b.j var1) {
-        return var0[0] > 16?new a():(var0.length > 1 && (var0[1] & 128) != 0?new a():var1);
+    public static UMBeanCoderBuilder read(byte[] var0, UMBeanCoderBuilder coderBuilder) {
+        return var0[0] > 16?new UMBeanCoder_b_Inner():(var0.length > 1 && (var0[1] & 128) != 0?new UMBeanCoder_b_Inner():coderBuilder);
     }
 }

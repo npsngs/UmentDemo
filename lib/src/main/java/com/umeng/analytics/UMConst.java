@@ -23,7 +23,7 @@ public class UMConst {
     public static final int o = 60;
     public static final int p = 360;
     public static final String q = "https://uop.umeng.com";
-    public static final String r = "uopdta";
+    public static final String uopdta = "uopdta";
     public static final String s = "uopdte";
     public static final String t = "uopcnt";
     public static final String u = "__ag_of";

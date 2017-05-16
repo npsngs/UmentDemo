@@ -26,7 +26,7 @@ public class SessionHelper {
     public SessionHelper() {
     }
 
-    public boolean a(Context context) {
+    public boolean commitSession(Context context) {
         SharedPreferences sp = SP_Util.getSp(context);
         String sessionId = sp.getString("session_id", null);
         if(sessionId == null) {
@@ -34,11 +34,10 @@ public class SessionHelper {
         } else {
             long sessionStartTime = sp.getLong("session_start_time", 0L);
             long sessionEndTime = sp.getLong("session_end_time", 0L);
-            long sessionLastTime = 0L;
+            long sessionLastTime;
             if(sessionEndTime != 0L) {
                 sessionLastTime = sessionEndTime - sessionStartTime;
                 if(Math.abs(sessionLastTime) > 86400000L) {
-                    sessionLastTime = 0L;
                 }
             }
 
@@ -93,7 +92,7 @@ public class SessionHelper {
         editor.apply();
     }
 
-    public String getSessionId(Context context) {
+    public String buildSessionId(Context context) {
         String deviceId = SystemUtil.getDeviceId(context);
         String appkey = AnalyticsConfig.getAppkey(context);
         long currentTimeMillis = System.currentTimeMillis();
@@ -107,11 +106,11 @@ public class SessionHelper {
         }
     }
 
-    public void c(Context context) {
+    public void resumeSession(Context context) {
         SessionHelper.context = context;
         SharedPreferences sp = SP_Util.getSp(context);
         if(sp != null) {
-            String var3;
+            String session;
             Editor edit = sp.edit();
             int lastVersionCode = sp.getInt("versioncode", 0);
             int versionCode = Integer.parseInt(SystemUtil.getVersionCode(SessionHelper.context));
@@ -124,23 +123,23 @@ public class SessionHelper {
                 }
 
                 if(getSessionID(context) == null) {
-                    this.a(context, sp);
+                    this.beginSession(context, sp);
                 }
 
-                this.e(SessionHelper.context);
+                this.pause(SessionHelper.context);
                 ExecuteReport.getInstance(SessionHelper.context).packData();
                 this.saveToCache(SessionHelper.context);
                 ExecuteReport.getInstance(SessionHelper.context).report();
             } else {
-                if(this.b(sp)) {
-                    var3 = this.a(context, sp);
-                    ULog.c("Start new session: " + var3);
+                if(this.hasPauseLast(sp)) {
+                    session = this.beginSession(context, sp);
+                    ULog.c("Start new session: " + session);
                 } else {
-                    var3 = sp.getString("session_id", (String)null);
+                    session = sp.getString("session_id", null);
                     edit.putLong("a_start_time", System.currentTimeMillis());
                     edit.putLong("a_end_time", 0L);
                     edit.commit();
-                    ULog.c("Extend current session: " + var3);
+                    ULog.c("Extend current session: " + session);
                 }
 
             }
@@ -171,21 +170,21 @@ public class SessionHelper {
         }
     }
 
-    private boolean b(SharedPreferences var1) {
-        long var2 = var1.getLong("a_start_time", 0L);
-        long var4 = var1.getLong("a_end_time", 0L);
-        long var6 = System.currentTimeMillis();
-        if(var2 != 0L && var6 - var2 < AnalyticsConfig.kContinueSessionMillis) {
+    private boolean hasPauseLast(SharedPreferences sp) {
+        long start_time = sp.getLong("a_start_time", 0L);
+        long end_time = sp.getLong("a_end_time", 0L);
+        long currentTimeMillis = System.currentTimeMillis();
+        if(start_time != 0L && currentTimeMillis - start_time < AnalyticsConfig.kContinueSessionMillis) {
             ULog.e("onResume called before onPause");
             return false;
         } else {
-            return var6 - var4 > AnalyticsConfig.kContinueSessionMillis;
+            return currentTimeMillis - end_time > AnalyticsConfig.kContinueSessionMillis;
         }
     }
 
-    private String a(Context context, SharedPreferences sharedPreferences) {
+    private String beginSession(Context context, SharedPreferences sp) {
         ExecuteReport executeReport = ExecuteReport.getInstance(context);
-        String sessionId = this.getSessionId(context);
+        String sessionId = this.buildSessionId(context);
         long currentTimeMillis = System.currentTimeMillis();
 
         try {
@@ -195,21 +194,21 @@ public class SessionHelper {
         } catch (Throwable t) {
         }
 
-        this.a(context);
-        Editor var9 = sharedPreferences.edit();
-        var9.putString("session_id", sessionId);
-        var9.putLong("session_start_time", System.currentTimeMillis());
-        var9.putLong("session_end_time", 0L);
-        var9.putLong("a_start_time", currentTimeMillis);
-        var9.putLong("a_end_time", 0L);
-        var9.putInt("versioncode", Integer.parseInt(SystemUtil.getVersionCode(context)));
-        var9.putString("versionname", SystemUtil.getVersionName(context));
-        var9.apply();
+        this.commitSession(context);
+        Editor editor = sp.edit();
+        editor.putString("session_id", sessionId);
+        editor.putLong("session_start_time", System.currentTimeMillis());
+        editor.putLong("session_end_time", 0L);
+        editor.putLong("a_start_time", currentTimeMillis);
+        editor.putLong("a_end_time", 0L);
+        editor.putInt("versioncode", Integer.parseInt(SystemUtil.getVersionCode(context)));
+        editor.putString("versionname", SystemUtil.getVersionName(context));
+        editor.apply();
         executeReport.report(Boolean.valueOf(true));
         return sessionId;
     }
 
-    public boolean e(Context context) {
+    public boolean pause(Context context) {
         boolean var2 = false;
         SharedPreferences sp = SP_Util.getSp(context);
         if(sp == null) {
@@ -226,7 +225,7 @@ public class SessionHelper {
                     this.onPause(context);
                 }
 
-                this.a(context);
+                this.commitSession(context);
                 return var2;
             }
         }
@@ -235,7 +234,7 @@ public class SessionHelper {
     public void saveToCache(Context context) {
         SharedPreferences sp = SP_Util.getSp(context);
         if(sp != null) {
-            String sessionId = this.getSessionId(context);
+            String sessionId = this.buildSessionId(context);
             Editor editor = sp.edit();
             long currentTimeMillis = System.currentTimeMillis();
             editor.putString("session_id", sessionId);

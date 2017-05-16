@@ -7,6 +7,7 @@ package com.umeng.tool;
 
 import android.content.Context;
 import com.umeng.analytics.d.RequestTracker;
+import com.umeng.analytics.e.OptionSetter_b;
 
 public class j {
     public static final int a_int = 0;
@@ -22,7 +23,7 @@ public class j {
     }
 
     public static boolean a(int var0) {
-        boolean var1 = false;
+        boolean var1;
         switch(var0) {
             case 0:
             case 1:
@@ -42,120 +43,120 @@ public class j {
         return var1;
     }
 
-    public static class a extends h {
+    public static class UMPolicy_a extends UMPolicy {
         private final long a = 15000L;
-        private RequestTracker b;
+        private RequestTracker requestTracker;
 
-        public a(RequestTracker var1) {
-            this.b = var1;
+        public UMPolicy_a(RequestTracker requestTracker) {
+            this.requestTracker = requestTracker;
         }
 
-        public boolean a(boolean var1) {
-            return System.currentTimeMillis() - this.b.lastRequestTime >= 15000L;
-        }
-    }
-
-    public static class j_inner extends h {
-        private RequestTracker b;
-
-        public j_inner(RequestTracker var1) {
-            this.b = var1;
-        }
-
-        public boolean a(boolean var1) {
-            return System.currentTimeMillis() - this.b.lastRequestTime >= 10800000L;
+        public boolean canReport(boolean var1) {
+            return System.currentTimeMillis() - this.requestTracker.lastRequestTime >= 15000L;
         }
     }
 
-    public static class c extends h {
-        private long a;
-        private long b = 0L;
+    public static class UMPolicy_j extends UMPolicy {
+        private RequestTracker requestTracker;
 
-        public c(int var1) {
-            this.a = (long)var1;
-            this.b = System.currentTimeMillis();
+        public UMPolicy_j(RequestTracker requestTracker) {
+            this.requestTracker = requestTracker;
         }
 
-        public boolean a(boolean var1) {
-            return System.currentTimeMillis() - this.b >= this.a;
-        }
-
-        public boolean a() {
-            return System.currentTimeMillis() - this.b < this.a;
+        public boolean canReport(boolean var1) {
+            return System.currentTimeMillis() - this.requestTracker.lastRequestTime >= 10800000L;
         }
     }
 
-    public static class b extends h {
-        private com.umeng.analytics.e.b a;
-        private RequestTracker b;
+    public static class UMPolicy_c extends UMPolicy {
+        private long maxInterval;
+        private long lastTime = 0L;
 
-        public b(RequestTracker var1, com.umeng.analytics.e.b var2) {
-            this.b = var1;
-            this.a = var2;
+        public UMPolicy_c(int interval) {
+            this.maxInterval = (long)interval;
+            this.lastTime = System.currentTimeMillis();
         }
 
-        public boolean a(boolean var1) {
+        public boolean canReport(boolean var1) {
+            return System.currentTimeMillis() - this.lastTime >= this.maxInterval;
+        }
+
+        public boolean canDiscard() {
+            return System.currentTimeMillis() - this.lastTime < this.maxInterval;
+        }
+    }
+
+    public static class UMPolicy_b extends UMPolicy {
+        private OptionSetter_b optionSetter_b;
+        private RequestTracker requestTracker;
+
+        public UMPolicy_b(RequestTracker var1, OptionSetter_b var2) {
+            this.requestTracker = var1;
+            this.optionSetter_b = var2;
+        }
+
+        public boolean canReport(boolean var1) {
             long var2 = System.currentTimeMillis();
-            long var4 = this.a.b();
-            return var2 - this.b.lastRequestTime >= var4;
+            long var4 = this.optionSetter_b.b();
+            return var2 - this.requestTracker.lastRequestTime >= var4;
         }
 
-        public boolean a() {
-            return this.a.d();
+        public boolean canDiscard() {
+            return this.optionSetter_b.isDiscardOnFail();
         }
     }
 
-    public static class i extends h {
+    public static class UMPolicy_i extends UMPolicy {
         private Context context = null;
 
-        public i(Context var1) {
-            this.context = var1;
+        public UMPolicy_i(Context context) {
+            this.context = context;
         }
 
-        public boolean a(boolean var1) {
+        public boolean canReport(boolean var1) {
             return SystemUtil.isCurrentWifiConnect(this.context);
         }
     }
 
-    public static class f extends h {
-        private long a = 86400000L;
-        private RequestTracker b;
+    public static class UMPolicy_f extends UMPolicy {
+        private long maxInterval = 86400000L;
+        private RequestTracker requestTracker;
 
-        public f(RequestTracker var1) {
-            this.b = var1;
+        public UMPolicy_f(RequestTracker requestTracker) {
+            this.requestTracker = requestTracker;
         }
 
-        public boolean a(boolean var1) {
-            return System.currentTimeMillis() - this.b.lastRequestTime >= this.a;
+        public boolean canReport(boolean var1) {
+            return System.currentTimeMillis() - this.requestTracker.lastRequestTime >= this.maxInterval;
         }
     }
 
-    public static class e extends h {
+    public static class UMPolicy_e extends UMPolicy {
         private static long a = 90000L;
         private static long b = 86400000L;
-        private long c;
-        private RequestTracker d;
+        private long maxInterval;
+        private RequestTracker requestTracker;
 
-        public e(RequestTracker var1, long var2) {
-            this.d = var1;
-            this.a(var2);
+        public UMPolicy_e(RequestTracker var1, long var2) {
+            this.requestTracker = var1;
+            this.setMaxInterval(var2);
         }
 
-        public boolean a(boolean var1) {
-            return System.currentTimeMillis() - this.d.lastRequestTime >= this.c;
+        public boolean canReport(boolean var1) {
+            return System.currentTimeMillis() - this.requestTracker.lastRequestTime >= this.maxInterval;
         }
 
-        public void a(long var1) {
-            if(var1 >= a && var1 <= b) {
-                this.c = var1;
+        public void setMaxInterval(long interval) {
+            if(interval >= a && interval <= b) {
+                this.maxInterval = interval;
             } else {
-                this.c = a;
+                this.maxInterval = a;
             }
 
         }
 
-        public long b() {
-            return this.c;
+        public long getMaxInterval() {
+            return this.maxInterval;
         }
 
         public static boolean a(int var0) {
@@ -163,33 +164,33 @@ public class j {
         }
     }
 
-    public static class d extends h {
-        public d() {
+    public static class UMPolicy_d extends UMPolicy {
+        public UMPolicy_d() {
         }
 
-        public boolean a(boolean var1) {
+        public boolean canReport(boolean var1) {
             return var1;
         }
     }
 
-    public static class g extends h {
-        public g() {
+    public static class UMPolicy_g extends UMPolicy {
+        public UMPolicy_g() {
         }
 
-        public boolean a(boolean var1) {
+        public boolean canReport(boolean var1) {
             return true;
         }
     }
 
-    public static class h {
-        public h() {
+    public static class UMPolicy {
+        public UMPolicy() {
         }
 
-        public boolean a(boolean var1) {
+        public boolean canReport(boolean var1) {
             return true;
         }
 
-        public boolean a() {
+        public boolean canDiscard() {
             return true;
         }
     }

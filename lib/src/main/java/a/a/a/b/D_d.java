@@ -5,15 +5,15 @@
 
 package a.a.a.b;
 
-public final class d {
+public final class D_d {
     public final byte a;
     public final int b;
 
-    public d() {
+    public D_d() {
         this((byte)0, (short)0);
     }
 
-    public d(byte var1, int var2) {
+    public D_d(byte var1, int var2) {
         this.a = var1;
         this.b = var2;
     }

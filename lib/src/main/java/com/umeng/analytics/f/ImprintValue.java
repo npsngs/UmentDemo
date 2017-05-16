@@ -6,6 +6,8 @@
 package com.umeng.analytics.f;
 
 import a.a.a.UMField;
+import a.a.a.a.B_b;
+import a.a.a.a.C_c;
 import a.a.a.a_j;
 import a.a.a.b.TField_c;
 import a.a.a.b.UMBeanCoderEngine;
@@ -46,7 +48,7 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
     public String guid;
     private byte l;
     private e_enum[] m;
-    public static final Map<e_enum, a.a.a.a.b> d;
+    public static final Map<e_enum, B_b> d;
 
     public ImprintValue() {
         this.l = 0;
@@ -86,7 +88,7 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
         this.guid = null;
     }
 
-    public String c() {
+    public String getValue() {
         return this.value;
     }
 
@@ -161,11 +163,11 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
     }
 
     public void unpackFrom(UMBeanCoder var1) throws UMException {
-        ((BeanTransferGetter)j.get(var1.getBeanTransferClass())).getBeanTransfer().pack(var1, this);
+        ((BeanTransferGetter)j.get(var1.getBeanTransferClass())).getBeanTransfer().unpack(var1, this);
     }
 
     public void packTo(UMBeanCoder var1) throws UMException {
-        ((BeanTransferGetter)j.get(var1.getBeanTransferClass())).getBeanTransfer().unpack(var1, this);
+        ((BeanTransferGetter)j.get(var1.getBeanTransferClass())).getBeanTransfer().pack(var1, this);
     }
 
     public String toString() {
@@ -231,11 +233,11 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
         j.put(UMBeanTransfer_c.class, new ImprintValue.b());
         j.put(UMBeanTransfer_d.class, new ImprintValue.d());
         EnumMap var0 = new EnumMap(e_enum.class);
-        var0.put(e_enum.a, new a.a.a.a.b("value", (byte)2, new a.a.a.a.c((byte)11)));
-        var0.put(e_enum.b, new a.a.a.a.b("ts", (byte)1, new a.a.a.a.c((byte)10)));
-        var0.put(e_enum.c, new a.a.a.a.b("guid", (byte)1, new a.a.a.a.c((byte)11)));
+        var0.put(e_enum.a, new B_b("value", (byte)2, new C_c((byte)11)));
+        var0.put(e_enum.b, new B_b("ts", (byte)1, new C_c((byte)10)));
+        var0.put(e_enum.c, new B_b("guid", (byte)1, new C_c((byte)11)));
         d = Collections.unmodifiableMap(var0);
-        a.a.a.a.b b = new a.a.a.a.b(null, (byte)1, null);
+        B_b b = new B_b(null, (byte)1, null);
         b.a(ImprintValue.class, d);
     }
 

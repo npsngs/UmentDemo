@@ -5,12 +5,13 @@
 
 package com.umeng.analytics.c;
 
-import a.a.a.g;
+import a.a.a.UMBeanUnpacker;
 import a.a.a.UMBeanPacker;
 import android.content.Context;
 import android.text.TextUtils;
 
 import com.umeng.analytics.d.OptionSetter;
+import com.umeng.analytics.e.OptionSetter_a;
 import com.umeng.analytics.f.Imprint;
 import com.umeng.analytics.f.ImprintValue;
 import com.umeng.tool.EncodeUtil;
@@ -61,7 +62,7 @@ public class ImprintTool {
             Entry entry = (Entry)iterator.next();
             sb.append((String)entry.getKey());
             if(((ImprintValue)entry.getValue()).hasValue()) {
-                sb.append(((ImprintValue)entry.getValue()).c());
+                sb.append(((ImprintValue)entry.getValue()).getValue());
             }
 
             sb.append(((ImprintValue)entry.getValue()).getTS());
@@ -215,7 +216,7 @@ public class ImprintTool {
             if(data != null) {
                 try {
                     Imprint imprint = new Imprint();
-                    (new g()).a(imprint, data);
+                    (new UMBeanUnpacker()).unpack(imprint, data);
                     this.imprint = imprint;
                     this.option.init(imprint);
                 } catch (Exception e) {
@@ -274,16 +275,16 @@ public class ImprintTool {
                 this.codex = this.a(var1, "codex");
                 this.report_policy = this.a(var1, "report_policy");
                 this.report_interval = this.a(var1, "report_interval");
-                this.client_test = this.b(var1, "client_test");
+                this.client_test = this.getValue(var1, "client_test");
                 this.test_report_interval = this.a(var1, "test_report_interval");
-                this.umid = this.b(var1, "umid");
+                this.umid = this.getValue(var1, "umid");
                 this.integrated_test = this.a(var1, "integrated_test");
                 this.latent_hours = this.a(var1, "latent_hours");
-                this.country = this.b(var1, "country");
-                this.domain_p = this.b(var1, "getDomainP");
-                this.domain_s = this.b(var1, "getDomain_s");
-                this.initial_view_time = this.b(var1, "initial_view_time");
-                this.track_list = this.b(var1, "track_list");
+                this.country = this.getValue(var1, "country");
+                this.domain_p = this.getValue(var1, "getDomainP");
+                this.domain_s = this.getValue(var1, "getDomain_s");
+                this.initial_view_time = this.getValue(var1, "initial_view_time");
+                this.track_list = this.getValue(var1, "track_list");
             }
         }
 
@@ -319,7 +320,7 @@ public class ImprintTool {
             return this.codex != 0 && this.codex != 1 && this.codex != -1?var1:this.codex;
         }
 
-        public int[] a(int def_policy, int def_interval) {
+        public int[] getReportPolicy(int def_policy, int def_interval) {
             if(this.report_policy != -1 && com.umeng.tool.j.a(this.report_policy)) {
                 if(this.report_interval == -1 || this.report_interval < 90 || this.report_interval > 86400) {
                     this.report_interval = 90;
@@ -331,12 +332,12 @@ public class ImprintTool {
             }
         }
 
-        public String f(String var1) {
-            return this.client_test != null && com.umeng.analytics.e.a.a(this.client_test)?this.client_test :var1;
+        public String getClient_test(String def) {
+            return this.client_test != null && OptionSetter_a.a(this.client_test)?this.client_test :def;
         }
 
-        public int d(int var1) {
-            return this.test_report_interval != -1 && this.test_report_interval >= 90 && this.test_report_interval <= 86400?this.test_report_interval * 1000:var1;
+        public int getTest_report_interval(int def) {
+            return this.test_report_interval != -1 && this.test_report_interval >= 90 && this.test_report_interval <= 86400?this.test_report_interval * 1000:def;
         }
 
         public boolean a() {
@@ -362,12 +363,12 @@ public class ImprintTool {
                 }
 
                 ImprintValue var3 = (ImprintValue)var1.getProperty().get(var2);
-                if(var3 == null || TextUtils.isEmpty(var3.c())) {
+                if(var3 == null || TextUtils.isEmpty(var3.getValue())) {
                     return -1;
                 }
 
                 try {
-                    return Integer.parseInt(var3.c().trim());
+                    return Integer.parseInt(var3.getValue().trim());
                 } catch (Exception var5) {
                     ;
                 }
@@ -378,25 +379,25 @@ public class ImprintTool {
             return -1;
         }
 
-        private String b(Imprint var1, String var2) {
-            String var3 = null;
+        private String getValue(Imprint imprint, String key) {
+            String value = null;
 
             try {
-                if(var1 == null || !var1.hasProperty()) {
+                if(imprint == null || !imprint.hasProperty()) {
                     return null;
                 }
 
-                ImprintValue var4 = (ImprintValue)var1.getProperty().get(var2);
-                if(var4 == null || TextUtils.isEmpty(var4.c())) {
+                ImprintValue imprintValue = imprint.getProperty().get(key);
+                if(imprintValue == null || TextUtils.isEmpty(imprintValue.getValue())) {
                     return null;
                 }
 
-                var3 = var4.c();
-            } catch (Exception var5) {
-                var5.printStackTrace();
+                value = imprintValue.getValue();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            return var3;
+            return value;
         }
     }
 }

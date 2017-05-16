@@ -13,7 +13,7 @@ import com.umeng.analytics.c.UMEnvelopeData;
 import com.umeng.tool.ULog;
 import com.umeng.analytics.d.OptionSetter;
 
-public class a implements OptionSetter {
+public class OptionSetter_a implements OptionSetter {
     private boolean a = false;
     private int policy = -1;
     private int interval = -1;
@@ -21,51 +21,51 @@ public class a implements OptionSetter {
     private float e = 0.0F;
     private float f = 0.0F;
     private String g = null;
-    private Context h = null;
-    private static a i = null;
+    private Context context = null;
+    private static OptionSetter_a i = null;
 
-    public static synchronized a a(Context context) {
+    public static synchronized OptionSetter_a a(Context context) {
         if(i == null) {
-            ImprintTool.Option var1 = ImprintTool.getInstance(context).getOption();
-            String var2 = var1.f((String)null);
-            int var3 = var1.d(0);
-            i = new a(context, var2, var3);
+            ImprintTool.Option option = ImprintTool.getInstance(context).getOption();
+            String var2 = option.getClient_test(null);
+            int var3 = option.getTest_report_interval(0);
+            i = new OptionSetter_a(context, var2, var3);
         }
 
         return i;
     }
 
-    private a(Context var1, String var2, int var3) {
-        this.h = var1;
+    private OptionSetter_a(Context var1, String var2, int var3) {
+        this.context = var1;
         this.a(var2, var3);
     }
 
-    private float b(String var1, int var2) {
+    private float b(String signature, int var2) {
         var2 *= 2;
-        if(var1 == null) {
+        if(signature == null) {
             return 0.0F;
         } else {
-            float var3 = (float)Integer.valueOf(var1.substring(var2, var2 + 5), 16).intValue();
+            float var3 = (float)Integer.valueOf(signature.substring(var2, var2 + 5), 16).intValue();
             float var4 = 1048576.0F;
             return var3 / var4;
         }
     }
 
-    public void a(String var1, int var2) {
-        this.interval = var2;
-        String var3 = UMEnvelopeData.getCachedSignature(this.h);
-        if(!TextUtils.isEmpty(var3) && !TextUtils.isEmpty(var1)) {
+    public void a(String test_client, int interval) {
+        this.interval = interval;
+        String signature = UMEnvelopeData.getCachedSignature(context);
+        if(!TextUtils.isEmpty(signature) && !TextUtils.isEmpty(test_client)) {
             try {
-                this.e = this.b(var3, 12);
-                this.f = this.b(var3, 6);
-                if(var1.startsWith("SIG7")) {
-                    this.b(var1);
-                } else if(var1.startsWith("FIXED")) {
-                    this.c(var1);
+                this.e = this.b(signature, 12);
+                this.f = this.b(signature, 6);
+                if(test_client.startsWith("SIG7")) {
+                    this.b(test_client);
+                } else if(test_client.startsWith("FIXED")) {
+                    this.c(test_client);
                 }
             } catch (Exception var5) {
                 this.a = false;
-                ULog.e("getApplicationLabel:" + var1, var5);
+                ULog.e("getApplicationLabel:" + test_client, var5);
             }
 
         } else {
@@ -104,9 +104,9 @@ public class a implements OptionSetter {
         }
     }
 
-    private void b(String var1) {
-        if(var1 != null) {
-            String[] var2 = var1.split("\\|");
+    private void b(String test_client) {
+        if(test_client != null) {
+            String[] var2 = test_client.split("\\|");
             float var3 = 0.0F;
             if(var2[2].equals("SIG13")) {
                 var3 = Float.valueOf(var2[3]).floatValue();
@@ -178,9 +178,9 @@ public class a implements OptionSetter {
         }
     }
 
-    private void c(String var1) {
-        if(var1 != null) {
-            String[] var2 = var1.split("\\|");
+    private void c(String test_client) {
+        if(test_client != null) {
+            String[] var2 = test_client.split("\\|");
             float var3 = 0.0F;
             if(var2[2].equals("SIG13")) {
                 var3 = Float.valueOf(var2[3]).floatValue();
@@ -259,8 +259,8 @@ public class a implements OptionSetter {
         return this.g;
     }
 
-    public void setOption(ImprintTool.Option var1) {
-        this.a(var1.f((String)null), var1.d(0));
+    public void setOption(ImprintTool.Option option) {
+        this.a(option.getClient_test(null), option.getTest_report_interval(0));
     }
 
     public String toString() {

@@ -6,6 +6,8 @@
 package com.umeng.analytics.f;
 
 import a.a.a.UMField;
+import a.a.a.a.B_b;
+import a.a.a.a.C_c;
 import a.a.a.a_j;
 import a.a.a.b.TField_c;
 import a.a.a.UMBean;
@@ -49,7 +51,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
     private static final int m = 0;
     private byte n;
     private e_enum[] o;
-    public static final Map<e_enum, a.a.a.a.b> e;
+    public static final Map<e_enum, B_b> e;
 
     public IdJournal_b() {
         this.n = 0;
@@ -194,11 +196,11 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
     }
 
     public void unpackFrom(UMBeanCoder var1) throws UMException {
-        ((BeanTransferGetter)l.get(var1.getBeanTransferClass())).getBeanTransfer().pack(var1, this);
+        ((BeanTransferGetter)l.get(var1.getBeanTransferClass())).getBeanTransfer().unpack(var1, this);
     }
 
     public void packTo(UMBeanCoder var1) throws UMException {
-        ((BeanTransferGetter)l.get(var1.getBeanTransferClass())).getBeanTransfer().unpack(var1, this);
+        ((BeanTransferGetter)l.get(var1.getBeanTransferClass())).getBeanTransfer().pack(var1, this);
     }
 
     public String toString() {
@@ -279,12 +281,12 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
         l.put(UMBeanTransfer_c.class, new IdJournal_b.b_inner());
         l.put(UMBeanTransfer_d.class, new IdJournal_b.d());
         EnumMap var0 = new EnumMap(IdJournal_b.e_enum.class);
-        var0.put(e_enum.a, new a.a.a.a.b("domain", (byte)1, new a.a.a.a.c((byte)11)));
-        var0.put(e_enum.b, new a.a.a.a.b("old_id", (byte)2, new a.a.a.a.c((byte)11)));
-        var0.put(e_enum.c, new a.a.a.a.b("new_id", (byte)1, new a.a.a.a.c((byte)11)));
-        var0.put(e_enum.d, new a.a.a.a.b("ts", (byte)1, new a.a.a.a.c((byte)10)));
+        var0.put(e_enum.a, new B_b("domain", (byte)1, new C_c((byte)11)));
+        var0.put(e_enum.b, new B_b("old_id", (byte)2, new C_c((byte)11)));
+        var0.put(e_enum.c, new B_b("new_id", (byte)1, new C_c((byte)11)));
+        var0.put(e_enum.d, new B_b("ts", (byte)1, new C_c((byte)10)));
         e = Collections.unmodifiableMap(var0);
-        a.a.a.a.b a = new a.a.a.a.b("",(byte)1,null);
+        B_b a = new B_b("",(byte)1,null);
         a.a(IdJournal_b.class, e);
     }
 

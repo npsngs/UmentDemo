@@ -15,6 +15,7 @@ import android.os.Build.VERSION;
 import android.text.TextUtils;
 
 import com.umeng.analytics.c.ImprintTool;
+import com.umeng.analytics.e.OptionSetter_a;
 import com.umeng.tool.StringTool;
 import com.umeng.tool.SystemUtil;
 import com.umeng.tool.ULog;
@@ -74,7 +75,7 @@ public class HttpSender {
         }
 
         UMConst.urls = new String[]{UMConst.url_p, UMConst.url_s};
-        int var3 = com.umeng.analytics.e.a.a(this.context).b();
+        int var3 = OptionSetter_a.a(this.context).b();
         if(var3 != -1) {
             if(var3 == 0) {
                 UMConst.urls = new String[]{UMConst.url_p, UMConst.url_s};

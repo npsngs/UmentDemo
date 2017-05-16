@@ -32,9 +32,8 @@ public abstract class UMSocialService {
             }
 
             String[] var9 = e.a(var0, var2, var3);
-            (new UMSocialService.a(var9, var1, var3)).execute(new Void[0]);
+            (new UMSocialService.a(var9, var1, var3)).execute(new Object[0]);
         } catch (Exception var8) {
-            ;
         }
 
     }

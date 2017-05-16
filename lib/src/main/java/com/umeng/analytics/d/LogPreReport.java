@@ -19,13 +19,16 @@ import com.umeng.analytics.c.ImprintTool;
 import com.umeng.analytics.c.UMEnvelopeData;
 import com.umeng.analytics.c.UMengItCache;
 import com.umeng.analytics.database.DBDataTool;
+import com.umeng.analytics.e.OptionSetter_a;
+import com.umeng.analytics.e.OptionSetter_b;
+import com.umeng.analytics.e.OptionSetter_c;
 import com.umeng.analytics.f.Imprint;
 import com.umeng.tool.SystemUtil;
 import com.umeng.tool.*;
 import com.umeng.tool.ULog;
 import com.umeng.tool.SafeRunnable;
 import com.umeng.tool.j;
-import com.umeng.tool.j.j_inner;
+import com.umeng.tool.j.UMPolicy_j;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.f.IdTracking;
 
@@ -41,10 +44,10 @@ import a.a.a.UMBeanPacker;
 public final class LogPreReport implements Reporter, OptionSetter {
     private CacheTool cacheTool = null;
     private RequestTracker requestTracker = null;
-    private com.umeng.analytics.e.b d = null;
-    private com.umeng.analytics.e.a e = null;
-    private com.umeng.analytics.e.c f = null;
-    private LogPreReport.a g = null;
+    private OptionSetter_b optionSetter_b = null;
+    private OptionSetter_a optionSetter_a = null;
+    private OptionSetter_c optionSetter_c = null;
+    private LogPreReport_a_Innser g = null;
     private ImprintTool.Option option = null;
     private long ts = 0L;
     private static Context context;
@@ -52,8 +55,8 @@ public final class LogPreReport implements Reporter, OptionSetter {
     private int memoryCacheMaxSize = 10;
     private JSONArray jsonArray = new JSONArray();
     private final int m = 5000;
-    private int n = 0;
-    private int o = 0;
+    private int count1 = 0;
+    private int count2 = 0;
     private long lastTime = 0L;
     private static final String q = "thtstart";
     private static final String r = "gkvc";
@@ -65,14 +68,14 @@ public final class LogPreReport implements Reporter, OptionSetter {
         this.requestTracker = new RequestTracker(context);
         this.cacheTool = CacheTool.getInstance(context);
         this.option = ImprintTool.getInstance(context).getOption();
-        this.g = new LogPreReport.a();
-        this.e = com.umeng.analytics.e.a.a(LogPreReport.context);
-        this.d = com.umeng.analytics.e.b.a(LogPreReport.context);
-        this.f = com.umeng.analytics.e.c.a(LogPreReport.context, this.requestTracker);
+        this.g = new LogPreReport_a_Innser();
+        this.optionSetter_a = OptionSetter_a.a(LogPreReport.context);
+        this.optionSetter_b = OptionSetter_b.a(LogPreReport.context);
+        this.optionSetter_c = OptionSetter_c.a(LogPreReport.context, this.requestTracker);
         SharedPreferences var2 = SP_Util.getSp(LogPreReport.context);
         this.lastTime = var2.getLong("thtstart", 0L);
-        this.n = var2.getInt("gkvc", 0);
-        this.o = var2.getInt("ekvc", 0);
+        this.count1 = var2.getInt("gkvc", 0);
+        this.count2 = var2.getInt("ekvc", 0);
         this.track_list = ImprintTool.getInstance(LogPreReport.context).getOption().getTrack_list(null);
     }
 
@@ -94,30 +97,30 @@ public final class LogPreReport implements Reporter, OptionSetter {
         if(o instanceof JSONObject) {
             try {
                 var3 = false;
-                this.b((JSONObject)o);
+                this.cacheToMemory((JSONObject)o);
             } catch (Throwable throwable) {
             }
         }
 
-        if(this.a(var3)) {
+        if(this.canReport(var3)) {
             this.startReport();
         }
     }
 
-    private void b(JSONObject jsonObject) {
+    private void cacheToMemory(JSONObject jsonObject) {
         try {
             if(2050 == jsonObject.getInt("__t")) {
-                if(!this.c(this.n)) {
+                if(!this.c(this.count1)) {
                     return;
                 }
 
-                ++this.n;
+                ++this.count1;
             } else if(2049 == jsonObject.getInt("__t")) {
-                if(!this.c(this.o)) {
+                if(!this.c(this.count2)) {
                     return;
                 }
 
-                ++this.o;
+                ++this.count2;
             }
 
             if(this.jsonArray.length() > this.memoryCacheMaxSize) {
@@ -139,14 +142,14 @@ public final class LogPreReport implements Reporter, OptionSetter {
         this.envelope(this.packData(new int[0]));
     }
 
-    private void a(int var1) {
-        int interval = (int)(System.currentTimeMillis() - this.requestTracker.getLastReq());
-        this.envelope(this.packData(new int[]{var1, interval}));
+    private void startReport(int interval) {
+        int latency = (int)(System.currentTimeMillis() - this.requestTracker.getLastReq());
+        this.envelope(this.packData(new int[]{interval, latency}));
         TaskExecutor.scheduleDelayExecute(new SafeRunnable() {
             public void safeRun() {
                 LogPreReport.this.report();
             }
-        }, (long)var1);
+        }, (long)interval);
     }
 
     private void envelope(JSONObject jsonObject) {
@@ -156,7 +159,7 @@ public final class LogPreReport implements Reporter, OptionSetter {
             }
 
             UMengItCache uMengItCache = UMengItCache.getInstance(context);
-            uMengItCache.a();
+            uMengItCache.invalidate();
 
             try {
                 IdTracking idTracking = uMengItCache.getIdTracking();
@@ -180,7 +183,7 @@ public final class LogPreReport implements Reporter, OptionSetter {
             }
 
             UMEnvelopeData envelopeData;
-            if(this.e()) {
+            if(this.hasCodex()) {
                 envelopeData = UMEnvelopeData.createCodex(context, AnalyticsConfig.getAppkey(context), bytes);
             } else {
                 envelopeData = UMEnvelopeData.create(context, AnalyticsConfig.getAppkey(context), bytes);
@@ -205,7 +208,7 @@ public final class LogPreReport implements Reporter, OptionSetter {
                 return null;
             } else {
                 this.saveData(context);
-                jsonObject = DBDataTool.getInstance(context).a();
+                jsonObject = DBDataTool.getInstance(context).selectAll();
                 if(jsonObject == null) {
                     jsonObject = new JSONObject();
                 }
@@ -217,7 +220,7 @@ public final class LogPreReport implements Reporter, OptionSetter {
                     bodyJson = new JSONObject();
                 }
 
-                JSONObject var4 = new JSONObject(bodyJson.toString());
+                JSONObject headerJson = new JSONObject(bodyJson.toString());
                 SharedPreferences sp = SP_Util.getSp(context);
                 if(sp != null) {
                     String userlevel = sp.getString("userlevel", "");
@@ -231,7 +234,7 @@ public final class LogPreReport implements Reporter, OptionSetter {
                     activate_msgJson = new JSONObject();
                     activate_msgJson.put("ts", this.ts);
                     bodyJson.put("activate_msg", activate_msgJson);
-                    var4.put("activate_msg", activate_msgJson);
+                    headerJson.put("activate_msg", activate_msgJson);
                 }
 
                 activate_msgJson = new JSONObject();
@@ -247,7 +250,7 @@ public final class LogPreReport implements Reporter, OptionSetter {
 
                 if(activate_msgJson.length() > 0) {
                     bodyJson.put("cc", activate_msgJson);
-                    var4.put("cc", activate_msgJson);
+                    headerJson.put("cc", activate_msgJson);
                 }
 
                 String[] au = AU.getAU(context);
@@ -258,15 +261,15 @@ public final class LogPreReport implements Reporter, OptionSetter {
                     active_userJson.put("puid", au[1]);
                     if(active_userJson.length() > 0) {
                         bodyJson.put("active_user", active_userJson);
-                        var4.put("active_user", active_userJson);
+                        headerJson.put("active_user", active_userJson);
                     }
                 }
 
-                if(com.umeng.analytics.e.a.a(context).a()) {
+                if(OptionSetter_a.a(context).a()) {
                     this.startReport(bodyJson);
                 }
 
-                this.d.a(bodyJson, context);
+                this.optionSetter_b.a(bodyJson, context);
                 if(var1 != null && var1.length == 2) {
                     active_userJson = new JSONObject();
                     JSONObject latent = new JSONObject();
@@ -397,13 +400,19 @@ public final class LogPreReport implements Reporter, OptionSetter {
                 }
 
                 jsonObject.put("header", active_userJson);
-                var4.put("sdk_version", active_userJson.getString("sdk_version")).put("device_id", active_userJson.getString("device_id")).put("device_model", active_userJson.getString("device_model")).put("version", active_userJson.getString("version_code")).put("appkey", active_userJson.getString("appkey")).put("channel", active_userJson.getString("channel"));
-                if(!this.a(active_userJson)) {
+                headerJson
+                        .put("sdk_version", active_userJson.getString("sdk_version"))
+                        .put("device_id", active_userJson.getString("device_id"))
+                        .put("device_model", active_userJson.getString("device_model"))
+                        .put("version", active_userJson.getString("version_code"))
+                        .put("appkey", active_userJson.getString("appkey"))
+                        .put("channel", active_userJson.getString("channel"));
+                if(!this.assertValid(active_userJson)) {
                     jsonObject = null;
                 }
 
-                if(ULog.isLogOn && var4.length() > 0) {
-                    ULog.b(String.valueOf(var4));
+                if(ULog.isDebugMode && headerJson.length() > 0) {
+                    ULog.b(String.valueOf(headerJson));
                 }
 
                 try {
@@ -413,37 +422,37 @@ public final class LogPreReport implements Reporter, OptionSetter {
                         editor.remove("vers_code");
                         editor.remove("vers_date");
                         editor.remove("vers_pre_version");
-                        editor.commit();
+                        editor.apply();
                     }
                 } catch (Throwable throwable) {
                 }
 
                 return jsonObject;
             }
-        } catch (Throwable var26) {
+        } catch (Throwable t) {
             CacheTool.getInstance(context).clearData();
             return null;
         }
     }
 
-    private void startReport(JSONObject var1) throws JSONException {
-        JSONObject var2 = new JSONObject();
-        var2.put(com.umeng.analytics.e.a.a(context).f(), com.umeng.analytics.e.a.a(context).e());
-        var1.put("group_info", var2);
+    private void startReport(JSONObject jsonObject) throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(OptionSetter_a.a(context).f(), OptionSetter_a.a(context).e());
+        jsonObject.put("group_info", json);
     }
 
-    private String[] a(Editor var1, SharedPreferences var2, String var3, String var4) {
-        var3 = var2.getString("pre_version", "");
-        var4 = var2.getString("pre_date", "");
-        String var5 = var2.getString("cur_version", "");
+    private String[] a(Editor editor, SharedPreferences sp, String var3, String var4) {
+        var3 = sp.getString("pre_version", "");
+        var4 = sp.getString("pre_date", "");
+        String var5 = sp.getString("cur_version", "");
         String var6 = SystemUtil.getVersionName(context);
         if(!var5.equals(var6)) {
             var3 = var5;
             var4 = (new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())).format(new Date(System.currentTimeMillis()));
-            var1.putString("pre_version", var5);
-            var1.putString("pre_date", var4);
-            var1.putString("cur_version", var6);
-            var1.commit();
+            editor.putString("pre_version", var5);
+            editor.putString("pre_date", var4);
+            editor.putString("cur_version", var6);
+            editor.commit();
         }
 
         return new String[]{var3, var4};
@@ -462,16 +471,16 @@ public final class LogPreReport implements Reporter, OptionSetter {
         var1.put("$ud_da", var3);
     }
 
-    public boolean a(JSONObject jsonObject) {
+    public boolean assertValid(JSONObject jsonObject) {
         return !TextUtils.isEmpty("device_id") && !TextUtils.isEmpty("mc") && !TextUtils.isEmpty("resolution") && !TextUtils.isEmpty("appkey") && !TextUtils.isEmpty("channel") && !TextUtils.isEmpty("app_signature") && !TextUtils.isEmpty("package_name") && !TextUtils.isEmpty("app_version");
     }
 
-    private boolean a(boolean var1) {
+    private boolean canReport(boolean var1) {
         if(!SystemUtil.isConnectState(context)) {
             ULog.e("network is unavailable");
             return false;
         } else {
-            return this.requestTracker.hasNotRequest()?true:this.g.b(var1).a(var1);
+            return this.requestTracker.hasNotRequest()?true:this.g.b(var1).canReport(var1);
         }
     }
 
@@ -480,26 +489,26 @@ public final class LogPreReport implements Reporter, OptionSetter {
             if(this.cacheTool.hasCache()) {
                 LogReportor logReportor = new LogReportor(context, this.requestTracker);
                 logReportor.setOptionSetter(this);
-                if(this.d.d()) {
-                    logReportor.b(true);
+                if(this.optionSetter_b.isDiscardOnFail()) {
+                    logReportor.setDiscardOnFail(true);
                 }
 
-                logReportor.a();
+                logReportor.report();
             } else {
-                JSONObject var4 = this.packData(new int[0]);
-                if(var4.length() <= 0) {
+                JSONObject jsonObject = this.packData(new int[0]);
+                if(jsonObject.length() <= 0) {
                     return;
                 }
 
-                LogReportor var2 = new LogReportor(context, this.requestTracker);
-                var2.setOptionSetter(this);
-                if(this.d.d()) {
-                    var2.b(true);
+                LogReportor logReportor = new LogReportor(context, this.requestTracker);
+                logReportor.setOptionSetter(this);
+                if(this.optionSetter_b.isDiscardOnFail()) {
+                    logReportor.setDiscardOnFail(true);
                 }
 
-                var2.setJsonLog(var4);
-                var2.setCodex(this.e());
-                var2.a();
+                logReportor.setJsonLog(jsonObject);
+                logReportor.setCodex(this.hasCodex());
+                logReportor.report();
             }
         } catch (Throwable throwable) {
             if(throwable != null) {
@@ -509,7 +518,7 @@ public final class LogPreReport implements Reporter, OptionSetter {
 
     }
 
-    private boolean e() {
+    private boolean hasCodex() {
         switch(this.option.c(-1)) {
             case -1:
                 return AnalyticsConfig.sEncrypt;
@@ -523,13 +532,13 @@ public final class LogPreReport implements Reporter, OptionSetter {
     }
 
     private void b(int var1) {
-        this.a(var1);
+        this.startReport(var1);
     }
 
     public void setOption(ImprintTool.Option option) {
-        this.e.setOption(option);
-        this.d.setOption(option);
-        this.f.setOption(option);
+        this.optionSetter_a.setOption(option);
+        this.optionSetter_b.setOption(option);
+        this.optionSetter_c.setOption(option);
         this.g.setOption(option);
         this.track_list = ImprintTool.getInstance(context).getOption().getTrack_list(null);
     }
@@ -538,7 +547,7 @@ public final class LogPreReport implements Reporter, OptionSetter {
         if(this.lastTime != 0L) {
             long currentTimeMillis = System.currentTimeMillis();
             if(currentTimeMillis - this.lastTime > 28800000L) {//8 hours
-                this.f();
+                this.reset();
                 return true;
             } else {
                 return var1 <= 5000;
@@ -563,69 +572,69 @@ public final class LogPreReport implements Reporter, OptionSetter {
             sp
             .edit()
             .putLong("thtstart", this.lastTime)
-            .putInt("gkvc", this.n)
-            .putInt("ekvc", this.o)
+            .putInt("gkvc", this.count1)
+            .putInt("ekvc", this.count2)
             .apply();
         } catch (Throwable t) {
         }
     }
 
-    private void f() {
-        this.n = 0;
-        this.o = 0;
+    private void reset() {
+        this.count1 = 0;
+        this.count2 = 0;
         this.lastTime = System.currentTimeMillis();
     }
 
-    public class a {
-        private j.h b;
-        private int c = -1;
-        private int d = -1;
+    public class LogPreReport_a_Innser {
+        private j.UMPolicy umPolicy;
+        private int policy = -1;
+        private int interval = -1;
         private int e = -1;
         private int f = -1;
 
-        public a() {
-            int[] var2 = LogPreReport.this.option.a(-1, -1);
-            this.c = var2[0];
-            this.d = var2[1];
+        public LogPreReport_a_Innser() {
+            int[] var2 = LogPreReport.this.option.getReportPolicy(-1, -1);
+            this.policy = var2[0];
+            this.interval = var2[1];
         }
 
         protected void a(boolean var1) {
             boolean var2;
-            if(LogPreReport.this.d.d()) {
-                var2 = this.b instanceof j.b && this.b.a();
-                this.b = (j.h)(var2?this.b:new j.b(LogPreReport.this.requestTracker, LogPreReport.this.d));
+            if(LogPreReport.this.optionSetter_b.isDiscardOnFail()) {
+                var2 = this.umPolicy instanceof j.UMPolicy_b && this.umPolicy.canDiscard();
+                this.umPolicy = var2?this.umPolicy :new j.UMPolicy_b(LogPreReport.this.requestTracker, LogPreReport.this.optionSetter_b);
             } else {
-                var2 = this.b instanceof j.c && this.b.a();
+                var2 = this.umPolicy instanceof j.UMPolicy_c && this.umPolicy.canDiscard();
                 if(!var2) {
-                    if(var1 && LogPreReport.this.f.a()) {
-                        this.b = new j.c((int)LogPreReport.this.f.b());
-                        LogPreReport.this.b((int)LogPreReport.this.f.b());
-                    } else if(ULog.isLogOn && LogPreReport.this.option.b()) {
-                        this.b = new j.a(LogPreReport.this.requestTracker);
+                    if(var1 && LogPreReport.this.optionSetter_c.a()) {
+                        this.umPolicy = new j.UMPolicy_c((int)LogPreReport.this.optionSetter_c.b());
+                        LogPreReport.this.b((int)LogPreReport.this.optionSetter_c.b());
+                    } else if(ULog.isDebugMode && LogPreReport.this.option.b()) {
+                        this.umPolicy = new j.UMPolicy_a(LogPreReport.this.requestTracker);
                     } else {
-                        int var3;
-                        if(LogPreReport.this.e.a() && "RPT".equals(LogPreReport.this.e.f())) {
-                            var3 = 0;
-                            if(LogPreReport.this.e.b() == 6) {
+                        int policy;
+                        if(LogPreReport.this.optionSetter_a.a() && "RPT".equals(LogPreReport.this.optionSetter_a.f())) {
+                            policy = 0;
+                            if(LogPreReport.this.optionSetter_a.b() == 6) {
                                 if(LogPreReport.this.option.a()) {
-                                    var3 = LogPreReport.this.option.d(90000);
-                                } else if(this.d > 0) {
-                                    var3 = this.d;
+                                    policy = LogPreReport.this.option.getTest_report_interval(90000);
+                                } else if(this.interval > 0) {
+                                    policy = this.interval;
                                 } else {
-                                    var3 = this.f;
+                                    policy = this.f;
                                 }
                             }
 
-                            this.b = this.b(LogPreReport.this.e.b(), var3);
+                            this.umPolicy = this.getUMPolicy(LogPreReport.this.optionSetter_a.b(), policy);
                         } else {
-                            var3 = this.e;
-                            int var4 = this.f;
-                            if(this.c != -1) {
-                                var3 = this.c;
-                                var4 = this.d;
+                            policy = this.e;
+                            int interval = this.f;
+                            if(this.policy != -1) {
+                                policy = this.policy;
+                                interval = this.interval;
                             }
 
-                            this.b = this.b(var3, var4);
+                            this.umPolicy = this.getUMPolicy(policy, interval);
                         }
                     }
                 }
@@ -633,45 +642,45 @@ public final class LogPreReport implements Reporter, OptionSetter {
 
         }
 
-        public j.h b(boolean var1) {
+        public j.UMPolicy b(boolean var1) {
             this.a(var1);
-            return this.b;
+            return this.umPolicy;
         }
 
-        private j.h b(int var1, int var2) {
-            Object var3 = null;
-            switch(var1) {
+        private j.UMPolicy getUMPolicy(int policy, int interval) {
+            j.UMPolicy policy1;
+            switch(policy) {
                 case 0:
-                    var3 = this.b instanceof j.g?this.b:new j.g();
+                    policy1 = this.umPolicy instanceof j.UMPolicy_g ?this.umPolicy :new j.UMPolicy_g();
                     break;
                 case 1:
-                    var3 = this.b instanceof j.d?this.b:new j.d();
+                    policy1 = this.umPolicy instanceof j.UMPolicy_d ?this.umPolicy :new j.UMPolicy_d();
                     break;
                 case 2:
                 case 3:
                 case 7:
                 default:
-                    var3 = this.b instanceof j.d?this.b:new j.d();
+                    policy1 = this.umPolicy instanceof j.UMPolicy_d ?this.umPolicy :new j.UMPolicy_d();
                     break;
                 case 4:
-                    var3 = this.b instanceof j.f?this.b:new j.f(LogPreReport.this.requestTracker);
+                    policy1 = this.umPolicy instanceof j.UMPolicy_f ?this.umPolicy :new j.UMPolicy_f(LogPreReport.this.requestTracker);
                     break;
                 case 5:
-                    var3 = this.b instanceof j.i?this.b:new j.i(LogPreReport.context);
+                    policy1 = this.umPolicy instanceof j.UMPolicy_i ?this.umPolicy :new j.UMPolicy_i(LogPreReport.context);
                     break;
                 case 6:
-                    if(this.b instanceof j.e) {
-                        var3 = this.b;
-                        ((j.e)var3).a((long)var2);
+                    if(this.umPolicy instanceof j.UMPolicy_e) {
+                        policy1 = this.umPolicy;
+                        ((j.UMPolicy_e)policy1).setMaxInterval((long)interval);
                     } else {
-                        var3 = new j.e(LogPreReport.this.requestTracker, (long)var2);
+                        policy1 = new j.UMPolicy_e(LogPreReport.this.requestTracker, (long)interval);
                     }
                     break;
                 case 8:
-                    var3 = this.b instanceof j_inner?this.b:new j_inner(LogPreReport.this.requestTracker);
+                    policy1 = this.umPolicy instanceof UMPolicy_j ?this.umPolicy :new UMPolicy_j(LogPreReport.this.requestTracker);
             }
 
-            return (j.h)var3;
+            return policy1;
         }
 
         public void a(int var1, int var2) {
@@ -680,9 +689,9 @@ public final class LogPreReport implements Reporter, OptionSetter {
         }
 
         public void setOption(ImprintTool.Option option) {
-            int[] var2 = option.a(-1, -1);
-            this.c = var2[0];
-            this.d = var2[1];
+            int[] var2 = option.getReportPolicy(-1, -1);
+            this.policy = var2[0];
+            this.interval = var2[1];
         }
     }
 }

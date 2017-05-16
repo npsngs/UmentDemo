@@ -5,11 +5,11 @@
 
 package a.a.a.a;
 
-public class e extends c {
-    public final c a;
-    public final c c;
+public class E_e_a extends C_c {
+    public final C_c a;
+    public final C_c c;
 
-    public e(byte var1, c var2, c var3) {
+    public E_e_a(byte var1, C_c var2, C_c var3) {
         super(var1);
         this.a = var2;
         this.c = var3;

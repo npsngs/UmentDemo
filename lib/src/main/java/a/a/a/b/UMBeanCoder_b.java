@@ -94,7 +94,7 @@ public class UMBeanCoder_b extends UMBeanCoder {
         this.writeByte((byte)0);
     }
 
-    public void a(e var1) throws UMException {
+    public void a(E_e var1) throws UMException {
         if(var1.size == 0) {
             this.writeByte((int)0);
         } else {
@@ -104,7 +104,7 @@ public class UMBeanCoder_b extends UMBeanCoder {
 
     }
 
-    public void a(d var1) throws UMException {
+    public void a(D_d var1) throws UMException {
         this.a(var1.a, var1.b);
     }
 
@@ -284,13 +284,13 @@ public class UMBeanCoder_b extends UMBeanCoder {
         }
     }
 
-    public e n() throws UMException {
+    public E_e n() throws UMException {
         int var1 = this.readInt();
         byte var2 = var1 == 0?0:this.readByte();
-        return new e(this.d((byte)(var2 >> 4)), this.d((byte)(var2 & 15)), var1);
+        return new E_e(this.d((byte)(var2 >> 4)), this.d((byte)(var2 & 15)), var1);
     }
 
-    public d p() throws UMException {
+    public D_d p() throws UMException {
         byte var1 = this.readByte();
         int var2 = var1 >> 4 & 15;
         if(var2 == 15) {
@@ -298,7 +298,7 @@ public class UMBeanCoder_b extends UMBeanCoder {
         }
 
         byte var3 = this.d(var1);
-        return new d(var3, var2);
+        return new D_d(var3, var2);
     }
 
     public l r() throws UMException {
@@ -565,18 +565,18 @@ public class UMBeanCoder_b extends UMBeanCoder {
         }
     }
 
-    public static class a implements a.a.a.b.j {
+    public static class UMBeanCoder_b_Inner implements UMBeanCoderBuilder {
         private final long a;
 
-        public a() {
+        public UMBeanCoder_b_Inner() {
             this.a = -1L;
         }
 
-        public a(int var1) {
+        public UMBeanCoder_b_Inner(int var1) {
             this.a = (long)var1;
         }
 
-        public UMBeanCoder a(IOStream ioStream) {
+        public UMBeanCoder build(IOStream ioStream) {
             return new UMBeanCoder_b(ioStream, this.a);
         }
     }

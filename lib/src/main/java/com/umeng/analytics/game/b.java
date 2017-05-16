@@ -9,7 +9,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.text.TextUtils;
-import com.umeng.analytics.d.j;
+import com.umeng.analytics.d.SerializableTool;
 import com.umeng.analytics.d.SP_Util;
 import java.io.Serializable;
 
@@ -23,8 +23,8 @@ public class b {
     private final String g = "stat_game_level";
     private b.a h = null;
 
-    public b(Context var1) {
-        this.context = var1;
+    public b(Context context) {
+        this.context = context;
     }
 
     public b.a a(String var1) {
@@ -37,7 +37,7 @@ public class b {
         if(this.h != null) {
             this.h.b();
             Editor editor = this.context.getSharedPreferences("um_g_cache", 0).edit();
-            editor.putString("single_level", j.a(this.h));
+            editor.putString("single_level", SerializableTool.writeToStr(this.h));
             editor.putString("stat_player_level", this.b);
             editor.putString("stat_game_level", this.a);
             editor.apply();
@@ -49,7 +49,7 @@ public class b {
         SharedPreferences sp = SP_Util.getSp(this.context, "um_g_cache");
         String singleLevel = sp.getString("single_level", null);
         if(!TextUtils.isEmpty(singleLevel)) {
-            this.h = (b.a)j.a(singleLevel);
+            this.h = (b.a) SerializableTool.readFromStr(singleLevel);
             if(this.h != null) {
                 this.h.c();
             }

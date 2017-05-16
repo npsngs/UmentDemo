@@ -8,6 +8,6 @@ package a.a.a.b;
 import a.a.a.d.IOStream;
 import java.io.Serializable;
 
-public interface j extends Serializable {
-    UMBeanCoder a(IOStream var1);
+public interface UMBeanCoderBuilder extends Serializable {
+    UMBeanCoder build(IOStream ioStream);
 }

@@ -83,7 +83,7 @@ public class UMBeanCoder_a extends UMBeanCoder {
         this.writeByte((byte)0);
     }
 
-    public void a(e var1) throws UMException {
+    public void a(E_e var1) throws UMException {
         this.writeByte(var1.a);
         this.writeByte(var1.b);
         this.writeUnsignedInt(var1.size);
@@ -92,7 +92,7 @@ public class UMBeanCoder_a extends UMBeanCoder {
     public void e() {
     }
 
-    public void a(d var1) throws UMException {
+    public void a(D_d var1) throws UMException {
         this.writeByte(var1.a);
         this.writeUnsignedInt(var1.b);
     }
@@ -198,15 +198,15 @@ public class UMBeanCoder_a extends UMBeanCoder {
     public void m() {
     }
 
-    public e n() throws UMException {
-        return new e(this.readByte(), this.readByte(), this.readSignedInt());
+    public E_e n() throws UMException {
+        return new E_e(this.readByte(), this.readByte(), this.readSignedInt());
     }
 
     public void o() {
     }
 
-    public d p() throws UMException {
-        return new d(this.readByte(), this.readSignedInt());
+    public D_d p() throws UMException {
+        return new D_d(this.readByte(), this.readSignedInt());
     }
 
     public void q() {
@@ -344,7 +344,7 @@ public class UMBeanCoder_a extends UMBeanCoder {
         }
     }
 
-    public static class a_inner implements a.a.a.b.j {
+    public static class a_inner implements UMBeanCoderBuilder {
         protected boolean a;
         protected boolean b;
         protected int c;
@@ -365,7 +365,7 @@ public class UMBeanCoder_a extends UMBeanCoder {
             this.c = var3;
         }
 
-        public UMBeanCoder a(IOStream ioStream) {
+        public UMBeanCoder build(IOStream ioStream) {
             UMBeanCoder_a var2 = new UMBeanCoder_a(ioStream, this.a, this.b);
             if(this.c != 0) {
                 var2.setMessageMaxLen(this.c);

@@ -6,6 +6,9 @@
 package com.umeng.analytics.f;
 
 import a.a.a.UMField;
+import a.a.a.a.B_b;
+import a.a.a.a.C_c;
+import a.a.a.a.G_g_a;
 import a.a.a.a_j;
 import a.a.a.b.TField_c;
 import a.a.a.b.UMBeanCoderEngine;
@@ -45,7 +48,7 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
     public Imprint imprint;
     private byte l;
     private RespField[] m;
-    public static final Map<RespField, a.a.a.a.b> d;
+    public static final Map<RespField, B_b> d;
 
     public Response() {
         this.l = 0;
@@ -106,7 +109,7 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
         this.l = a_j.a(this.l, 0, var1);
     }
 
-    public String f() {
+    public String getMsg() {
         return this.msg;
     }
 
@@ -159,11 +162,11 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
     }
 
     public void unpackFrom(UMBeanCoder var1) throws UMException {
-        (j.get(var1.getBeanTransferClass())).getBeanTransfer().pack(var1, this);
+        (j.get(var1.getBeanTransferClass())).getBeanTransfer().unpack(var1, this);
     }
 
     public void packTo(UMBeanCoder var1) throws UMException {
-        (j.get(var1.getBeanTransferClass())).getBeanTransfer().unpack(var1, this);
+        (j.get(var1.getBeanTransferClass())).getBeanTransfer().pack(var1, this);
     }
 
     public String toString() {
@@ -232,11 +235,11 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
         j.put(UMBeanTransfer_c.class, new Response.b());
         j.put(UMBeanTransfer_d.class, new Response.d());
         EnumMap var0 = new EnumMap(RespField.class);
-        var0.put(RespField.RESP_CODE, new a.a.a.a.b("resp_code", (byte)1, new a.a.a.a.c((byte)8)));
-        var0.put(RespField.MSG, new a.a.a.a.b("msg", (byte)2, new a.a.a.a.c((byte)11)));
-        var0.put(RespField.IMPRINT, new a.a.a.a.b("imprint", (byte)2, new a.a.a.a.g((byte)12, Imprint.class)));
+        var0.put(RespField.RESP_CODE, new B_b("resp_code", (byte)1, new C_c((byte)8)));
+        var0.put(RespField.MSG, new B_b("msg", (byte)2, new C_c((byte)11)));
+        var0.put(RespField.IMPRINT, new B_b("imprint", (byte)2, new G_g_a((byte)12, Imprint.class)));
         d = Collections.unmodifiableMap(var0);
-        a.a.a.a.b b = new a.a.a.a.b(null, (byte)1, null);
+        B_b b = new B_b(null, (byte)1, null);
         b.a(Response.class, d);
     }
 
