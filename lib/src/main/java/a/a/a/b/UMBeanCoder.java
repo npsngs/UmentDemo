@@ -31,19 +31,19 @@ public abstract class UMBeanCoder {
 
     public abstract void startPack(Name var1) throws UMException;
 
-    public abstract void b() throws UMException;
+    public abstract void endPack() throws UMException;
 
     public abstract void writeTField(TField_c tField) throws UMException;
 
     public abstract void c() throws UMException;
 
-    public abstract void d() throws UMException;
+    public abstract void writeDivider() throws UMException;
 
-    public abstract void a(E_e var1) throws UMException;
+    public abstract void writeMapHeader(MapHeader var1) throws UMException;
 
     public abstract void e() throws UMException;
 
-    public abstract void a(D_d var1) throws UMException;
+    public abstract void writeListHeader(ListHeader var1) throws UMException;
 
     public abstract void f() throws UMException;
 
@@ -79,11 +79,11 @@ public abstract class UMBeanCoder {
 
     public abstract void m() throws UMException;
 
-    public abstract E_e n() throws UMException;
+    public abstract MapHeader readMapHeader() throws UMException;
 
     public abstract void o() throws UMException;
 
-    public abstract D_d p() throws UMException;
+    public abstract ListHeader readListHeader() throws UMException;
 
     public abstract void q() throws UMException;
 

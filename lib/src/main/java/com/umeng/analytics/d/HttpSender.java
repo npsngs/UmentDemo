@@ -75,7 +75,7 @@ public class HttpSender {
         }
 
         UMConst.urls = new String[]{UMConst.url_p, UMConst.url_s};
-        int var3 = OptionSetter_a.a(this.context).b();
+        int var3 = OptionSetter_a.a(this.context).getPolicy();
         if(var3 != -1) {
             if(var3 == 0) {
                 UMConst.urls = new String[]{UMConst.url_p, UMConst.url_s};
@@ -170,14 +170,14 @@ public class HttpSender {
                 this.requestCallback.requestFinish();
             }
 
-            int var22 = connection.getResponseCode();
-            String var6 = connection.getHeaderField("Content-Type");
-            boolean var7 = false;
-            if(!TextUtils.isEmpty(var6) && var6.equalsIgnoreCase("application/thrift")) {
-                var7 = true;
+            int responseCode = connection.getResponseCode();
+            String contentType = connection.getHeaderField("Content-Type");
+            boolean isThriftType = false;
+            if(!TextUtils.isEmpty(contentType) && contentType.equalsIgnoreCase("application/thrift")) {
+                isThriftType = true;
             }
 
-            if(var22 != 200 || !var7) {
+            if(responseCode != 200 || !isThriftType) {
                 return null;
             }
 

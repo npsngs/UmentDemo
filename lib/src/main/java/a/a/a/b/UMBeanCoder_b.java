@@ -65,7 +65,7 @@ public class UMBeanCoder_b extends UMBeanCoder {
         this.n = 0;
     }
 
-    public void b() throws UMException {
+    public void endPack() throws UMException {
         this.n = this.shortStack.pop();
     }
 
@@ -78,38 +78,37 @@ public class UMBeanCoder_b extends UMBeanCoder {
 
     }
 
-    private void a(TField_c var1, byte var2) throws UMException {
-        byte var3 = var2 == -1?this.e(var1.type):var2;
-        if(var1.id > this.n && var1.id - this.n <= 15) {
-            this.writeByte(var1.id - this.n << 4 | var3);
+    private void a(TField_c tField, byte var2) throws UMException {
+        byte var3 = var2 == -1?this.map(tField.type):var2;
+        if(tField.id > this.n && tField.id - this.n <= 15) {
+            this.writeByte(tField.id - this.n << 4 | var3);
         } else {
             this.writeByte(var3);
-            this.writeUnsignedShort(var1.id);
+            this.writeUnsignedShort(tField.id);
         }
 
-        this.n = var1.id;
+        this.n = tField.id;
     }
 
-    public void d() throws UMException {
+    public void writeDivider() throws UMException {
         this.writeByte((byte)0);
     }
 
-    public void a(E_e var1) throws UMException {
-        if(var1.size == 0) {
-            this.writeByte((int)0);
+    public void writeMapHeader(MapHeader mapHeader) throws UMException {
+        if(mapHeader.size == 0) {
+            this.writeByte(0);
         } else {
-            this.writeInt(var1.size);
-            this.writeByte(this.e(var1.a) << 4 | this.e(var1.b));
+            this.writeInt(mapHeader.size);
+            this.writeByte(this.map(mapHeader.keyType) << 4 | this.map(mapHeader.valueType));
         }
-
     }
 
-    public void a(D_d var1) throws UMException {
-        this.a(var1.a, var1.b);
+    public void writeListHeader(ListHeader listHeader) throws UMException {
+        this.write(listHeader.type, listHeader.size);
     }
 
     public void a(l var1) throws UMException {
-        this.a(var1.a, var1.b);
+        this.write(var1.a, var1.b);
     }
 
     public void writeBoolean(boolean var1) throws UMException {
@@ -175,12 +174,12 @@ public class UMBeanCoder_b extends UMBeanCoder {
     public void c() throws UMException {
     }
 
-    protected void a(byte var1, int var2) throws UMException {
-        if(var2 <= 14) {
-            this.writeByte(var2 << 4 | this.e(var1));
+    protected void write(byte type, int size) throws UMException {
+        if(size <= 14) {
+            this.writeByte(size << 4 | this.map(type));
         } else {
-            this.writeByte(240 | this.e(var1));
-            this.writeInt(var2);
+            this.writeByte(0xf0 | this.map(type));
+            this.writeInt(size);
         }
 
     }
@@ -274,7 +273,7 @@ public class UMBeanCoder_b extends UMBeanCoder {
                 var2 = (short)(this.n + var3);
             }
 
-            TField_c tField = new TField_c("", this.d((byte)(protocolId & 15)), var2);
+            TField_c tField = new TField_c("", this.unmap((byte)(protocolId & 15)), var2);
             if(this.c(protocolId)) {
                 this.p = (byte)(protocolId & 15) == 1?Boolean.TRUE:Boolean.FALSE;
             }
@@ -284,25 +283,25 @@ public class UMBeanCoder_b extends UMBeanCoder {
         }
     }
 
-    public E_e n() throws UMException {
-        int var1 = this.readInt();
-        byte var2 = var1 == 0?0:this.readByte();
-        return new E_e(this.d((byte)(var2 >> 4)), this.d((byte)(var2 & 15)), var1);
+    public MapHeader readMapHeader() throws UMException {
+        int listSize = this.readInt();
+        byte var2 = listSize == 0?0:this.readByte();
+        return new MapHeader(this.unmap((byte)(var2 >> 4)), this.unmap((byte)(var2 & 15)), listSize);
     }
 
-    public D_d p() throws UMException {
+    public ListHeader readListHeader() throws UMException {
         byte var1 = this.readByte();
         int var2 = var1 >> 4 & 15;
-        if(var2 == 15) {
+        if(var2 == 0xf) {
             var2 = this.readInt();
         }
 
-        byte var3 = this.d(var1);
-        return new D_d(var3, var2);
+        byte type = this.unmap(var1);
+        return new ListHeader(type, var2);
     }
 
     public l r() throws UMException {
-        return new l(this.p());
+        return new l(this.readListHeader());
     }
 
     public boolean readBoolean() throws UMException {
@@ -496,7 +495,7 @@ public class UMBeanCoder_b extends UMBeanCoder {
         return var2 == 1 || var2 == 2;
     }
 
-    private byte d(byte var1) throws UMMsgException {
+    private byte unmap(byte var1) throws UMMsgException {
         switch((byte)(var1 & 15)) {
             case 0:
                 return 0;
@@ -508,27 +507,27 @@ public class UMBeanCoder_b extends UMBeanCoder {
             case 4:
                 return 6;
             case 5:
-                return 8;
+                return 8;//int
             case 6:
                 return 10;
             case 7:
                 return 4;
             case 8:
-                return 11;
+                return 11;//string
             case 9:
-                return 15;
+                return 15;//list
             case 10:
                 return 14;
             case 11:
-                return 13;
+                return 13;//map
             case 12:
-                return 12;
+                return 12;//object
             default:
                 throw new UMMsgException("don\'getPackageName know what type: " + (byte)(var1 & 15));
         }
     }
 
-    private byte e(byte var1) {
+    private byte map(byte var1) {
         return f[var1];
     }
 

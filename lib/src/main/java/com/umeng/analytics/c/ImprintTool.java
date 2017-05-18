@@ -15,6 +15,7 @@ import com.umeng.analytics.e.OptionSetter_a;
 import com.umeng.analytics.f.Imprint;
 import com.umeng.analytics.f.ImprintValue;
 import com.umeng.tool.EncodeUtil;
+import com.umeng.tool.J;
 import com.umeng.tool.StringTool;
 
 import java.io.File;
@@ -110,27 +111,27 @@ public class ImprintTool {
         return var5;
     }
 
-    public void b(Imprint imprint) {
+    public void setImprint(Imprint imprint) {
         if(imprint != null) {
             if(this.c(imprint)) {
-                boolean var2 = false;
+                boolean isNeedUpdateOption = false;
                 synchronized(this) {
                     Imprint imprint1 = this.imprint;
-                    String var6 = imprint1 == null?null:imprint1.getCheckSum();
+                    String old_checksum = imprint1 == null?null:imprint1.getCheckSum();
                     if(imprint1 == null) {
-                        imprint1 = this.d(imprint);
+                        imprint1 = this.removeEmptyProperty(imprint);
                     } else {
-                        imprint1 = this.a(imprint1, imprint);
+                        imprint1 = this.append(imprint1, imprint);
                     }
 
                     this.imprint = imprint1;
-                    String var7 = imprint1 == null?null:imprint1.getCheckSum();
-                    if(!this.isEqualStr(var6, var7)) {
-                        var2 = true;
+                    String new_checksum = imprint1 == null?null:imprint1.getCheckSum();
+                    if(!this.isEqualStr(old_checksum, new_checksum)) {
+                        isNeedUpdateOption = true;
                     }
                 }
 
-                if(this.imprint != null && var2) {
+                if(this.imprint != null && isNeedUpdateOption) {
                     this.option.init(this.imprint);
                     if(this.optionSetter != null) {
                         this.optionSetter.setOption(this.option);
@@ -145,7 +146,7 @@ public class ImprintTool {
         return var1 == null?var2 == null:var1.equals(var2);
     }
 
-    private Imprint a(Imprint var1, Imprint var2) {
+    private Imprint append(Imprint var1, Imprint var2) {
         if(var2 == null) {
             return var1;
         } else {
@@ -162,14 +163,14 @@ public class ImprintTool {
                 }
             }
 
-            var1.a(var2.getVersion());
+            var1.setVersion(var2.getVersion());
             var1.setCheckSum(this.checkSum(var1));
             return var1;
         }
     }
 
-    private Imprint d(Imprint var1) {
-        Map var2 = var1.getProperty();
+    private Imprint removeEmptyProperty(Imprint imprint) {
+        Map var2 = imprint.getProperty();
         ArrayList var3 = new ArrayList(var2.size() / 2);
         Iterator var4 = var2.entrySet().iterator();
 
@@ -187,7 +188,7 @@ public class ImprintTool {
             var2.remove(var6);
         }
 
-        return var1;
+        return imprint;
     }
 
     public synchronized Imprint getImprint() {
@@ -321,7 +322,7 @@ public class ImprintTool {
         }
 
         public int[] getReportPolicy(int def_policy, int def_interval) {
-            if(this.report_policy != -1 && com.umeng.tool.j.a(this.report_policy)) {
+            if(this.report_policy != -1 && J.a(this.report_policy)) {
                 if(this.report_interval == -1 || this.report_interval < 90 || this.report_interval > 86400) {
                     this.report_interval = 90;
                 }
@@ -340,7 +341,7 @@ public class ImprintTool {
             return this.test_report_interval != -1 && this.test_report_interval >= 90 && this.test_report_interval <= 86400?this.test_report_interval * 1000:def;
         }
 
-        public boolean a() {
+        public boolean hasTest_report_interval() {
             return this.test_report_interval != -1;
         }
 
@@ -348,7 +349,7 @@ public class ImprintTool {
             return this.umid;
         }
 
-        public boolean b() {
+        public boolean isIntegrated_test() {
             return this.integrated_test == 1;
         }
 

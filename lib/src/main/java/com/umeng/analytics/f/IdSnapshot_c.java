@@ -330,8 +330,8 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
             var1.writeTField(IdSnapshot_c.VERSION_FIELD);
             var1.writeUnsignedInt(var2.version);
             var1.c();
-            var1.d();
-            var1.b();
+            var1.writeDivider();
+            var1.endPack();
         }
     }
 

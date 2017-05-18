@@ -791,8 +791,8 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                 umBeanCoder.c();
             }
 
-            umBeanCoder.d();
-            umBeanCoder.b();
+            umBeanCoder.writeDivider();
+            umBeanCoder.endPack();
         }
     }
 

@@ -98,7 +98,6 @@ public class StringTool {
     }
 
     public static int a(int var0, String var1) {
-        boolean var2 = false;
         float var3 = (new Random()).nextFloat();
         int var7;
         if((double)var3 < 0.001D) {
@@ -110,8 +109,7 @@ public class StringTool {
 
             try {
                 var4 = Integer.parseInt(var1.substring(9, 11), 16);
-            } catch (Exception var6) {
-                ;
+            } catch (Exception e) {
             }
 
             var7 = (128 | var4) * 1000;

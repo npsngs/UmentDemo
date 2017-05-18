@@ -18,8 +18,8 @@ public class OptionSetter_a implements OptionSetter {
     private int policy = -1;
     private int interval = -1;
     private int d = -1;
-    private float e = 0.0F;
-    private float f = 0.0F;
+    private float p13 = 0.0F;
+    private float p07 = 0.0F;
     private String g = null;
     private Context context = null;
     private static OptionSetter_a i = null;
@@ -56,16 +56,16 @@ public class OptionSetter_a implements OptionSetter {
         String signature = UMEnvelopeData.getCachedSignature(context);
         if(!TextUtils.isEmpty(signature) && !TextUtils.isEmpty(test_client)) {
             try {
-                this.e = this.b(signature, 12);
-                this.f = this.b(signature, 6);
+                this.p13 = this.b(signature, 12);
+                this.p07 = this.b(signature, 6);
                 if(test_client.startsWith("SIG7")) {
                     this.b(test_client);
                 } else if(test_client.startsWith("FIXED")) {
                     this.c(test_client);
                 }
-            } catch (Exception var5) {
+            } catch (Exception e) {
                 this.a = false;
-                ULog.e("getApplicationLabel:" + test_client, var5);
+                ULog.e("getApplicationLabel:" + test_client, e);
             }
 
         } else {
@@ -112,7 +112,7 @@ public class OptionSetter_a implements OptionSetter {
                 var3 = Float.valueOf(var2[3]).floatValue();
             }
 
-            if(this.e > var3) {
+            if(this.p13 > var3) {
                 this.a = false;
             } else {
                 float[] var4 = null;
@@ -127,15 +127,15 @@ public class OptionSetter_a implements OptionSetter {
                 }
 
                 int[] var10 = null;
-                int var7;
+                int i;
                 String[] var11;
                 if(var2[4].equals("RPT")) {
                     this.g = "RPT";
                     var11 = var2[5].split(",");
                     var10 = new int[var11.length];
 
-                    for(var7 = 0; var7 < var11.length; ++var7) {
-                        var10[var7] = Integer.valueOf(var11[var7]).intValue();
+                    for(i = 0; i < var11.length; ++i) {
+                        var10[i] = Integer.valueOf(var11[i]).intValue();
                     }
                 } else if(var2[4].equals("DOM")) {
                     this.a = true;
@@ -145,11 +145,10 @@ public class OptionSetter_a implements OptionSetter {
                         var11 = var2[5].split(",");
                         var10 = new int[var11.length];
 
-                        for(var7 = 0; var7 < var11.length; ++var7) {
-                            var10[var7] = Integer.valueOf(var11[var7]).intValue();
+                        for(i = 0; i < var11.length; ++i) {
+                            var10[i] = Integer.valueOf(var11[i]).intValue();
                         }
-                    } catch (Exception var9) {
-                        ;
+                    } catch (Exception e) {
                     }
                 }
 
@@ -158,7 +157,7 @@ public class OptionSetter_a implements OptionSetter {
 
                 for(int var8 = 0; var8 < var4.length; ++var8) {
                     var12 += var4[var8];
-                    if(this.f < var12) {
+                    if(this.p07 < var12) {
                         var6 = var8;
                         break;
                     }
@@ -186,7 +185,7 @@ public class OptionSetter_a implements OptionSetter {
                 var3 = Float.valueOf(var2[3]).floatValue();
             }
 
-            if(this.e > var3) {
+            if(this.p13 > var3) {
                 this.a = false;
             } else {
                 int var4 = -1;
@@ -239,11 +238,11 @@ public class OptionSetter_a implements OptionSetter {
         return this.a;
     }
 
-    public int b() {
+    public int getPolicy() {
         return this.policy;
     }
 
-    public int c() {
+    public int getInterval() {
         return this.interval;
     }
 
@@ -266,9 +265,9 @@ public class OptionSetter_a implements OptionSetter {
     public String toString() {
         StringBuilder var1 = new StringBuilder();
         var1.append(" p13:");
-        var1.append(this.e);
+        var1.append(this.p13);
         var1.append(" p07:");
-        var1.append(this.f);
+        var1.append(this.p07);
         var1.append(" policy:");
         var1.append(this.policy);
         var1.append(" interval:");

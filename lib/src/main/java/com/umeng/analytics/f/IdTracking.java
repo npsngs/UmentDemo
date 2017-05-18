@@ -14,8 +14,8 @@ import a.a.a.a.C_c;
 import a.a.a.a.D_d_a;
 import a.a.a.a.E_e_a;
 import a.a.a.a.G_g_a;
-import a.a.a.b.D_d;
-import a.a.a.b.E_e;
+import a.a.a.b.ListHeader;
+import a.a.a.b.MapHeader;
 import a.a.a.b.TField_c;
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMBeanCoder_b;
@@ -65,7 +65,7 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
 
     public IdTracking(IdTracking idTracking) {
         Iterator var3;
-        if(idTracking.f()) {
+        if(idTracking.isSnapshotNotNull()) {
             HashMap var2 = new HashMap();
             var3 = idTracking.snapshots.entrySet().iterator();
 
@@ -92,7 +92,7 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
             this.journals = var9;
         }
 
-        if(idTracking.n()) {
+        if(idTracking.isNotNullChecksum()) {
             this.checksum = idTracking.checksum;
         }
 
@@ -108,16 +108,16 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
         this.checksum = null;
     }
 
-    public int c() {
+    public int getSnapshotsSize() {
         return this.snapshots == null?0:this.snapshots.size();
     }
 
-    public void a(String var1, IdSnapshot_c var2) {
+    public void putSnapshot(String key, IdSnapshot_c idSnapshot) {
         if(this.snapshots == null) {
             this.snapshots = new HashMap();
         }
 
-        this.snapshots.put(var1, var2);
+        this.snapshots.put(key, idSnapshot);
     }
 
     public Map<String, IdSnapshot_c> getSnapShots() {
@@ -129,11 +129,11 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
         return this;
     }
 
-    public void e() {
+    public void clearSnapshot() {
         this.snapshots = null;
     }
 
-    public boolean f() {
+    public boolean isSnapshotNotNull() {
         return this.snapshots != null;
     }
 
@@ -144,20 +144,20 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
 
     }
 
-    public int g() {
+    public int getJournalsSize() {
         return this.journals == null?0:this.journals.size();
     }
 
-    public Iterator<IdJournal_b> h() {
+    public Iterator<IdJournal_b> iteratorJournals() {
         return this.journals == null?null:this.journals.iterator();
     }
 
-    public void a(IdJournal_b var1) {
+    public void addIdJournal(IdJournal_b idJournal) {
         if(this.journals == null) {
             this.journals = new ArrayList();
         }
 
-        this.journals.add(var1);
+        this.journals.add(idJournal);
     }
 
     public List<IdJournal_b> getJournals() {
@@ -193,11 +193,11 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
         return this;
     }
 
-    public void m() {
+    public void clearChecksum() {
         this.checksum = null;
     }
 
-    public boolean n() {
+    public boolean isNotNullChecksum() {
         return this.checksum != null;
     }
 
@@ -212,12 +212,12 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
         return e_enum.a(var1);
     }
 
-    public void unpackFrom(UMBeanCoder var1) throws UMException {
-        j.get(var1.getBeanTransferClass()).getBeanTransfer().unpack(var1, this);
+    public void unpackFrom(UMBeanCoder umBeanCoder) throws UMException {
+        j.get(umBeanCoder.getBeanTransferClass()).getBeanTransfer().unpack(umBeanCoder, this);
     }
 
-    public void packTo(UMBeanCoder var1) throws UMException {
-        j.get(var1.getBeanTransferClass()).getBeanTransfer().pack(var1, this);
+    public void packTo(UMBeanCoder umBeanCoder) throws UMException {
+        j.get(umBeanCoder.getBeanTransferClass()).getBeanTransfer().pack(umBeanCoder, this);
     }
 
     public String toString() {
@@ -246,7 +246,7 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
             var2 = false;
         }
 
-        if(this.n()) {
+        if(this.isNotNullChecksum()) {
             if(!var2) {
                 sb.append(", ");
             }
@@ -269,19 +269,19 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
         }
     }
 
-    private void a(ObjectOutputStream var1) throws IOException {
+    private void pack(ObjectOutputStream oos) throws IOException {
         try {
-            this.packTo(new UMBeanCoder_b(new UMIOStream(var1)));
-        } catch (UMException var3) {
-            throw new IOException(var3.getMessage());
+            this.packTo(new UMBeanCoder_b(new UMIOStream(oos)));
+        } catch (UMException e) {
+            throw new IOException(e.getMessage());
         }
     }
 
-    private void a(ObjectInputStream var1) throws IOException, ClassNotFoundException {
+    private void unpack(ObjectInputStream ois) throws IOException, ClassNotFoundException {
         try {
-            this.unpackFrom((UMBeanCoder)(new UMBeanCoder_b(new UMIOStream(var1))));
-        } catch (UMException var3) {
-            throw new IOException(var3.getMessage());
+            this.unpackFrom((UMBeanCoder)(new UMBeanCoder_b(new UMIOStream(ois))));
+        } catch (UMException e) {
+            throw new IOException(e.getMessage());
         }
     }
 
@@ -316,7 +316,7 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
                 var7.set(0);
             }
 
-            if(var2.n()) {
+            if(var2.isNotNullChecksum()) {
                 var7.set(1);
             }
 
@@ -331,7 +331,7 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
                 }
             }
 
-            if(var2.n()) {
+            if(var2.isNotNullChecksum()) {
                 var3.writeString(var2.checksum);
             }
 
@@ -339,7 +339,7 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
 
         public void pack(UMBeanCoder umBeanCoder, IdTracking idTracking) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)umBeanCoder;
-            E_e var4 = new E_e((byte)11, (byte)12, var3.readSignedInt());
+            MapHeader var4 = new MapHeader((byte)11, (byte)12, var3.readSignedInt());
             idTracking.snapshots = new HashMap(2 * var4.size);
 
             for(int var5 = 0; var5 < var4.size; ++var5) {
@@ -352,10 +352,10 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
             idTracking.a(true);
             BitSet var8 = var3.b(2);
             if(var8.get(0)) {
-                D_d var9 = new D_d((byte)12, var3.readSignedInt());
-                idTracking.journals = new ArrayList(var9.b);
+                ListHeader var9 = new ListHeader((byte)12, var3.readSignedInt());
+                idTracking.journals = new ArrayList(var9.size);
 
-                for(int var10 = 0; var10 < var9.b; ++var10) {
+                for(int var10 = 0; var10 < var9.size; ++var10) {
                     IdJournal_b var11 = new IdJournal_b();
                     var11.unpackFrom(var3);
                     idTracking.journals.add(var11);
@@ -385,69 +385,69 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
         private a() {
         }
 
-        public void unpack(UMBeanCoder var1, IdTracking var2) throws UMException {
-            var1.startUnpack();
+        public void unpack(UMBeanCoder umBeanCoder, IdTracking idTracking) throws UMException {
+            umBeanCoder.startUnpack();
 
             while(true) {
-                TField_c var3 = var1.readTField();
-                if(var3.type == 0) {
-                    var1.k();
-                    var2.assertValid();
+                TField_c tField = umBeanCoder.readTField();
+                if(tField.type == 0) {
+                    umBeanCoder.k();
+                    idTracking.assertValid();
                     return;
                 }
 
                 int var5;
-                switch(var3.id) {
+                switch(tField.id) {
                     case 1:
-                        if(var3.type != 13) {
-                            UMBeanCoderEngine.read(var1, var3.type);
+                        if(tField.type != 13) {
+                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
                             break;
                         }
 
-                        E_e var8 = var1.n();
-                        var2.snapshots = new HashMap(2 * var8.size);
+                        MapHeader var8 = umBeanCoder.readMapHeader();
+                        idTracking.snapshots = new HashMap(2 * var8.size);
 
                         for(var5 = 0; var5 < var8.size; ++var5) {
-                            String var9 = var1.readString();
+                            String var9 = umBeanCoder.readString();
                             IdSnapshot_c var7 = new IdSnapshot_c();
-                            var7.unpackFrom(var1);
-                            var2.snapshots.put(var9, var7);
+                            var7.unpackFrom(umBeanCoder);
+                            idTracking.snapshots.put(var9, var7);
                         }
 
-                        var1.o();
-                        var2.a(true);
+                        umBeanCoder.o();
+                        idTracking.a(true);
                         break;
                     case 2:
-                        if(var3.type != 15) {
-                            UMBeanCoderEngine.read(var1, var3.type);
+                        if(tField.type != 15) {
+                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
                             break;
                         }
 
-                        D_d var4 = var1.p();
-                        var2.journals = new ArrayList(var4.b);
+                        ListHeader var4 = umBeanCoder.readListHeader();
+                        idTracking.journals = new ArrayList(var4.size);
 
-                        for(var5 = 0; var5 < var4.b; ++var5) {
+                        for(var5 = 0; var5 < var4.size; ++var5) {
                             IdJournal_b var6 = new IdJournal_b();
-                            var6.unpackFrom(var1);
-                            var2.journals.add(var6);
+                            var6.unpackFrom(umBeanCoder);
+                            idTracking.journals.add(var6);
                         }
 
-                        var1.q();
-                        var2.b(true);
+                        umBeanCoder.q();
+                        idTracking.b(true);
                         break;
                     case 3:
-                        if(var3.type == 11) {
-                            var2.checksum = var1.readString();
-                            var2.c(true);
+                        if(tField.type == 11) {
+                            idTracking.checksum = umBeanCoder.readString();
+                            idTracking.c(true);
                         } else {
-                            UMBeanCoderEngine.read(var1, var3.type);
+                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
                         }
                         break;
                     default:
-                        UMBeanCoderEngine.read(var1, var3.type);
+                        UMBeanCoderEngine.read(umBeanCoder, tField.type);
                 }
 
-                var1.m();
+                umBeanCoder.m();
             }
         }
 
@@ -457,7 +457,7 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
             Iterator var3;
             if(idTracking.snapshots != null) {
                 umBeanCoder.writeTField(IdTracking.g);
-                umBeanCoder.a(new E_e((byte)11, (byte)12, idTracking.snapshots.size()));
+                umBeanCoder.writeMapHeader(new MapHeader((byte)11, (byte)12, idTracking.snapshots.size()));
                 var3 = idTracking.snapshots.entrySet().iterator();
 
                 while(var3.hasNext()) {
@@ -472,7 +472,7 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
 
             if(idTracking.journals != null && idTracking.k()) {
                 umBeanCoder.writeTField(IdTracking.h);
-                umBeanCoder.a(new D_d((byte)12, idTracking.journals.size()));
+                umBeanCoder.writeListHeader(new ListHeader((byte)12, idTracking.journals.size()));
                 var3 = idTracking.journals.iterator();
 
                 while(var3.hasNext()) {
@@ -484,14 +484,14 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
                 umBeanCoder.c();
             }
 
-            if(idTracking.checksum != null && idTracking.n()) {
+            if(idTracking.checksum != null && idTracking.isNotNullChecksum()) {
                 umBeanCoder.writeTField(IdTracking.i);
                 umBeanCoder.writeString(idTracking.checksum);
                 umBeanCoder.c();
             }
 
-            umBeanCoder.d();
-            umBeanCoder.b();
+            umBeanCoder.writeDivider();
+            umBeanCoder.endPack();
         }
     }
 

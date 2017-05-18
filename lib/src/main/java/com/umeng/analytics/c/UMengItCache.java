@@ -30,14 +30,14 @@ public class UMengItCache {
     private long lastTimeInMills;
     private long interval;
     private Set<UMProperty> properties = new HashSet();
-    private UMengItCache.a h = null;
+    private KeyManager keyManager = null;
     public static UMengItCache instance;
 
     UMengItCache(Context context) {
         this.file = new File(context.getFilesDir(), "umeng_it.cache");
         this.interval = 86400000L;
-        this.h = new UMengItCache.a(context);
-        this.h.b();
+        this.keyManager = new KeyManager(context);
+        this.keyManager.loadFromCache();
     }
 
 
@@ -72,7 +72,7 @@ public class UMengItCache {
 
 
     public boolean addProperty(UMProperty property) {
-        return this.h.a(property.getName())?this.properties.add(property):false;
+        return this.keyManager.notContains(property.getName())?this.properties.add(property):false;
     }
 
     public void setInterval(long interval) {
@@ -90,14 +90,14 @@ public class UMengItCache {
                 if(umProperty.isValidIDSnapshot() && umProperty.a()) {
                     var3 = true;
                     if(!umProperty.isValidIDSnapshot()) {
-                        this.h.b(umProperty.getName());
+                        this.keyManager.add(umProperty.getName());
                     }
                 }
             }
 
             if(var3) {
                 this.initIdTracking();
-                this.h.a();
+                this.keyManager.saveToCache();
                 this.cache();
             }
 
@@ -236,27 +236,27 @@ public class UMengItCache {
 
     }
 
-    public static class a {
+    public static class KeyManager {
         private Context context;
         private Set<String> hashSet = new HashSet();
 
-        public a(Context context) {
+        public KeyManager(Context context) {
             this.context = context;
         }
 
-        public boolean a(String var1) {
-            return !this.hashSet.contains(var1);
+        public boolean notContains(String key) {
+            return !this.hashSet.contains(key);
         }
 
-        public void b(String var1) {
-            this.hashSet.add(var1);
+        public void add(String key) {
+            this.hashSet.add(key);
         }
 
-        public void c(String var1) {
-            this.hashSet.remove(var1);
+        public void remove(String key) {
+            this.hashSet.remove(key);
         }
 
-        public void a() {
+        public void saveToCache() {
             if(!this.hashSet.isEmpty()) {
                 StringBuilder sb = new StringBuilder();
                 Iterator iterator = this.hashSet.iterator();
@@ -274,7 +274,7 @@ public class UMengItCache {
 
         }
 
-        public void b() {
+        public void loadFromCache() {
             SharedPreferences sp = SP_Util.getSp(this.context);
             String var2 = sp.getString("invld_id", null);
             if(!TextUtils.isEmpty(var2)) {

@@ -224,7 +224,7 @@ public class LogReportor {
         try {
             beanUnpacker.unpack(response, respData);
             if(response.respCode == 1) {
-                this.imprintTool.b(response.getImprint());
+                this.imprintTool.setImprint(response.getImprint());
                 this.imprintTool.writeToCache();
             }
 

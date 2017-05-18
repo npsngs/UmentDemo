@@ -10,7 +10,7 @@ import a.a.a.a.B_b;
 import a.a.a.a.C_c;
 import a.a.a.a.E_e_a;
 import a.a.a.a_j;
-import a.a.a.b.E_e;
+import a.a.a.b.MapHeader;
 import a.a.a.b.TField_c;
 import a.a.a.b.UMBeanCoderEngine;
 import a.a.a.UMBean;
@@ -120,7 +120,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
         return this;
     }
 
-    public void e() {
+    public void clearProperty() {
         this.property = null;
     }
 
@@ -139,8 +139,8 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
         return this.version;
     }
 
-    public Imprint a(int var1) {
-        this.version = var1;
+    public Imprint setVersion(int version) {
+        this.version = version;
         this.b(true);
         return this;
     }
@@ -284,7 +284,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
 
         public void pack(UMBeanCoder var1, Imprint var2) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
-            E_e var4 = new E_e((byte)11, (byte)12, var3.readSignedInt());
+            MapHeader var4 = new MapHeader((byte)11, (byte)12, var3.readSignedInt());
             var2.property = new HashMap(2 * var4.size);
 
             for(int var5 = 0; var5 < var4.size; ++var5) {
@@ -337,14 +337,14 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
                             break;
                         }
 
-                        E_e var4 = umBeanCoder.n();
-                        imprint.property = new HashMap(2 * var4.size);
+                        MapHeader mapHeader = umBeanCoder.readMapHeader();
+                        imprint.property = new HashMap(2 * mapHeader.size);
 
-                        for(int i = 0; i < var4.size; ++i) {
-                            String var6 = umBeanCoder.readString();
+                        for(int i = 0; i < mapHeader.size; ++i) {
+                            String key = umBeanCoder.readString();
                             ImprintValue imprintValue = new ImprintValue();
                             imprintValue.unpackFrom(umBeanCoder);
-                            imprint.property.put(var6, imprintValue);
+                            imprint.property.put(key, imprintValue);
                         }
 
                         umBeanCoder.o();
@@ -374,35 +374,35 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
             }
         }
 
-        public void pack(UMBeanCoder var1, Imprint var2) throws UMException {
-            var2.assertValid();
-            var1.startPack(Imprint.f);
-            if(var2.property != null) {
-                var1.writeTField(Imprint.g);
-                var1.a(new E_e((byte)11, (byte)12, var2.property.size()));
-                Iterator var3 = var2.property.entrySet().iterator();
+        public void pack(UMBeanCoder umBeanCoder, Imprint imprint) throws UMException {
+            imprint.assertValid();
+            umBeanCoder.startPack(Imprint.f);
+            if(imprint.property != null) {
+                umBeanCoder.writeTField(Imprint.g);
+                umBeanCoder.writeMapHeader(new MapHeader((byte)11, (byte)12, imprint.property.size()));
+                Iterator iterator = imprint.property.entrySet().iterator();
 
-                while(var3.hasNext()) {
-                    Entry var4 = (Entry)var3.next();
-                    var1.writeString((String)var4.getKey());
-                    ((ImprintValue)var4.getValue()).packTo(var1);
+                while(iterator.hasNext()) {
+                    Entry entry = (Entry)iterator.next();
+                    umBeanCoder.writeString((String)entry.getKey());
+                    ((ImprintValue)entry.getValue()).packTo(umBeanCoder);
                 }
 
-                var1.e();
-                var1.c();
+                umBeanCoder.e();
+                umBeanCoder.c();
             }
 
-            var1.writeTField(Imprint.h);
-            var1.writeUnsignedInt(var2.version);
-            var1.c();
-            if(var2.checksum != null) {
-                var1.writeTField(Imprint.i);
-                var1.writeString(var2.checksum);
-                var1.c();
+            umBeanCoder.writeTField(Imprint.h);
+            umBeanCoder.writeUnsignedInt(imprint.version);
+            umBeanCoder.c();
+            if(imprint.checksum != null) {
+                umBeanCoder.writeTField(Imprint.i);
+                umBeanCoder.writeString(imprint.checksum);
+                umBeanCoder.c();
             }
 
-            var1.d();
-            var1.b();
+            umBeanCoder.writeDivider();
+            umBeanCoder.endPack();
         }
     }
 

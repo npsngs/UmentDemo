@@ -20,45 +20,45 @@ public class OptionSetter_c implements OptionSetter {
     private final long b = 129600000L;
     private final int c = 1800000;
     private final int d = 10000;
-    private CacheTool e;
-    private RequestTracker f;
-    private long g = 1296000000L;
+    private CacheTool cacheTool;
+    private RequestTracker requestTracker;
+    private long half_month = 1296000000L;
     private int h = 10000;
     private long i = 0L;
     private long j = 0L;
-    private Context k;
-    private static OptionSetter_c l = null;
+    private Context context;
+    private static OptionSetter_c optionSetter_c = null;
 
     public static synchronized OptionSetter_c a(Context var0, RequestTracker var1) {
-        if(l == null) {
-            l = new OptionSetter_c(var0, var1);
-            l.setOption(ImprintTool.getInstance(var0).getOption());
+        if(optionSetter_c == null) {
+            optionSetter_c = new OptionSetter_c(var0, var1);
+            optionSetter_c.setOption(ImprintTool.getInstance(var0).getOption());
         }
 
-        return l;
+        return optionSetter_c;
     }
 
-    private OptionSetter_c(Context var1, RequestTracker var2) {
-        this.k = var1;
-        this.e = CacheTool.getInstance(var1);
-        this.f = var2;
+    private OptionSetter_c(Context context, RequestTracker requestTracker) {
+        this.context = context;
+        this.cacheTool = CacheTool.getInstance(context);
+        this.requestTracker = requestTracker;
     }
 
-    public boolean a() {
-        if(this.e.hasCache()) {
+    public boolean isNeedReport() {
+        if(this.cacheTool.hasCache()) {
             return false;
-        } else if(this.f.hasNotRequest()) {
+        } else if(this.requestTracker.hasNotRequest()) {
             return false;
         } else {
-            long var1 = System.currentTimeMillis() - this.f.getLastReq();
-            if(var1 > this.g) {
-                String var3 = UMEnvelopeData.getCachedSignature(this.k);
-                this.i = (long) StringTool.a(this.h, var3);
-                this.j = var1;
+            long interval = System.currentTimeMillis() - this.requestTracker.getLastReq();
+            if(interval > this.half_month) {
+                String signature = UMEnvelopeData.getCachedSignature(this.context);
+                this.i = (long) StringTool.a(this.h, signature);
+                this.j = interval;
                 return true;
-            } else if(var1 > 129600000L) {
+            } else if(interval > 129600000L) {
                 this.i = 0L;
-                this.j = var1;
+                this.j = interval;
                 return true;
             } else {
                 return false;
@@ -75,7 +75,7 @@ public class OptionSetter_c implements OptionSetter {
     }
 
     public void setOption(Option var1) {
-        this.g = var1.a(1296000000L);
+        this.half_month = var1.a(1296000000L);
         int var2 = var1.b(0);
         if(var2 == 0) {
             if(AnalyticsConfig.sLatentWindow > 0 && AnalyticsConfig.sLatentWindow <= 1800000) {

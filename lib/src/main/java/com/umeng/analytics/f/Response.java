@@ -47,12 +47,10 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
     public String msg;
     public Imprint imprint;
     private byte l;
-    private RespField[] m;
     public static final Map<RespField, B_b> d;
 
     public Response() {
         this.l = 0;
-        this.m = new RespField[]{RespField.MSG, RespField.IMPRINT};
     }
 
     public Response(int var1) {
@@ -63,7 +61,6 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
 
     public Response(Response var1) {
         this.l = 0;
-        this.m = new RespField[]{RespField.MSG, RespField.IMPRINT};
         this.l = var1.l;
         this.respCode = var1.respCode;
         if(var1.hasMsg()) {
@@ -369,8 +366,8 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
                 beanCoder.c();
             }
 
-            beanCoder.d();
-            beanCoder.b();
+            beanCoder.writeDivider();
+            beanCoder.endPack();
         }
     }
 

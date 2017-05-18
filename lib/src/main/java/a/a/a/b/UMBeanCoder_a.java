@@ -68,7 +68,7 @@ public class UMBeanCoder_a extends UMBeanCoder {
     public void startPack(Name var1) {
     }
 
-    public void b() {
+    public void endPack() {
     }
 
     public void writeTField(TField_c tField) throws UMException {
@@ -79,22 +79,22 @@ public class UMBeanCoder_a extends UMBeanCoder {
     public void c() {
     }
 
-    public void d() throws UMException {
+    public void writeDivider() throws UMException {
         this.writeByte((byte)0);
     }
 
-    public void a(E_e var1) throws UMException {
-        this.writeByte(var1.a);
-        this.writeByte(var1.b);
+    public void writeMapHeader(MapHeader var1) throws UMException {
+        this.writeByte(var1.keyType);
+        this.writeByte(var1.valueType);
         this.writeUnsignedInt(var1.size);
     }
 
     public void e() {
     }
 
-    public void a(D_d var1) throws UMException {
-        this.writeByte(var1.a);
-        this.writeUnsignedInt(var1.b);
+    public void writeListHeader(ListHeader var1) throws UMException {
+        this.writeByte(var1.type);
+        this.writeUnsignedInt(var1.size);
     }
 
     public void f() {
@@ -198,15 +198,15 @@ public class UMBeanCoder_a extends UMBeanCoder {
     public void m() {
     }
 
-    public E_e n() throws UMException {
-        return new E_e(this.readByte(), this.readByte(), this.readSignedInt());
+    public MapHeader readMapHeader() throws UMException {
+        return new MapHeader(this.readByte(), this.readByte(), this.readSignedInt());
     }
 
     public void o() {
     }
 
-    public D_d p() throws UMException {
-        return new D_d(this.readByte(), this.readSignedInt());
+    public ListHeader readListHeader() throws UMException {
+        return new ListHeader(this.readByte(), this.readSignedInt());
     }
 
     public void q() {

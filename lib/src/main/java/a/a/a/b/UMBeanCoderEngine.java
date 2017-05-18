@@ -66,11 +66,11 @@ public class UMBeanCoderEngine {
                         beanCoder.m();
                     }
                 case 13:
-                    E_e var3 = beanCoder.n();
+                    MapHeader var3 = beanCoder.readMapHeader();
 
                     for(int var8 = 0; var8 < var3.size; ++var8) {
-                        read(beanCoder, var3.a, skip - 1);
-                        read(beanCoder, var3.b, skip - 1);
+                        read(beanCoder, var3.keyType, skip - 1);
+                        read(beanCoder, var3.valueType, skip - 1);
                     }
 
                     beanCoder.o();
@@ -85,10 +85,10 @@ public class UMBeanCoderEngine {
                     beanCoder.s();
                     break;
                 case 15:
-                    D_d var5 = beanCoder.p();
+                    ListHeader var5 = beanCoder.readListHeader();
 
-                    for(int i = 0; i < var5.b; ++i) {
-                        read(beanCoder, var5.a, skip - 1);
+                    for(int i = 0; i < var5.size; ++i) {
+                        read(beanCoder, var5.type, skip - 1);
                     }
 
                     beanCoder.q();

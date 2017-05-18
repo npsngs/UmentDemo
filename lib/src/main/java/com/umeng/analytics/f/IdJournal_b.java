@@ -421,8 +421,8 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
             umBeanCoder.writeTField(IdJournal_b.K_bc);
             umBeanCoder.writeUnsignedLong(idJournal_b.d);
             umBeanCoder.c();
-            umBeanCoder.d();
-            umBeanCoder.b();
+            umBeanCoder.writeDivider();
+            umBeanCoder.endPack();
         }
     }
 

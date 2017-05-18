@@ -9,7 +9,7 @@ import android.content.Context;
 import com.umeng.analytics.d.RequestTracker;
 import com.umeng.analytics.e.OptionSetter_b;
 
-public class j {
+public class J {
     public static final int a_int = 0;
     public static final int b_int = 1;
     static final int c_int = 2;
@@ -19,7 +19,7 @@ public class j {
     public static final int g_int = 6;
     public static final int h_int = 8;
 
-    public j() {
+    public J() {
     }
 
     public static boolean a(int var0) {

@@ -355,8 +355,8 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
                 var1.c();
             }
 
-            var1.d();
-            var1.b();
+            var1.writeDivider();
+            var1.endPack();
         }
     }
 

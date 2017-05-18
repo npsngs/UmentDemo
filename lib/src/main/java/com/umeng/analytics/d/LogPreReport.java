@@ -27,8 +27,8 @@ import com.umeng.tool.SystemUtil;
 import com.umeng.tool.*;
 import com.umeng.tool.ULog;
 import com.umeng.tool.SafeRunnable;
-import com.umeng.tool.j;
-import com.umeng.tool.j.UMPolicy_j;
+import com.umeng.tool.J;
+import com.umeng.tool.J.UMPolicy_j;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.f.IdTracking;
 
@@ -196,7 +196,6 @@ public final class LogPreReport implements Reporter, OptionSetter {
             uMengItCache.d();
         } catch (Exception e) {
         }
-
     }
 
     protected JSONObject packData(int... var1) {
@@ -480,7 +479,7 @@ public final class LogPreReport implements Reporter, OptionSetter {
             ULog.e("network is unavailable");
             return false;
         } else {
-            return this.requestTracker.hasNotRequest()?true:this.g.b(var1).canReport(var1);
+            return this.requestTracker.hasNotRequest()?true:this.g.getUMPolicy(var1).canReport(var1);
         }
     }
 
@@ -531,8 +530,8 @@ public final class LogPreReport implements Reporter, OptionSetter {
         }
     }
 
-    private void b(int var1) {
-        this.startReport(var1);
+    private void startDelayReport(int interval) {
+        this.startReport(interval);
     }
 
     public void setOption(ImprintTool.Option option) {
@@ -586,11 +585,11 @@ public final class LogPreReport implements Reporter, OptionSetter {
     }
 
     public class LogPreReport_a_Innser {
-        private j.UMPolicy umPolicy;
+        private J.UMPolicy umPolicy;
         private int policy = -1;
         private int interval = -1;
-        private int e = -1;
-        private int f = -1;
+        private int defaultPolicy = -1;
+        private int defaultInterval = -1;
 
         public LogPreReport_a_Innser() {
             int[] var2 = LogPreReport.this.option.getReportPolicy(-1, -1);
@@ -601,34 +600,34 @@ public final class LogPreReport implements Reporter, OptionSetter {
         protected void a(boolean var1) {
             boolean var2;
             if(LogPreReport.this.optionSetter_b.isDiscardOnFail()) {
-                var2 = this.umPolicy instanceof j.UMPolicy_b && this.umPolicy.canDiscard();
-                this.umPolicy = var2?this.umPolicy :new j.UMPolicy_b(LogPreReport.this.requestTracker, LogPreReport.this.optionSetter_b);
+                var2 = this.umPolicy instanceof J.UMPolicy_b && this.umPolicy.canDiscard();
+                this.umPolicy = var2?this.umPolicy :new J.UMPolicy_b(LogPreReport.this.requestTracker, LogPreReport.this.optionSetter_b);
             } else {
-                var2 = this.umPolicy instanceof j.UMPolicy_c && this.umPolicy.canDiscard();
+                var2 = this.umPolicy instanceof J.UMPolicy_c && this.umPolicy.canDiscard();
                 if(!var2) {
-                    if(var1 && LogPreReport.this.optionSetter_c.a()) {
-                        this.umPolicy = new j.UMPolicy_c((int)LogPreReport.this.optionSetter_c.b());
-                        LogPreReport.this.b((int)LogPreReport.this.optionSetter_c.b());
-                    } else if(ULog.isDebugMode && LogPreReport.this.option.b()) {
-                        this.umPolicy = new j.UMPolicy_a(LogPreReport.this.requestTracker);
+                    if(var1 && LogPreReport.this.optionSetter_c.isNeedReport()) {
+                        this.umPolicy = new J.UMPolicy_c((int)LogPreReport.this.optionSetter_c.b());
+                        LogPreReport.this.startDelayReport((int)LogPreReport.this.optionSetter_c.b());
+                    } else if(ULog.isDebugMode && LogPreReport.this.option.isIntegrated_test()) {
+                        this.umPolicy = new J.UMPolicy_a(LogPreReport.this.requestTracker);
                     } else {
                         int policy;
                         if(LogPreReport.this.optionSetter_a.a() && "RPT".equals(LogPreReport.this.optionSetter_a.f())) {
                             policy = 0;
-                            if(LogPreReport.this.optionSetter_a.b() == 6) {
-                                if(LogPreReport.this.option.a()) {
+                            if(LogPreReport.this.optionSetter_a.getPolicy() == 6) {
+                                if(LogPreReport.this.option.hasTest_report_interval()) {
                                     policy = LogPreReport.this.option.getTest_report_interval(90000);
                                 } else if(this.interval > 0) {
                                     policy = this.interval;
                                 } else {
-                                    policy = this.f;
+                                    policy = this.defaultInterval;
                                 }
                             }
 
-                            this.umPolicy = this.getUMPolicy(LogPreReport.this.optionSetter_a.b(), policy);
+                            this.umPolicy = this.getUMPolicy(LogPreReport.this.optionSetter_a.getPolicy(), policy);
                         } else {
-                            policy = this.e;
-                            int interval = this.f;
+                            policy = this.defaultPolicy;
+                            int interval = this.defaultInterval;
                             if(this.policy != -1) {
                                 policy = this.policy;
                                 interval = this.interval;
@@ -642,38 +641,38 @@ public final class LogPreReport implements Reporter, OptionSetter {
 
         }
 
-        public j.UMPolicy b(boolean var1) {
+        public J.UMPolicy getUMPolicy(boolean var1) {
             this.a(var1);
             return this.umPolicy;
         }
 
-        private j.UMPolicy getUMPolicy(int policy, int interval) {
-            j.UMPolicy policy1;
+        private J.UMPolicy getUMPolicy(int policy, int interval) {
+            J.UMPolicy policy1;
             switch(policy) {
                 case 0:
-                    policy1 = this.umPolicy instanceof j.UMPolicy_g ?this.umPolicy :new j.UMPolicy_g();
+                    policy1 = this.umPolicy instanceof J.UMPolicy_g ?this.umPolicy :new J.UMPolicy_g();
                     break;
                 case 1:
-                    policy1 = this.umPolicy instanceof j.UMPolicy_d ?this.umPolicy :new j.UMPolicy_d();
+                    policy1 = this.umPolicy instanceof J.UMPolicy_d ?this.umPolicy :new J.UMPolicy_d();
                     break;
                 case 2:
                 case 3:
                 case 7:
                 default:
-                    policy1 = this.umPolicy instanceof j.UMPolicy_d ?this.umPolicy :new j.UMPolicy_d();
+                    policy1 = this.umPolicy instanceof J.UMPolicy_d ?this.umPolicy :new J.UMPolicy_d();
                     break;
                 case 4:
-                    policy1 = this.umPolicy instanceof j.UMPolicy_f ?this.umPolicy :new j.UMPolicy_f(LogPreReport.this.requestTracker);
+                    policy1 = this.umPolicy instanceof J.UMPolicy_f ?this.umPolicy :new J.UMPolicy_f(LogPreReport.this.requestTracker);
                     break;
                 case 5:
-                    policy1 = this.umPolicy instanceof j.UMPolicy_i ?this.umPolicy :new j.UMPolicy_i(LogPreReport.context);
+                    policy1 = this.umPolicy instanceof J.UMPolicy_i ?this.umPolicy :new J.UMPolicy_i(LogPreReport.context);
                     break;
                 case 6:
-                    if(this.umPolicy instanceof j.UMPolicy_e) {
+                    if(this.umPolicy instanceof J.UMPolicy_e) {
                         policy1 = this.umPolicy;
-                        ((j.UMPolicy_e)policy1).setMaxInterval((long)interval);
+                        ((J.UMPolicy_e)policy1).setMaxInterval((long)interval);
                     } else {
-                        policy1 = new j.UMPolicy_e(LogPreReport.this.requestTracker, (long)interval);
+                        policy1 = new J.UMPolicy_e(LogPreReport.this.requestTracker, (long)interval);
                     }
                     break;
                 case 8:
@@ -683,9 +682,9 @@ public final class LogPreReport implements Reporter, OptionSetter {
             return policy1;
         }
 
-        public void a(int var1, int var2) {
-            this.e = var1;
-            this.f = var2;
+        public void setDefault(int policy, int interval) {
+            this.defaultPolicy = policy;
+            this.defaultInterval = interval;
         }
 
         public void setOption(ImprintTool.Option option) {
