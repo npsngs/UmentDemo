@@ -63,17 +63,20 @@ public class ZipTool {
     }
 
     public static byte[] inflater(byte[] source) throws UnsupportedEncodingException, DataFormatException {
+        return inflater(source, 0, source.length);
+    }
+
+
+    public static byte[] inflater(byte[] source, int offset, int length) throws UnsupportedEncodingException, DataFormatException {
         if(source != null && source.length != 0) {
             Inflater inflater = new Inflater();
-            inflater.setInput(source, 0, source.length);
+            inflater.setInput(source, offset, length);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             byte[] buffer = new byte[1024];
-            int len;
-            for(int i = 0; !inflater.needsInput(); i += len) {
+            while (!inflater.needsInput()){
                 len = inflater.inflate(buffer);
-                bos.write(buffer, i, len);
+                bos.write(buffer, 0, len);
             }
-
             inflater.end();
             return bos.toByteArray();
         } else {

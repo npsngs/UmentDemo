@@ -8,15 +8,15 @@ package com.umeng.analytics.f;
 import a.a.a.UMField;
 import a.a.a.a.B_b;
 import a.a.a.a.C_c;
-import a.a.a.a_j;
-import a.a.a.b.TField_c;
+import a.a.a.ByteTool;
+import a.a.a.b.TField;
 import a.a.a.b.UMBeanCoderEngine;
 import a.a.a.UMBean;
 import a.a.a.UMException;
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMBeanCoder_b;
 import a.a.a.b.UMMsgException;
-import a.a.a.b.Name;
+import a.a.a.b.UMName;
 import a.a.a.b.UMBeanCoder_n;
 import a.a.a.c.BeanTransferGetter;
 import a.a.a.c.UMBeanTransfer;
@@ -38,10 +38,10 @@ import java.util.Map;
 
 public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, Serializable, Cloneable {
     private static final long e = 7501688097813630241L;
-    private static final Name f = new Name("ImprintValue");
-    private static final TField_c g = new TField_c("value", (byte)11, (short)1);
-    private static final TField_c h = new TField_c("ts", (byte)10, (short)2);
-    private static final TField_c i = new TField_c("guid", (byte)11, (short)3);
+    private static final UMName f = new UMName("ImprintValue");
+    private static final TField g = new TField("value", (byte)11, (short)1);
+    private static final TField h = new TField("ts", (byte)10, (short)2);
+    private static final TField i = new TField("guid", (byte)11, (short)3);
     private static final Map<Class<? extends UMBeanTransfer>, BeanTransferGetter> j = new HashMap();
     public String value;
     public long ts;
@@ -123,15 +123,15 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
     }
 
     public void g() {
-        this.l = a_j.b(this.l, 0);
+        this.l = ByteTool.b(this.l, 0);
     }
 
     public boolean h() {
-        return a_j.a(this.l, 0);
+        return ByteTool.a(this.l, 0);
     }
 
     public void b(boolean var1) {
-        this.l = a_j.a(this.l, 0, var1);
+        this.l = ByteTool.a(this.l, 0, var1);
     }
 
     public String getGUID() {
@@ -238,7 +238,7 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
         var0.put(e_enum.c, new B_b("guid", (byte)1, new C_c((byte)11)));
         d = Collections.unmodifiableMap(var0);
         B_b b = new B_b(null, (byte)1, null);
-        b.a(ImprintValue.class, d);
+        b.put(ImprintValue.class, d);
     }
 
     private static class c extends UMBeanTransfer_d<ImprintValue> {
@@ -293,7 +293,7 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
             var1.startUnpack();
 
             while(true) {
-                TField_c var3 = var1.readTField();
+                TField var3 = var1.readTField();
                 if(var3.type == 0) {
                     var1.k();
                     if(!var2.h()) {
@@ -333,7 +333,7 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
                         UMBeanCoderEngine.read(var1, var3.type);
                 }
 
-                var1.m();
+                var1.endReadObj();
             }
         }
 
@@ -343,20 +343,20 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
             if(var2.value != null && var2.hasValue()) {
                 var1.writeTField(ImprintValue.g);
                 var1.writeString(var2.value);
-                var1.c();
+                var1.endWriteField();
             }
 
             var1.writeTField(ImprintValue.h);
             var1.writeUnsignedLong(var2.ts);
-            var1.c();
+            var1.endWriteField();
             if(var2.guid != null) {
                 var1.writeTField(ImprintValue.i);
                 var1.writeString(var2.guid);
-                var1.c();
+                var1.endWriteField();
             }
 
             var1.writeDivider();
-            var1.endPack();
+            var1.endWriteObj();
         }
     }
 

@@ -8,15 +8,15 @@ package com.umeng.analytics.f;
 import a.a.a.UMField;
 import a.a.a.a.B_b;
 import a.a.a.a.C_c;
-import a.a.a.a_j;
-import a.a.a.b.TField_c;
+import a.a.a.ByteTool;
+import a.a.a.b.TField;
 import a.a.a.UMBean;
 import a.a.a.UMException;
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMBeanCoder_b;
 import a.a.a.b.UMMsgException;
 import a.a.a.b.UMBeanCoderEngine;
-import a.a.a.b.Name;
+import a.a.a.b.UMName;
 import a.a.a.b.UMBeanCoder_n;
 import a.a.a.c.BeanTransferGetter;
 import a.a.a.c.UMBeanTransfer;
@@ -38,16 +38,16 @@ import java.util.Map;
 
 public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Serializable, Cloneable {
     private static final long f = 9132678615281394583L;
-    private static final Name g = new Name("IdJournal");
-    private static final TField_c h = new TField_c("domain", (byte)11, (short)1);
-    private static final TField_c i = new TField_c("old_id", (byte)11, (short)2);
-    private static final TField_c j = new TField_c("new_id", (byte)11, (short)3);
-    private static final TField_c K_bc = new TField_c("ts", (byte)10, (short)4);
+    private static final UMName g = new UMName("IdJournal");
+    private static final TField h = new TField("domain", (byte)11, (short)1);
+    private static final TField i = new TField("old_id", (byte)11, (short)2);
+    private static final TField j = new TField("new_id", (byte)11, (short)3);
+    private static final TField K_bc = new TField("ts", (byte)10, (short)4);
     private static final Map<Class<? extends UMBeanTransfer>, BeanTransferGetter> l = new HashMap();
     public String domain;
     public String old_id;
     public String new_id;
-    public long d;
+    public long ts;
     private static final int m = 0;
     private byte n;
     private e_enum[] o;
@@ -62,7 +62,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
         this();
         this.domain = var1;
         this.new_id = var2;
-        this.d = var3;
+        this.ts = var3;
         this.d(true);
     }
 
@@ -82,7 +82,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
             this.new_id = var1.new_id;
         }
 
-        this.d = var1.d;
+        this.ts = var1.ts;
     }
 
     public IdJournal_b copyOne() {
@@ -94,7 +94,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
         this.old_id = null;
         this.new_id = null;
         this.d(false);
-        this.d = 0L;
+        this.ts = 0L;
     }
 
     public String c() {
@@ -170,25 +170,25 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
     }
 
     public long l() {
-        return this.d;
+        return this.ts;
     }
 
     public IdJournal_b a(long var1) {
-        this.d = var1;
+        this.ts = var1;
         this.d(true);
         return this;
     }
 
     public void m() {
-        this.n = a_j.b(this.n, 0);
+        this.n = ByteTool.b(this.n, 0);
     }
 
     public boolean n() {
-        return a_j.a(this.n, 0);
+        return ByteTool.a(this.n, 0);
     }
 
     public void d(boolean var1) {
-        this.n = a_j.a(this.n, 0, var1);
+        this.n = ByteTool.a(this.n, 0, var1);
     }
 
     public e_enum getUMField(int var1) {
@@ -246,7 +246,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
         }
 
         var1.append("ts:");
-        var1.append(this.d);
+        var1.append(this.ts);
         var2 = false;
         var1.append(")");
         return var1.toString();
@@ -287,7 +287,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
         var0.put(e_enum.d, new B_b("ts", (byte)1, new C_c((byte)10)));
         e = Collections.unmodifiableMap(var0);
         B_b a = new B_b("",(byte)1,null);
-        a.a(IdJournal_b.class, e);
+        a.put(IdJournal_b.class, e);
     }
 
     private static class c extends UMBeanTransfer_d<IdJournal_b> {
@@ -298,7 +298,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
             var3.writeString(var2.domain);
             var3.writeString(var2.new_id);
-            var3.writeUnsignedLong(var2.d);
+            var3.writeUnsignedLong(var2.ts);
             BitSet var4 = new BitSet();
             if(var2.h()) {
                 var4.set(0);
@@ -317,7 +317,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
             var2.a(true);
             var2.new_id = var3.readString();
             var2.c(true);
-            var2.d = var3.readSignedLong();
+            var2.ts = var3.readSignedLong();
             var2.d(true);
             BitSet var4 = var3.b(1);
             if(var4.get(0)) {
@@ -345,7 +345,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
             umBeanCoder.startUnpack();
 
             while(true) {
-                TField_c tField = umBeanCoder.readTField();
+                TField tField = umBeanCoder.readTField();
                 if(tField.type == 0) {
                     umBeanCoder.k();
                     if(!idJournal_b.n()) {
@@ -383,7 +383,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
                         break;
                     case 4:
                         if(tField.type == 10) {
-                            idJournal_b.d = umBeanCoder.readSignedLong();
+                            idJournal_b.ts = umBeanCoder.readSignedLong();
                             idJournal_b.d(true);
                         } else {
                             UMBeanCoderEngine.read(umBeanCoder, tField.type);
@@ -393,7 +393,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
                         UMBeanCoderEngine.read(umBeanCoder, tField.type);
                 }
 
-                umBeanCoder.m();
+                umBeanCoder.endReadObj();
             }
         }
 
@@ -403,26 +403,26 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
             if(idJournal_b.domain != null) {
                 umBeanCoder.writeTField(IdJournal_b.h);
                 umBeanCoder.writeString(idJournal_b.domain);
-                umBeanCoder.c();
+                umBeanCoder.endWriteField();
             }
 
             if(idJournal_b.old_id != null && idJournal_b.h()) {
                 umBeanCoder.writeTField(IdJournal_b.i);
                 umBeanCoder.writeString(idJournal_b.old_id);
-                umBeanCoder.c();
+                umBeanCoder.endWriteField();
             }
 
             if(idJournal_b.new_id != null) {
                 umBeanCoder.writeTField(IdJournal_b.j);
                 umBeanCoder.writeString(idJournal_b.new_id);
-                umBeanCoder.c();
+                umBeanCoder.endWriteField();
             }
 
             umBeanCoder.writeTField(IdJournal_b.K_bc);
-            umBeanCoder.writeUnsignedLong(idJournal_b.d);
-            umBeanCoder.c();
+            umBeanCoder.writeUnsignedLong(idJournal_b.ts);
+            umBeanCoder.endWriteField();
             umBeanCoder.writeDivider();
-            umBeanCoder.endPack();
+            umBeanCoder.endWriteObj();
         }
     }
 

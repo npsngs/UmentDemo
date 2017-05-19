@@ -16,12 +16,12 @@ import a.a.a.a.E_e_a;
 import a.a.a.a.G_g_a;
 import a.a.a.b.ListHeader;
 import a.a.a.b.MapHeader;
-import a.a.a.b.TField_c;
+import a.a.a.b.TField;
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMBeanCoder_b;
 import a.a.a.b.UMMsgException;
 import a.a.a.b.UMBeanCoderEngine;
-import a.a.a.b.Name;
+import a.a.a.b.UMName;
 import a.a.a.b.UMBeanCoder_n;
 import a.a.a.c.BeanTransferGetter;
 import a.a.a.c.UMBeanTransfer;
@@ -45,10 +45,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serializable, Cloneable {
-    private static final Name f = new Name("IdTracking");
-    private static final TField_c g = new TField_c("snapshots", (byte)13, (short) 1);
-    private static final TField_c h = new TField_c("journals", (byte)15, (short)2);
-    private static final TField_c i = new TField_c("checksum", (byte)11, (short)3);
+    private static final UMName f = new UMName("IdTracking");
+    private static final TField g = new TField("snapshots", (byte)13, (short) 1);
+    private static final TField h = new TField("journals", (byte)15, (short)2);
+    private static final TField i = new TField("checksum", (byte)11, (short)3);
     private static final Map<Class<? extends UMBeanTransfer>, BeanTransferGetter> j = new HashMap();
     public Map<String, IdSnapshot_c> snapshots;
     public List<IdJournal_b> journals;
@@ -293,7 +293,7 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
         var0.put(e_enum.b, new B_b("journals", (byte)2, new D_d_a((byte)15, new G_g_a((byte)12, IdJournal_b.class))));
         var0.put(e_enum.c, new B_b("checksum", (byte)2, new C_c((byte)11)));
         d = Collections.unmodifiableMap(var0);
-        B_b.a(IdTracking.class, d);
+        B_b.put(IdTracking.class, d);
     }
 
     private static class c extends UMBeanTransfer_d<IdTracking> {
@@ -389,7 +389,7 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
             umBeanCoder.startUnpack();
 
             while(true) {
-                TField_c tField = umBeanCoder.readTField();
+                TField tField = umBeanCoder.readTField();
                 if(tField.type == 0) {
                     umBeanCoder.k();
                     idTracking.assertValid();
@@ -447,7 +447,7 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
                         UMBeanCoderEngine.read(umBeanCoder, tField.type);
                 }
 
-                umBeanCoder.m();
+                umBeanCoder.endReadObj();
             }
         }
 
@@ -467,7 +467,7 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
                 }
 
                 umBeanCoder.e();
-                umBeanCoder.c();
+                umBeanCoder.endWriteField();
             }
 
             if(idTracking.journals != null && idTracking.k()) {
@@ -481,17 +481,17 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
                 }
 
                 umBeanCoder.f();
-                umBeanCoder.c();
+                umBeanCoder.endWriteField();
             }
 
             if(idTracking.checksum != null && idTracking.isNotNullChecksum()) {
                 umBeanCoder.writeTField(IdTracking.i);
                 umBeanCoder.writeString(idTracking.checksum);
-                umBeanCoder.c();
+                umBeanCoder.endWriteField();
             }
 
             umBeanCoder.writeDivider();
-            umBeanCoder.endPack();
+            umBeanCoder.endWriteObj();
         }
     }
 

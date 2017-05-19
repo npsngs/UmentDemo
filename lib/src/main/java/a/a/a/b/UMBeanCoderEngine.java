@@ -6,7 +6,7 @@
 package a.a.a.b;
 
 import a.a.a.UMException;
-import a.a.a.b.UMBeanCoder_b.UMBeanCoder_b_Inner;
+import a.a.a.b.UMBeanCoder_b.UMBeanCoder_b_Builder;
 
 public class UMBeanCoderEngine {
     private static int skip = Integer.MAX_VALUE;
@@ -56,14 +56,14 @@ public class UMBeanCoderEngine {
                     beanCoder.startUnpack();
 
                     while(true) {
-                        TField_c tField = beanCoder.readTField();
+                        TField tField = beanCoder.readTField();
                         if(tField.type == 0) {
                             beanCoder.k();
                             return;
                         }
 
                         read(beanCoder, tField.type, skip - 1);
-                        beanCoder.m();
+                        beanCoder.endReadObj();
                     }
                 case 13:
                     MapHeader var3 = beanCoder.readMapHeader();
@@ -98,6 +98,6 @@ public class UMBeanCoderEngine {
     }
 
     public static UMBeanCoderBuilder read(byte[] var0, UMBeanCoderBuilder coderBuilder) {
-        return var0[0] > 16?new UMBeanCoder_b_Inner():(var0.length > 1 && (var0[1] & 128) != 0?new UMBeanCoder_b_Inner():coderBuilder);
+        return var0[0] > 16?new UMBeanCoder_b_Builder():(var0.length > 1 && (var0[1] & 128) != 0?new UMBeanCoder_b_Builder():coderBuilder);
     }
 }

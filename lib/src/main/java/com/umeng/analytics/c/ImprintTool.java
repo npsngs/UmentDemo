@@ -313,12 +313,12 @@ public class ImprintTool {
             return this.defcon == -1?def:(this.defcon <= 3 && this.defcon >= 0?this.defcon :def);
         }
 
-        public int b(int var1) {
-            return this.latent == -1?var1:(this.latent >= 0 && this.latent <= 1800?this.latent * 1000:var1);
+        public int getLatent(int def) {
+            return this.latent == -1?def:(this.latent >= 0 && this.latent <= 1800?this.latent * 1000:def);
         }
 
-        public int c(int var1) {
-            return this.codex != 0 && this.codex != 1 && this.codex != -1?var1:this.codex;
+        public int getCodex(int def) {
+            return this.codex != 0 && this.codex != 1 && this.codex != -1?def:this.codex;
         }
 
         public int[] getReportPolicy(int def_policy, int def_interval) {

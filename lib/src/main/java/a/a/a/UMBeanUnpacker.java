@@ -5,34 +5,34 @@
 
 package a.a.a;
 
-import a.a.a.b.TField_c;
+import a.a.a.b.TField;
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMBeanCoderEngine;
 import a.a.a.b.UMBeanCoderBuilder;
-import a.a.a.b.UMBeanCoder_b.UMBeanCoder_b_Inner;
+import a.a.a.b.UMBeanCoder_b.UMBeanCoder_b_Builder;
 import a.a.a.d.BufferIOStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
 public class UMBeanUnpacker {
     private final UMBeanCoder umBeanCoder;
-    private final BufferIOStream b;
+    private final BufferIOStream bis;
 
     public UMBeanUnpacker() {
-        this(new UMBeanCoder_b_Inner());
+        this(new UMBeanCoder_b_Builder());
     }
 
     public UMBeanUnpacker(UMBeanCoderBuilder umBeanCoderBuilder) {
-        this.b = new BufferIOStream();
-        this.umBeanCoder = umBeanCoderBuilder.build(this.b);
+        this.bis = new BufferIOStream();
+        this.umBeanCoder = umBeanCoderBuilder.build(this.bis);
     }
 
     public void unpack(UMBean umBean, byte[] data) throws UMException {
         try {
-            this.b.setBuffer(data);
+            this.bis.setBuffer(data);
             umBean.unpackFrom(this.umBeanCoder);
         } finally {
-            this.b.clearBuffer();
+            this.bis.clearBuffer();
             this.umBeanCoder.B();
         }
 
@@ -57,7 +57,7 @@ public class UMBeanUnpacker {
         } catch (Exception e) {
             throw new UMException(e);
         } finally {
-            this.b.clearBuffer();
+            this.bis.clearBuffer();
             this.umBeanCoder.B();
         }
 
@@ -98,7 +98,7 @@ public class UMBeanUnpacker {
     public Short i(byte[] var1, UMField var2, UMField... var3) throws UMException {
         Short var5;
         try {
-            TField_c var4 = this.j(var1, var2, var3);
+            TField var4 = this.j(var1, var2, var3);
             if(var4 != null) {
                 this.umBeanCoder.startUnpack();
                 var5 = Short.valueOf(this.umBeanCoder.readTField().id);
@@ -109,7 +109,7 @@ public class UMBeanUnpacker {
         } catch (Exception var9) {
             throw new UMException(var9);
         } finally {
-            this.b.clearBuffer();
+            this.bis.clearBuffer();
             this.umBeanCoder.B();
         }
 
@@ -118,7 +118,7 @@ public class UMBeanUnpacker {
 
     private Object unpack(byte var1, byte[] var2, UMField var3, UMField... var4) throws UMException {
         try {
-            TField_c var5 = this.j(var2, var3, var4);
+            TField var5 = this.j(var2, var3, var4);
             ByteBuffer var6;
             if(var5 != null) {
                 switch(var1) {
@@ -177,38 +177,38 @@ public class UMBeanUnpacker {
         } catch (Exception var10) {
             throw new UMException(var10);
         } finally {
-            this.b.clearBuffer();
+            this.bis.clearBuffer();
             this.umBeanCoder.B();
         }
     }
 
-    private TField_c j(byte[] var1, UMField var2, UMField... var3) throws UMException {
-        this.b.setBuffer(var1);
-        UMField[] var4 = new UMField[var3.length + 1];
-        var4[0] = var2;
+    private TField j(byte[] buffer, UMField umField, UMField... umFields) throws UMException {
+        this.bis.setBuffer(buffer);
+        UMField[] var4 = new UMField[umFields.length + 1];
+        var4[0] = umField;
 
-        int var5;
-        for(var5 = 0; var5 < var3.length; ++var5) {
-            var4[var5 + 1] = var3[var5];
+        int i;
+        for(i = 0; i < umFields.length; ++i) {
+            var4[i + 1] = umFields[i];
         }
 
-        var5 = 0;
-        TField_c var6 = null;
+        i = 0;
+        TField var6 = null;
         this.umBeanCoder.startUnpack();
 
-        while(var5 < var4.length) {
+        while(i < var4.length) {
             var6 = this.umBeanCoder.readTField();
-            if(var6.type == 0 || var6.id > var4[var5].getFieldId()) {
+            if(var6.type == 0 || var6.id > var4[i].getFieldId()) {
                 return null;
             }
 
-            if(var6.id != var4[var5].getFieldId()) {
+            if(var6.id != var4[i].getFieldId()) {
                 UMBeanCoderEngine a = new UMBeanCoderEngine();
                 a.read(this.umBeanCoder, var6.type);
-                this.umBeanCoder.m();
+                this.umBeanCoder.endReadObj();
             } else {
-                ++var5;
-                if(var5 < var4.length) {
+                ++i;
+                if(i < var4.length) {
                     this.umBeanCoder.startUnpack();
                 }
             }

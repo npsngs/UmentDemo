@@ -18,13 +18,13 @@ public class UMBeanPacker {
     private UMBeanCoder umBeanCoder;
 
     public UMBeanPacker() {
-        this(new UMBeanCoder_b.UMBeanCoder_b_Inner());
+        this(new UMBeanCoder_b.UMBeanCoder_b_Builder());
     }
 
-    public UMBeanPacker(UMBeanCoderBuilder var1) {
+    public UMBeanPacker(UMBeanCoderBuilder builder) {
         this.baos = new ByteArrayOutputStream();
         this.umioStream = new UMIOStream(this.baos);
-        this.umBeanCoder = var1.build(this.umioStream);
+        this.umBeanCoder = builder.build(this.umioStream);
     }
 
     public byte[] pack2Bytes(UMBean umBean) throws UMException {

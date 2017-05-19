@@ -588,7 +588,7 @@ public class DBDataTool {
             if(TextUtils.isEmpty(d)) {
                 var2 = var1;
             } else {
-                byte[] var3 = StringTool.a(var1.getBytes(), d.getBytes());
+                byte[] var3 = StringTool.encrypt(var1.getBytes(), d.getBytes());
                 var2 = Base64.encodeToString(var3, 0);
             }
         } catch (Exception e) {
@@ -605,7 +605,7 @@ public class DBDataTool {
                 var2 = source;
             } else {
                 byte[] var3 = Base64.decode(source.getBytes(), 0);
-                var2 = new String(StringTool.b(var3, d.getBytes()));
+                var2 = new String(StringTool.decrypt(var3, d.getBytes()));
             }
         } catch (Exception e) {
         }

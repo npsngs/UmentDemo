@@ -9,15 +9,15 @@ import a.a.a.UMField;
 import a.a.a.a.B_b;
 import a.a.a.a.C_c;
 import a.a.a.a.G_g_a;
-import a.a.a.a_j;
-import a.a.a.b.TField_c;
+import a.a.a.ByteTool;
+import a.a.a.b.TField;
 import a.a.a.b.UMBeanCoderEngine;
 import a.a.a.UMBean;
 import a.a.a.UMException;
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMBeanCoder_b;
 import a.a.a.b.UMMsgException;
-import a.a.a.b.Name;
+import a.a.a.b.UMName;
 import a.a.a.b.UMBeanCoder_n;
 import a.a.a.c.BeanTransferGetter;
 import a.a.a.c.UMBeanTransfer;
@@ -38,10 +38,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class Response implements UMBean<Response, Response.RespField>, Serializable, Cloneable {
-    private static final Name f = new Name("Response");
-    private static final TField_c RESP_CODE_FIELD = new TField_c("resp_code", (byte)8, (short) 1);
-    private static final TField_c MSH_FIELD = new TField_c("msg", (byte)11, (short)2);
-    private static final TField_c IMPRINT_FIELD = new TField_c("imprint", (byte)12, (short)3);
+    private static final UMName f = new UMName("Response");
+    private static final TField RESP_CODE_FIELD = new TField("resp_code", (byte)8, (short) 1);
+    private static final TField MSH_FIELD = new TField("msg", (byte)11, (short)2);
+    private static final TField IMPRINT_FIELD = new TField("imprint", (byte)12, (short)3);
     private static final Map<Class<? extends UMBeanTransfer>, BeanTransferGetter> j = new HashMap();
     public int respCode;
     public String msg;
@@ -95,15 +95,15 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
     }
 
     public void d() {
-        this.l = a_j.b(this.l, 0);
+        this.l = ByteTool.b(this.l, 0);
     }
 
     public boolean e() {
-        return a_j.a(this.l, 0);
+        return ByteTool.a(this.l, 0);
     }
 
     public void a(boolean var1) {
-        this.l = a_j.a(this.l, 0, var1);
+        this.l = ByteTool.a(this.l, 0, var1);
     }
 
     public String getMsg() {
@@ -237,7 +237,7 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
         var0.put(RespField.IMPRINT, new B_b("imprint", (byte)2, new G_g_a((byte)12, Imprint.class)));
         d = Collections.unmodifiableMap(var0);
         B_b b = new B_b(null, (byte)1, null);
-        b.a(Response.class, d);
+        b.put(Response.class, d);
     }
 
     private static class c extends UMBeanTransfer_d<Response> {
@@ -303,7 +303,7 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
             beanCoder.startUnpack();
 
             while(true) {
-                TField_c tField = beanCoder.readTField();
+                TField tField = beanCoder.readTField();
                 if(tField.type == 0) {
                     beanCoder.k();
                     if(!response.e()) {
@@ -344,7 +344,7 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
                         UMBeanCoderEngine.read(beanCoder, tField.type);
                 }
 
-                beanCoder.m();
+                beanCoder.endReadObj();
             }
         }
 
@@ -353,21 +353,21 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
             beanCoder.startPack(Response.f);
             beanCoder.writeTField(Response.RESP_CODE_FIELD);
             beanCoder.writeUnsignedInt(response.respCode);
-            beanCoder.c();
+            beanCoder.endWriteField();
             if(response.msg != null && response.hasMsg()) {
                 beanCoder.writeTField(Response.MSH_FIELD);
                 beanCoder.writeString(response.msg);
-                beanCoder.c();
+                beanCoder.endWriteField();
             }
 
             if(response.imprint != null && response.hasImprint()) {
                 beanCoder.writeTField(Response.IMPRINT_FIELD);
                 response.imprint.packTo(beanCoder);
-                beanCoder.c();
+                beanCoder.endWriteField();
             }
 
             beanCoder.writeDivider();
-            beanCoder.endPack();
+            beanCoder.endWriteObj();
         }
     }
 

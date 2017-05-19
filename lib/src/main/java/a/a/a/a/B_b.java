@@ -24,7 +24,7 @@ public class B_b implements Serializable {
         this.c = var3;
     }
 
-    public static void a(Class<? extends UMBean> var0, Map<? extends UMField, B_b> var1) {
+    public static void put(Class<? extends UMBean> var0, Map<? extends UMField, B_b> var1) {
         d.put(var0, var1);
     }
 

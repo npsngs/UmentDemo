@@ -9,14 +9,14 @@ import a.a.a.UMBean;
 import a.a.a.UMField;
 import a.a.a.a.B_b;
 import a.a.a.a.C_c;
-import a.a.a.a_j;
+import a.a.a.ByteTool;
 import a.a.a.UMException;
-import a.a.a.b.TField_c;
+import a.a.a.b.TField;
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMBeanCoder_b;
 import a.a.a.b.UMMsgException;
 import a.a.a.b.UMBeanCoderEngine;
-import a.a.a.b.Name;
+import a.a.a.b.UMName;
 import a.a.a.b.UMBeanCoder_n;
 import a.a.a.c.BeanTransferGetter;
 import a.a.a.c.UMBeanTransfer;
@@ -37,10 +37,10 @@ import java.util.Map;
 
 public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, Serializable, Cloneable {
     private static final long e = -6496538196005191531L;
-    private static final Name f = new Name("IdSnapshot");
-    private static final TField_c IDENTITY_FIELD = new TField_c("identity", (byte) 11, (short) 1);
-    private static final TField_c TS_FIELD = new TField_c("ts", (byte)10, (short)2);
-    private static final TField_c VERSION_FIELD = new TField_c("version", (byte)8, (short)3);
+    private static final UMName f = new UMName("IdSnapshot");
+    private static final TField IDENTITY_FIELD = new TField("identity", (byte) 11, (short) 1);
+    private static final TField TS_FIELD = new TField("ts", (byte)10, (short)2);
+    private static final TField VERSION_FIELD = new TField("version", (byte)8, (short)3);
     private static final Map<Class<? extends UMBeanTransfer>, BeanTransferGetter> j = new HashMap();
     public String identity;
     public long ts;
@@ -119,15 +119,15 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
     }
 
     public void g() {
-        this.m = a_j.b(this.m, 0);
+        this.m = ByteTool.b(this.m, 0);
     }
 
     public boolean h() {
-        return a_j.a(this.m, 0);
+        return ByteTool.a(this.m, 0);
     }
 
     public void b(boolean var1) {
-        this.m = a_j.a(this.m, 0, var1);
+        this.m = ByteTool.a(this.m, 0, var1);
     }
 
     public int getVersion() {
@@ -141,15 +141,15 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
     }
 
     public void j() {
-        this.m = a_j.b(this.m, 1);
+        this.m = ByteTool.b(this.m, 1);
     }
 
     public boolean k() {
-        return a_j.a(this.m, 1);
+        return ByteTool.a(this.m, 1);
     }
 
     public void c(boolean var1) {
-        this.m = a_j.a(this.m, 1, var1);
+        this.m = ByteTool.a(this.m, 1, var1);
     }
 
     public e_enum getUMField(int var1) {
@@ -225,7 +225,7 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
         var0.put(e_enum.c, new B_b("version", (byte)1, new C_c((byte)8)));
         d = Collections.unmodifiableMap(var0);
         B_b a = new B_b(null, (byte)1, null);
-        a.a(IdSnapshot_c.class, d);
+        a.put(IdSnapshot_c.class, d);
     }
 
     private static class c_inner extends UMBeanTransfer_d<IdSnapshot_c> {
@@ -267,7 +267,7 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
             var1.startUnpack();
 
             while(true) {
-                TField_c var3 = var1.readTField();
+                TField var3 = var1.readTField();
                 if(var3.type == 0) {
                     var1.k();
                     if(!var2.h()) {
@@ -311,7 +311,7 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
                         UMBeanCoderEngine.read(var1, var3.type);
                 }
 
-                var1.m();
+                var1.endReadObj();
             }
         }
 
@@ -321,17 +321,17 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
             if(var2.identity != null) {
                 var1.writeTField(IdSnapshot_c.IDENTITY_FIELD);
                 var1.writeString(var2.identity);
-                var1.c();
+                var1.endWriteField();
             }
 
             var1.writeTField(IdSnapshot_c.TS_FIELD);
             var1.writeUnsignedLong(var2.ts);
-            var1.c();
+            var1.endWriteField();
             var1.writeTField(IdSnapshot_c.VERSION_FIELD);
             var1.writeUnsignedInt(var2.version);
-            var1.c();
+            var1.endWriteField();
             var1.writeDivider();
-            var1.endPack();
+            var1.endWriteObj();
         }
     }
 

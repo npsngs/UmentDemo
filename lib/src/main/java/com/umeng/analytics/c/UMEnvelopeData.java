@@ -80,8 +80,10 @@ public class UMEnvelopeData {
             UMEnvelopeData umEnvelopeData = new UMEnvelopeData(entity, address, (deviceId + macAddress).getBytes());
             umEnvelopeData.setSignature(signature);
             umEnvelopeData.setSerial(serial);
-            umEnvelopeData.setDefault();
-            sp.edit().putInt("serial", serial + 1).putString("signature", umEnvelopeData.getSignature()).commit();
+            umEnvelopeData.buildDefault();
+            sp.edit()
+                    .putInt("serial", serial + 1)
+                    .putString("signature", umEnvelopeData.getSignature()).apply();
             umEnvelopeData.writeToCache(context);
             return umEnvelopeData;
         } catch (Exception e) {
@@ -101,7 +103,8 @@ public class UMEnvelopeData {
             umEnvelopeData.setCodex(true);
             umEnvelopeData.setSignature(signature);
             umEnvelopeData.setSerial(serial);
-            umEnvelopeData.setDefault();
+
+            umEnvelopeData.buildDefault();
             sp.edit()
                     .putInt("serial", serial + 1)
                     .putString("signature", umEnvelopeData.getSignature())
@@ -114,23 +117,23 @@ public class UMEnvelopeData {
         }
     }
 
-    public void setDefault() {
+    public void buildDefault() {
         if(this.signature == null) {
             this.signature = this.createDefaultSignature();
         }
 
         if(this.isCodex) {
-            byte[] var1 = new byte[16];
+            byte[] key = new byte[16];
 
             try {
-                System.arraycopy(this.signature, 1, var1, 0, 16);
-                this.entity = StringTool.a(this.entity, var1);
+                System.arraycopy(this.signature, 1, key, 0, 16);
+                this.entity = StringTool.encrypt(this.entity, key);
             } catch (Exception e) {
             }
         }
 
         this.guid = this.encode(this.signature, this.timeStamp);
-        this.checkSum = this.e();
+        this.checkSum = this.createChecksum();
     }
 
     private byte[] encode(byte[] var1, int var2) {
@@ -146,15 +149,15 @@ public class UMEnvelopeData {
 
         byte[] var10 = var1;
 
-        for(int var8 = 0; var8 < 2; ++var8) {
-            var6[var8] = var10[var8];
-            var6[var6.length - var8 - 1] = var10[var10.length - var8 - 1];
+        for(int i = 0; i < 2; ++i) {
+            var6[i] = var10[i];
+            var6[var6.length - i - 1] = var10[var10.length - i - 1];
         }
 
         byte[] var11 = new byte[]{(byte)(var2 & 255), (byte)(var2 >> 8 & 255), (byte)(var2 >> 16 & 255), (byte)(var2 >>> 24)};
 
-        for(int var9 = 0; var9 < var6.length; ++var9) {
-            var6[var9] ^= var11[var9 % 4];
+        for(int i = 0; i < var6.length; ++i) {
+            var6[i] ^= var11[i % 4];
         }
 
         return var6;
@@ -164,14 +167,14 @@ public class UMEnvelopeData {
         return this.encode(this.a, (int)(System.currentTimeMillis() / 1000L));
     }
 
-    private byte[] e() {
-        StringBuilder var1 = new StringBuilder();
-        var1.append(StringTool.byte2Hex(this.signature));
-        var1.append(this.serial);
-        var1.append(this.timeStamp);
-        var1.append(this.length);
-        var1.append(StringTool.byte2Hex(this.guid));
-        return StringTool.md5(var1.toString().getBytes());
+    private byte[] createChecksum() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(StringTool.byte2Hex(this.signature));
+        sb.append(this.serial);
+        sb.append(this.timeStamp);
+        sb.append(this.length);
+        sb.append(StringTool.byte2Hex(this.guid));
+        return StringTool.md5(sb.toString().getBytes());
     }
 
     public byte[] envelope() {

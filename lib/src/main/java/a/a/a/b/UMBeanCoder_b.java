@@ -13,8 +13,8 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
 public class UMBeanCoder_b extends UMBeanCoder {
-    private static final Name d = new Name("");
-    private static final TField_c EMPTY_FIELD = new TField_c("", (byte) 0, (short) 0);
+    private static final UMName d = new UMName("");
+    private static final TField EMPTY_FIELD = new TField("", (byte) 0, (short) 0);
     private static final byte[] f = new byte[16];
     private static final byte h = -126;
     private static final byte i = 1;
@@ -23,7 +23,7 @@ public class UMBeanCoder_b extends UMBeanCoder {
     private static final int l = 5;
     private ShortStack shortStack;
     private short n;
-    private TField_c o;
+    private TField o;
     private Boolean p;
     private final long maxLength;
     byte[] tmpInt;
@@ -57,19 +57,19 @@ public class UMBeanCoder_b extends UMBeanCoder {
         this.writeInt(-126);
         this.writeByte(1 | tMessage.type << 5 & -32);
         this.writeInt(tMessage.seqid);
-        this.writeString(tMessage.name);
+        this.writeString(tMessage.domain);
     }
 
-    public void startPack(Name var1) throws UMException {
+    public void startPack(UMName var1) throws UMException {
         this.shortStack.push(this.n);
         this.n = 0;
     }
 
-    public void endPack() throws UMException {
+    public void endWriteObj() throws UMException {
         this.n = this.shortStack.pop();
     }
 
-    public void writeTField(TField_c var1) throws UMException {
+    public void writeTField(TField var1) throws UMException {
         if(var1.type == 2) {
             this.o = var1;
         } else {
@@ -78,7 +78,7 @@ public class UMBeanCoder_b extends UMBeanCoder {
 
     }
 
-    private void a(TField_c tField, byte var2) throws UMException {
+    private void a(TField tField, byte var2) throws UMException {
         byte var3 = var2 == -1?this.map(tField.type):var2;
         if(tField.id > this.n && tField.id - this.n <= 15) {
             this.writeByte(tField.id - this.n << 4 | var3);
@@ -171,7 +171,7 @@ public class UMBeanCoder_b extends UMBeanCoder {
     public void g() throws UMException {
     }
 
-    public void c() throws UMException {
+    public void endWriteField() throws UMException {
     }
 
     protected void write(byte type, int size) throws UMException {
@@ -250,7 +250,7 @@ public class UMBeanCoder_b extends UMBeanCoder {
         }
     }
 
-    public Name startUnpack() throws UMException {
+    public UMName startUnpack() throws UMException {
         this.shortStack.push(this.n);
         this.n = 0;
         return d;
@@ -260,12 +260,12 @@ public class UMBeanCoder_b extends UMBeanCoder {
         this.n = this.shortStack.pop();
     }
 
-    public TField_c readTField() throws UMException {
+    public TField readTField() throws UMException {
         byte protocolId = this.readByte();
         if(protocolId == 0) {
             return EMPTY_FIELD;
         } else {
-            short var3 = (short)((protocolId & 240) >> 4);
+            short var3 = (short)((protocolId & 0xf0) >> 4);
             short var2;
             if(var3 == 0) {
                 var2 = this.readSignedShort();
@@ -273,9 +273,9 @@ public class UMBeanCoder_b extends UMBeanCoder {
                 var2 = (short)(this.n + var3);
             }
 
-            TField_c tField = new TField_c("", this.unmap((byte)(protocolId & 15)), var2);
+            TField tField = new TField("", this.unmap((byte)(protocolId & 0xf)), var2);
             if(this.c(protocolId)) {
-                this.p = (byte)(protocolId & 15) == 1?Boolean.TRUE:Boolean.FALSE;
+                this.p = (byte)(protocolId & 0xf) == 1?Boolean.TRUE:Boolean.FALSE;
             }
 
             this.n = tField.id;
@@ -398,7 +398,7 @@ public class UMBeanCoder_b extends UMBeanCoder {
     public void i() throws UMException {
     }
 
-    public void m() throws UMException {
+    public void endReadObj() throws UMException {
     }
 
     public void o() throws UMException {
@@ -414,20 +414,20 @@ public class UMBeanCoder_b extends UMBeanCoder {
         int var1 = 0;
         int var2 = 0;
         if(this.ioStream.getBufferSize() >= 5) {
-            byte[] var7 = this.ioStream.getBuffer();
-            int var4 = this.ioStream.getBufferOffset();
-            int var5 = 0;
+            byte[] buffer = this.ioStream.getBuffer();
+            int offset = this.ioStream.getBufferOffset();
+            int i = 0;
 
             while(true) {
-                byte var6 = var7[var4 + var5];
+                byte var6 = buffer[offset + i];
                 var1 |= (var6 & 127) << var2;
                 if((var6 & 128) != 128) {
-                    this.ioStream.offset(var5 + 1);
+                    this.ioStream.offset(i + 1);
                     break;
                 }
 
                 var2 += 7;
-                ++var5;
+                ++i;
             }
         } else {
             while(true) {
@@ -509,7 +509,7 @@ public class UMBeanCoder_b extends UMBeanCoder {
             case 5:
                 return 8;//int
             case 6:
-                return 10;
+                return 10;//long
             case 7:
                 return 4;
             case 8:
@@ -564,14 +564,14 @@ public class UMBeanCoder_b extends UMBeanCoder {
         }
     }
 
-    public static class UMBeanCoder_b_Inner implements UMBeanCoderBuilder {
+    public static class UMBeanCoder_b_Builder implements UMBeanCoderBuilder {
         private final long a;
 
-        public UMBeanCoder_b_Inner() {
+        public UMBeanCoder_b_Builder() {
             this.a = -1L;
         }
 
-        public UMBeanCoder_b_Inner(int var1) {
+        public UMBeanCoder_b_Builder(int var1) {
             this.a = (long)var1;
         }
 

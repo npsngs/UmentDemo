@@ -9,9 +9,9 @@ import a.a.a.UMField;
 import a.a.a.a.B_b;
 import a.a.a.a.C_c;
 import a.a.a.a.E_e_a;
-import a.a.a.a_j;
+import a.a.a.ByteTool;
 import a.a.a.b.MapHeader;
-import a.a.a.b.TField_c;
+import a.a.a.b.TField;
 import a.a.a.b.UMBeanCoderEngine;
 import a.a.a.UMBean;
 import a.a.a.UMException;
@@ -19,7 +19,7 @@ import a.a.a.a.G_g_a;
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMBeanCoder_b;
 import a.a.a.b.UMMsgException;
-import a.a.a.b.Name;
+import a.a.a.b.UMName;
 import a.a.a.b.UMBeanCoder_n;
 import a.a.a.c.BeanTransferGetter;
 import a.a.a.c.UMBeanTransfer;
@@ -41,10 +41,10 @@ import java.util.Map.Entry;
 
 public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, Cloneable {
     private static final long serialNumber = 2846460275012375038L;
-    private static final Name f = new Name("Imprint");
-    private static final TField_c g = new TField_c("property", (byte) 13, (short) 1);
-    private static final TField_c h = new TField_c("version", (byte)8, (short)2);
-    private static final TField_c i = new TField_c("checksum", (byte)11, (short)3);
+    private static final UMName f = new UMName("Imprint");
+    private static final TField g = new TField("property", (byte) 13, (short) 1);
+    private static final TField h = new TField("version", (byte)8, (short)2);
+    private static final TField i = new TField("checksum", (byte)11, (short)3);
     private static final Map<Class<? extends UMBeanTransfer>, BeanTransferGetter> j = new HashMap();
     public Map<String, ImprintValue> property;
     public int version;
@@ -146,15 +146,15 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
     }
 
     public void h() {
-        this.l = a_j.b(this.l, 0);
+        this.l = ByteTool.b(this.l, 0);
     }
 
     public boolean i() {
-        return a_j.a(this.l, 0);
+        return ByteTool.a(this.l, 0);
     }
 
     public void b(boolean var1) {
-        this.l = a_j.a(this.l, 0, var1);
+        this.l = ByteTool.a(this.l, 0, var1);
     }
 
     public String getCheckSum() {
@@ -260,7 +260,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
         enumMap.put(e_enum.CHECKSUM, new B_b("checksum", (byte)1, new C_c((byte)11)));
         d = Collections.unmodifiableMap(enumMap);
         B_b b = new B_b(null, (byte) 1, null);
-        b.a(Imprint.class, d);
+        b.put(Imprint.class, d);
     }
 
     private static class c extends UMBeanTransfer_d<Imprint> {
@@ -319,7 +319,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
             umBeanCoder.startUnpack();
 
             while(true) {
-                TField_c tField = umBeanCoder.readTField();
+                TField tField = umBeanCoder.readTField();
                 if(tField.type == 0) {
                     umBeanCoder.k();
                     if(!imprint.i()) {
@@ -370,7 +370,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
                         UMBeanCoderEngine.read(umBeanCoder, tField.type);
                 }
 
-                umBeanCoder.m();
+                umBeanCoder.endReadObj();
             }
         }
 
@@ -389,20 +389,20 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
                 }
 
                 umBeanCoder.e();
-                umBeanCoder.c();
+                umBeanCoder.endWriteField();
             }
 
             umBeanCoder.writeTField(Imprint.h);
             umBeanCoder.writeUnsignedInt(imprint.version);
-            umBeanCoder.c();
+            umBeanCoder.endWriteField();
             if(imprint.checksum != null) {
                 umBeanCoder.writeTField(Imprint.i);
                 umBeanCoder.writeString(imprint.checksum);
-                umBeanCoder.c();
+                umBeanCoder.endWriteField();
             }
 
             umBeanCoder.writeDivider();
-            umBeanCoder.endPack();
+            umBeanCoder.endWriteObj();
         }
     }
 

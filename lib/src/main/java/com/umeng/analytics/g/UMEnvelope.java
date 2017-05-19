@@ -7,7 +7,7 @@ package com.umeng.analytics.g;
 import a.a.a.UMField;
 import a.a.a.a.B_b;
 import a.a.a.a.C_c;
-import a.a.a.b.TField_c;
+import a.a.a.b.TField;
 import a.a.a.b.UMBeanCoder_b;
 import a.a.a.c.BeanTransferGetter;
 import a.a.a.c.UMBeanTransfer;
@@ -15,13 +15,13 @@ import a.a.a.c.UMBeanTransfer_c;
 import a.a.a.c.UMBeanTransfer_d;
 import a.a.a.d.UMIOStream;
 import a.a.a.e_j;
-import a.a.a.a_j;
+import a.a.a.ByteTool;
 import a.a.a.b.UMBeanCoderEngine;
 import a.a.a.UMBean;
 import a.a.a.UMException;
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMMsgException;
-import a.a.a.b.Name;
+import a.a.a.b.UMName;
 import a.a.a.b.UMBeanCoder_n;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -37,90 +37,82 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serializable, Cloneable {
-    private static final long l = 420342210744516016L;
-    private static final Name m = new Name("UMEnvelope");
-    private static final TField_c n = new TField_c("version", (byte)11, (short)1);
-    private static final TField_c o = new TField_c("address", (byte)11, (short)2);
-    private static final TField_c p = new TField_c("signature", (byte)11, (short)3);
-    private static final TField_c q = new TField_c("serial_num", (byte)8, (short)4);
-    private static final TField_c r = new TField_c("ts_secs", (byte)8, (short)5);
-    private static final TField_c s = new TField_c("length", (byte)8, (short)6);
-    private static final TField_c t = new TField_c("entity", (byte)11, (short)7);
-    private static final TField_c u = new TField_c("guid", (byte)11, (short)8);
-    private static final TField_c v = new TField_c("checksum", (byte)11, (short)9);
-    private static final TField_c w = new TField_c("codex", (byte)8, (short)10);
+    private static final UMName name = new UMName("UMEnvelope");
+    private static final TField VERSION = new TField("version", (byte)11, (short)1);
+    private static final TField ADDRESS = new TField("address", (byte)11, (short)2);
+    private static final TField SIGNATURE = new TField("signature", (byte)11, (short)3);
+    private static final TField SERIAL_NUM = new TField("serial_num", (byte)8, (short)4);
+    private static final TField TS_SECS = new TField("ts_secs", (byte)8, (short)5);
+    private static final TField LENGTH = new TField("length", (byte)8, (short)6);
+    private static final TField ENTITY = new TField("entity", (byte)11, (short)7);
+    private static final TField GUID = new TField("guid", (byte)11, (short)8);
+    private static final TField CHECKSUM = new TField("checksum", (byte)11, (short)9);
+    private static final TField CODEX = new TField("codex", (byte)8, (short)10);
     private static final Map<Class<? extends UMBeanTransfer>, BeanTransferGetter> x = new HashMap();
     public String version;
     public String address;
     public String signature;
-    public int d;
-    public int e;
-    public int f;
-    public ByteBuffer g;
-    public String h;
-    public String i;
-    public int j;
-    private static final int y = 0;
-    private static final int z = 1;
-    private static final int A = 2;
-    private static final int B = 3;
+    public int serial_num;
+    public int ts_secs;
+    public int length;
+    public ByteBuffer entity;
+    public String guid;
+    public String checksum;
+    public int codex;
     private byte C;
-    private e_enum[] D;
     public static final Map<e_enum, B_b> k_map;
 
     public UMEnvelope() {
         this.C = 0;
-        this.D = new e_enum[]{e_enum.j};
     }
 
-    public UMEnvelope(String var1, String var2, String var3, int var4, int var5, int var6, ByteBuffer var7, String var8, String var9) {
+    public UMEnvelope(String version, String address, String signature, int serial_num, int ts_secs, int length, ByteBuffer entity, String guid, String checksum) {
         this();
-        this.version = var1;
-        this.address = var2;
-        this.signature = var3;
-        this.d = var4;
+        this.version = version;
+        this.address = address;
+        this.signature = signature;
+        this.serial_num = serial_num;
         this.d(true);
-        this.e = var5;
+        this.ts_secs = ts_secs;
         this.e(true);
-        this.f = var6;
+        this.length = length;
         this.f(true);
-        this.g = var7;
-        this.h = var8;
-        this.i = var9;
+        this.entity = entity;
+        this.guid = guid;
+        this.checksum = checksum;
     }
 
-    public UMEnvelope(UMEnvelope var1) {
+    public UMEnvelope(UMEnvelope umEnvelope) {
         this.C = 0;
-        this.D = new e_enum[]{e_enum.j};
-        this.C = var1.C;
-        if(var1.e()) {
-            this.version = var1.version;
+        this.C = umEnvelope.C;
+        if(umEnvelope.hasVersion()) {
+            this.version = umEnvelope.version;
         }
 
-        if(var1.h()) {
-            this.address = var1.address;
+        if(umEnvelope.hasAddress()) {
+            this.address = umEnvelope.address;
         }
 
-        if(var1.k()) {
-            this.signature = var1.signature;
+        if(umEnvelope.hasSignature()) {
+            this.signature = umEnvelope.signature;
         }
 
-        this.d = var1.d;
-        this.e = var1.e;
-        this.f = var1.f;
-        if(var1.y()) {
-            this.g = e_j.d(var1.g);
+        this.serial_num = umEnvelope.serial_num;
+        this.ts_secs = umEnvelope.ts_secs;
+        this.length = umEnvelope.length;
+        if(umEnvelope.hasEntity()) {
+            this.entity = e_j.d(umEnvelope.entity);
         }
 
-        if(var1.B()) {
-            this.h = var1.h;
+        if(umEnvelope.hasGuid()) {
+            this.guid = umEnvelope.guid;
         }
 
-        if(var1.E()) {
-            this.i = var1.i;
+        if(umEnvelope.hasChecksum()) {
+            this.checksum = umEnvelope.checksum;
         }
 
-        this.j = var1.j;
+        this.codex = umEnvelope.codex;
     }
 
     public UMEnvelope copyOne() {
@@ -132,16 +124,16 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
         this.address = null;
         this.signature = null;
         this.d(false);
-        this.d = 0;
+        this.serial_num = 0;
         this.e(false);
-        this.e = 0;
+        this.ts_secs = 0;
         this.f(false);
-        this.f = 0;
-        this.g = null;
-        this.h = null;
-        this.i = null;
+        this.length = 0;
+        this.entity = null;
+        this.guid = null;
+        this.checksum = null;
         this.j(false);
-        this.j = 0;
+        this.codex = 0;
     }
 
     public String getVersion() {
@@ -153,11 +145,11 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
         return this;
     }
 
-    public void d() {
+    public void clearVersion() {
         this.version = null;
     }
 
-    public boolean e() {
+    public boolean hasVersion() {
         return this.version != null;
     }
 
@@ -177,11 +169,11 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
         return this;
     }
 
-    public void g() {
+    public void clearAddress() {
         this.address = null;
     }
 
-    public boolean h() {
+    public boolean hasAddress() {
         return this.address != null;
     }
 
@@ -192,7 +184,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
 
     }
 
-    public String i() {
+    public String getSignature() {
         return this.signature;
     }
 
@@ -201,11 +193,11 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
         return this;
     }
 
-    public void j() {
+    public void clearSignature() {
         this.signature = null;
     }
 
-    public boolean k() {
+    public boolean hasSignature() {
         return this.signature != null;
     }
 
@@ -216,174 +208,174 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
 
     }
 
-    public int l() {
-        return this.d;
+    public int getSerial_num() {
+        return this.serial_num;
     }
 
-    public UMEnvelope setSerial(int var1) {
-        this.d = var1;
+    public UMEnvelope setSerial(int serial) {
+        this.serial_num = serial;
         this.d(true);
         return this;
     }
 
     public void m() {
-        this.C = a_j.b(this.C, 0);
+        this.C = ByteTool.b(this.C, 0);
     }
 
     public boolean n() {
-        return a_j.a(this.C, 0);
+        return ByteTool.a(this.C, 0);
     }
 
     public void d(boolean var1) {
-        this.C = a_j.a(this.C, 0, var1);
+        this.C = ByteTool.a(this.C, 0, var1);
     }
 
     public int o() {
-        return this.e;
+        return this.ts_secs;
     }
 
-    public UMEnvelope setTimestamp(int var1) {
-        this.e = var1;
+    public UMEnvelope setTimestamp(int ts) {
+        this.ts_secs = ts;
         this.e(true);
         return this;
     }
 
     public void q() {
-        this.C = a_j.b(this.C, 1);
+        this.C = ByteTool.b(this.C, 1);
     }
 
     public boolean r() {
-        return a_j.a(this.C, 1);
+        return ByteTool.a(this.C, 1);
     }
 
     public void e(boolean var1) {
-        this.C = a_j.a(this.C, 1, var1);
+        this.C = ByteTool.a(this.C, 1, var1);
     }
 
-    public int s() {
-        return this.f;
+    public int getLength() {
+        return this.length;
     }
 
-    public UMEnvelope setLength(int var1) {
-        this.f = var1;
+    public UMEnvelope setLength(int length) {
+        this.length = length;
         this.f(true);
         return this;
     }
 
     public void t() {
-        this.C = a_j.b(this.C, 2);
+        this.C = ByteTool.b(this.C, 2);
     }
 
     public boolean u() {
-        return a_j.a(this.C, 2);
+        return ByteTool.a(this.C, 2);
     }
 
     public void f(boolean var1) {
-        this.C = a_j.a(this.C, 2, var1);
+        this.C = ByteTool.a(this.C, 2, var1);
     }
 
     public byte[] v() {
-        this.a(e_j.c(this.g));
-        return this.g == null?null:this.g.array();
+        this.setEntity(e_j.c(this.entity));
+        return this.entity == null?null:this.entity.array();
     }
 
-    public ByteBuffer w() {
-        return this.g;
+    public ByteBuffer getEntity() {
+        return this.entity;
     }
 
-    public UMEnvelope setEntity(byte[] var1) {
-        this.a(var1 == null?(ByteBuffer)null:ByteBuffer.wrap(var1));
+    public UMEnvelope setEntity(byte[] entity) {
+        this.setEntity(entity == null?null:ByteBuffer.wrap(entity));
         return this;
     }
 
-    public UMEnvelope a(ByteBuffer var1) {
-        this.g = var1;
+    public UMEnvelope setEntity(ByteBuffer entity) {
+        this.entity = entity;
         return this;
     }
 
-    public void x() {
-        this.g = null;
+    public void clearEntity() {
+        this.entity = null;
     }
 
-    public boolean y() {
-        return this.g != null;
+    public boolean hasEntity() {
+        return this.entity != null;
     }
 
     public void g(boolean var1) {
         if(!var1) {
-            this.g = null;
+            this.entity = null;
         }
 
     }
 
-    public String z() {
-        return this.h;
+    public String getGuid() {
+        return this.guid;
     }
 
-    public UMEnvelope setGuid(String var1) {
-        this.h = var1;
+    public UMEnvelope setGuid(String guid) {
+        this.guid = guid;
         return this;
     }
 
-    public void A() {
-        this.h = null;
+    public void clearGuid() {
+        this.guid = null;
     }
 
-    public boolean B() {
-        return this.h != null;
+    public boolean hasGuid() {
+        return this.guid != null;
     }
 
     public void h(boolean var1) {
         if(!var1) {
-            this.h = null;
+            this.guid = null;
         }
 
     }
 
-    public String C() {
-        return this.i;
+    public String getChecksum() {
+        return this.checksum;
     }
 
-    public UMEnvelope setCheckSum(String var1) {
-        this.i = var1;
+    public UMEnvelope setCheckSum(String checkSum) {
+        this.checksum = checkSum;
         return this;
     }
 
-    public void D() {
-        this.i = null;
+    public void clearChecksum() {
+        this.checksum = null;
     }
 
-    public boolean E() {
-        return this.i != null;
+    public boolean hasChecksum() {
+        return this.checksum != null;
     }
 
     public void i(boolean var1) {
         if(!var1) {
-            this.i = null;
+            this.checksum = null;
         }
 
     }
 
-    public int F() {
-        return this.j;
+    public int getCodex() {
+        return this.codex;
     }
 
-    public UMEnvelope setCodex(int var1) {
-        this.j = var1;
+    public UMEnvelope setCodex(int codex) {
+        this.codex = codex;
         this.j(true);
         return this;
     }
 
     public void G() {
-        this.C = a_j.b(this.C, 3);
+        this.C = ByteTool.b(this.C, 3);
     }
 
     public boolean H() {
-        return a_j.a(this.C, 3);
+        return ByteTool.a(this.C, 3);
     }
 
     public void j(boolean var1) {
-        this.C = a_j.a(this.C, 3, var1);
+        this.C = ByteTool.a(this.C, 3, var1);
     }
 
     public e_enum getUMField(int var1) {
@@ -438,31 +430,31 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
         }
 
         var1.append("serial_num:");
-        var1.append(this.d);
+        var1.append(this.serial_num);
         var2 = false;
         if(!var2) {
             var1.append(", ");
         }
 
         var1.append("ts_secs:");
-        var1.append(this.e);
+        var1.append(this.ts_secs);
         var2 = false;
         if(!var2) {
             var1.append(", ");
         }
 
         var1.append("length:");
-        var1.append(this.f);
+        var1.append(this.length);
         var2 = false;
         if(!var2) {
             var1.append(", ");
         }
 
         var1.append("entity:");
-        if(this.g == null) {
+        if(this.entity == null) {
             var1.append("null");
         } else {
-            e_j.a(this.g, var1);
+            e_j.a(this.entity, var1);
         }
 
         var2 = false;
@@ -471,10 +463,10 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
         }
 
         var1.append("guid:");
-        if(this.h == null) {
+        if(this.guid == null) {
             var1.append("null");
         } else {
-            var1.append(this.h);
+            var1.append(this.guid);
         }
 
         var2 = false;
@@ -483,10 +475,10 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
         }
 
         var1.append("checksum:");
-        if(this.i == null) {
+        if(this.checksum == null) {
             var1.append("null");
         } else {
-            var1.append(this.i);
+            var1.append(this.checksum);
         }
 
         var2 = false;
@@ -496,8 +488,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
             }
 
             var1.append("codex:");
-            var1.append(this.j);
-            var2 = false;
+            var1.append(this.codex);
         }
 
         var1.append(")");
@@ -511,11 +502,11 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
             throw new UMMsgException("Required field \'address\' was not present! Struct: " + this.toString());
         } else if(this.signature == null) {
             throw new UMMsgException("Required field \'signature\' was not present! Struct: " + this.toString());
-        } else if(this.g == null) {
+        } else if(this.entity == null) {
             throw new UMMsgException("Required field \'entity\' was not present! Struct: " + this.toString());
-        } else if(this.h == null) {
+        } else if(this.guid == null) {
             throw new UMMsgException("Required field \'guid\' was not present! Struct: " + this.toString());
-        } else if(this.i == null) {
+        } else if(this.checksum == null) {
             throw new UMMsgException("Required field \'checksum\' was not present! Struct: " + this.toString());
         }
     }
@@ -532,8 +523,8 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
         try {
             this.C = 0;
             this.unpackFrom(new UMBeanCoder_b(new UMIOStream(ois)));
-        } catch (UMException var3) {
-            throw new IOException(var3.getMessage());
+        } catch (UMException e) {
+            throw new IOException(e.getMessage());
         }
     }
 
@@ -552,8 +543,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
         var0.put(e_enum.i, new B_b("checksum", (byte)1, new C_c((byte)11)));
         var0.put(e_enum.j, new B_b("codex", (byte)2, new C_c((byte)8)));
         k_map = Collections.unmodifiableMap(var0);
-        B_b b = new B_b(null,(byte)1,null);
-        b.a(UMEnvelope.class, k_map);
+        B_b.put(UMEnvelope.class, k_map);
     }
 
     private static class c extends UMBeanTransfer_d<UMEnvelope> {
@@ -565,12 +555,12 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
             var3.writeString(var2.version);
             var3.writeString(var2.address);
             var3.writeString(var2.signature);
-            var3.writeUnsignedInt(var2.d);
-            var3.writeUnsignedInt(var2.e);
-            var3.writeUnsignedInt(var2.f);
-            var3.writeByteBuffer(var2.g);
-            var3.writeString(var2.h);
-            var3.writeString(var2.i);
+            var3.writeUnsignedInt(var2.serial_num);
+            var3.writeUnsignedInt(var2.ts_secs);
+            var3.writeUnsignedInt(var2.length);
+            var3.writeByteBuffer(var2.entity);
+            var3.writeString(var2.guid);
+            var3.writeString(var2.checksum);
             BitSet var4 = new BitSet();
             if(var2.H()) {
                 var4.set(0);
@@ -578,7 +568,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
 
             var3.a(var4, 1);
             if(var2.H()) {
-                var3.writeUnsignedInt(var2.j);
+                var3.writeUnsignedInt(var2.codex);
             }
 
         }
@@ -591,21 +581,21 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
             var2.b(true);
             var2.signature = var3.readString();
             var2.c(true);
-            var2.d = var3.readSignedInt();
+            var2.serial_num = var3.readSignedInt();
             var2.d(true);
-            var2.e = var3.readSignedInt();
+            var2.ts_secs = var3.readSignedInt();
             var2.e(true);
-            var2.f = var3.readSignedInt();
+            var2.length = var3.readSignedInt();
             var2.f(true);
-            var2.g = var3.readByteBuffer();
+            var2.entity = var3.readByteBuffer();
             var2.g(true);
-            var2.h = var3.readString();
+            var2.guid = var3.readString();
             var2.h(true);
-            var2.i = var3.readString();
+            var2.checksum = var3.readString();
             var2.i(true);
             BitSet var4 = var3.b(1);
             if(var4.get(0)) {
-                var2.j = var3.readSignedInt();
+                var2.codex = var3.readSignedInt();
                 var2.j(true);
             }
 
@@ -629,7 +619,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
             umBeanCoder.startUnpack();
 
             while(true) {
-                TField_c tField = umBeanCoder.readTField();
+                TField tField = umBeanCoder.readTField();
                 if(tField.type == 0) {
                     umBeanCoder.k();
                     if(!umEnvelope.n()) {
@@ -675,7 +665,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                         break;
                     case 4:
                         if(tField.type == 8) {
-                            umEnvelope.d = umBeanCoder.readSignedInt();
+                            umEnvelope.serial_num = umBeanCoder.readSignedInt();
                             umEnvelope.d(true);
                         } else {
                             UMBeanCoderEngine.read(umBeanCoder, tField.type);
@@ -683,7 +673,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                         break;
                     case 5:
                         if(tField.type == 8) {
-                            umEnvelope.e = umBeanCoder.readSignedInt();
+                            umEnvelope.ts_secs = umBeanCoder.readSignedInt();
                             umEnvelope.e(true);
                         } else {
                             UMBeanCoderEngine.read(umBeanCoder, tField.type);
@@ -691,7 +681,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                         break;
                     case 6:
                         if(tField.type == 8) {
-                            umEnvelope.f = umBeanCoder.readSignedInt();
+                            umEnvelope.length = umBeanCoder.readSignedInt();
                             umEnvelope.f(true);
                         } else {
                             UMBeanCoderEngine.read(umBeanCoder, tField.type);
@@ -699,7 +689,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                         break;
                     case 7:
                         if(tField.type == 11) {
-                            umEnvelope.g = umBeanCoder.readByteBuffer();
+                            umEnvelope.entity = umBeanCoder.readByteBuffer();
                             umEnvelope.g(true);
                         } else {
                             UMBeanCoderEngine.read(umBeanCoder, tField.type);
@@ -707,7 +697,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                         break;
                     case 8:
                         if(tField.type == 11) {
-                            umEnvelope.h = umBeanCoder.readString();
+                            umEnvelope.guid = umBeanCoder.readString();
                             umEnvelope.h(true);
                         } else {
                             UMBeanCoderEngine.read(umBeanCoder, tField.type);
@@ -715,7 +705,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                         break;
                     case 9:
                         if(tField.type == 11) {
-                            umEnvelope.i = umBeanCoder.readString();
+                            umEnvelope.checksum = umBeanCoder.readString();
                             umEnvelope.i(true);
                         } else {
                             UMBeanCoderEngine.read(umBeanCoder, tField.type);
@@ -723,7 +713,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                         break;
                     case 10:
                         if(tField.type == 8) {
-                            umEnvelope.j = umBeanCoder.readSignedInt();
+                            umEnvelope.codex = umBeanCoder.readSignedInt();
                             umEnvelope.j(true);
                         } else {
                             UMBeanCoderEngine.read(umBeanCoder, tField.type);
@@ -733,66 +723,66 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                         UMBeanCoderEngine.read(umBeanCoder, tField.type);
                 }
 
-                umBeanCoder.m();
+                umBeanCoder.endReadObj();
             }
         }
 
         public void pack(UMBeanCoder umBeanCoder, UMEnvelope umEnvelope) throws UMException {
             umEnvelope.assertValid();
-            umBeanCoder.startPack(UMEnvelope.m);
+            umBeanCoder.startPack(UMEnvelope.name);
             if(umEnvelope.version != null) {
-                umBeanCoder.writeTField(UMEnvelope.n);
+                umBeanCoder.writeTField(UMEnvelope.VERSION);
                 umBeanCoder.writeString(umEnvelope.version);
-                umBeanCoder.c();
+                umBeanCoder.endWriteField();
             }
 
             if(umEnvelope.address != null) {
-                umBeanCoder.writeTField(UMEnvelope.o);
+                umBeanCoder.writeTField(UMEnvelope.ADDRESS);
                 umBeanCoder.writeString(umEnvelope.address);
-                umBeanCoder.c();
+                umBeanCoder.endWriteField();
             }
 
             if(umEnvelope.signature != null) {
-                umBeanCoder.writeTField(UMEnvelope.p);
+                umBeanCoder.writeTField(UMEnvelope.SIGNATURE);
                 umBeanCoder.writeString(umEnvelope.signature);
-                umBeanCoder.c();
+                umBeanCoder.endWriteField();
             }
 
-            umBeanCoder.writeTField(UMEnvelope.q);
-            umBeanCoder.writeUnsignedInt(umEnvelope.d);
-            umBeanCoder.c();
-            umBeanCoder.writeTField(UMEnvelope.r);
-            umBeanCoder.writeUnsignedInt(umEnvelope.e);
-            umBeanCoder.c();
-            umBeanCoder.writeTField(UMEnvelope.s);
-            umBeanCoder.writeUnsignedInt(umEnvelope.f);
-            umBeanCoder.c();
-            if(umEnvelope.g != null) {
-                umBeanCoder.writeTField(UMEnvelope.t);
-                umBeanCoder.writeByteBuffer(umEnvelope.g);
-                umBeanCoder.c();
+            umBeanCoder.writeTField(UMEnvelope.SERIAL_NUM);
+            umBeanCoder.writeUnsignedInt(umEnvelope.serial_num);
+            umBeanCoder.endWriteField();
+            umBeanCoder.writeTField(UMEnvelope.TS_SECS);
+            umBeanCoder.writeUnsignedInt(umEnvelope.ts_secs);
+            umBeanCoder.endWriteField();
+            umBeanCoder.writeTField(UMEnvelope.LENGTH);
+            umBeanCoder.writeUnsignedInt(umEnvelope.length);
+            umBeanCoder.endWriteField();
+            if(umEnvelope.entity != null) {
+                umBeanCoder.writeTField(UMEnvelope.ENTITY);
+                umBeanCoder.writeByteBuffer(umEnvelope.entity);
+                umBeanCoder.endWriteField();
             }
 
-            if(umEnvelope.h != null) {
-                umBeanCoder.writeTField(UMEnvelope.u);
-                umBeanCoder.writeString(umEnvelope.h);
-                umBeanCoder.c();
+            if(umEnvelope.guid != null) {
+                umBeanCoder.writeTField(UMEnvelope.GUID);
+                umBeanCoder.writeString(umEnvelope.guid);
+                umBeanCoder.endWriteField();
             }
 
-            if(umEnvelope.i != null) {
-                umBeanCoder.writeTField(UMEnvelope.v);
-                umBeanCoder.writeString(umEnvelope.i);
-                umBeanCoder.c();
+            if(umEnvelope.checksum != null) {
+                umBeanCoder.writeTField(UMEnvelope.CHECKSUM);
+                umBeanCoder.writeString(umEnvelope.checksum);
+                umBeanCoder.endWriteField();
             }
 
             if(umEnvelope.H()) {
-                umBeanCoder.writeTField(UMEnvelope.w);
-                umBeanCoder.writeUnsignedInt(umEnvelope.j);
-                umBeanCoder.c();
+                umBeanCoder.writeTField(UMEnvelope.CODEX);
+                umBeanCoder.writeUnsignedInt(umEnvelope.codex);
+                umBeanCoder.endWriteField();
             }
 
             umBeanCoder.writeDivider();
-            umBeanCoder.endPack();
+            umBeanCoder.endWriteObj();
         }
     }
 
@@ -805,7 +795,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
         }
     }
 
-    public static enum e_enum implements UMField {
+    public enum e_enum implements UMField {
         a((byte)1, "version"),
         b((byte)2, "address"),
         c((byte)3, "signature"),
@@ -858,10 +848,10 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
         }
 
         public static UMEnvelope.e_enum a(String var0) {
-            return (UMEnvelope.e_enum)k.get(var0);
+            return k.get(var0);
         }
 
-        private e_enum(short var3, String var4) {
+        e_enum(short var3, String var4) {
             this.l = var3;
             this.m = var4;
         }

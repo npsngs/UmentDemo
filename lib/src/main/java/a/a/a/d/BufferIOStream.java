@@ -64,6 +64,7 @@ public final class BufferIOStream extends IOStream {
         return this.buffer;
     }
 
+    @Override
     public int getBufferOffset() {
         return this.buferrOffset;
     }

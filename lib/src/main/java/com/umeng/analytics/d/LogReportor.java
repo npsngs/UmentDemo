@@ -142,7 +142,7 @@ public class LogReportor {
                     if(respData == null) {
                         resp_code = 1;
                     } else {
-                        resp_code = LogReportor.this.setRequestCallback(respData);
+                        resp_code = LogReportor.this.parseResponse(respData);
                     }
 
                     return LogReportor.this.isDiscardOnFail ?true:resp_code != 1;
@@ -196,7 +196,7 @@ public class LogReportor {
             if(respData == null) {
                 resp_code = 1;
             } else {
-                resp_code = this.setRequestCallback(respData);
+                resp_code = this.parseResponse(respData);
             }
 
             switch(resp_code) {
@@ -217,9 +217,9 @@ public class LogReportor {
 
     }
 
-    private int setRequestCallback(byte[] respData) {
+    private int parseResponse(byte[] respData) {
         Response response = new Response();
-        UMBeanUnpacker beanUnpacker = new UMBeanUnpacker(new UMBeanCoder_a.a_inner());
+        UMBeanUnpacker beanUnpacker = new UMBeanUnpacker(new UMBeanCoder_a.UMBeanCoder_a_Builder());
 
         try {
             beanUnpacker.unpack(response, respData);
@@ -228,7 +228,7 @@ public class LogReportor {
                 this.imprintTool.writeToCache();
             }
 
-            ULog.c("setRequestCallback log:" + response.getMsg());
+            ULog.c("parseResponse log:" + response.getMsg());
         } catch (Throwable t) {
         }
 

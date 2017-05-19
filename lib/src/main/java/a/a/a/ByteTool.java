@@ -5,27 +5,27 @@
 
 package a.a.a;
 
-public class a_j {
-    public a_j() {
+public class ByteTool {
+    public ByteTool() {
     }
 
-    public static final void a(int var0, byte[] var1) {
-        a(var0, var1, 0);
+    public static final void int2Bytes(int src, byte[] buffer) {
+        int2Bytes(src, buffer, 0);
     }
 
-    public static final void a(int var0, byte[] var1, int var2) {
-        var1[var2] = (byte)(255 & var0 >> 24);
-        var1[var2 + 1] = (byte)(255 & var0 >> 16);
-        var1[var2 + 2] = (byte)(255 & var0 >> 8);
-        var1[var2 + 3] = (byte)(255 & var0);
+    public static final void int2Bytes(int src, byte[] buffer, int offset) {
+        buffer[offset] = (byte)(255 & src >> 24);
+        buffer[offset + 1] = (byte)(255 & src >> 16);
+        buffer[offset + 2] = (byte)(255 & src >> 8);
+        buffer[offset + 3] = (byte)(255 & src);
     }
 
-    public static final int a(byte[] var0) {
-        return a(var0, 0);
+    public static final int bytes2Int(byte[] offset) {
+        return bytes2Int(offset, 0);
     }
 
-    public static final int a(byte[] var0, int var1) {
-        return (var0[var1] & 255) << 24 | (var0[var1 + 1] & 255) << 16 | (var0[var1 + 2] & 255) << 8 | var0[var1 + 3] & 255;
+    public static final int bytes2Int(byte[] bytes, int offset) {
+        return (bytes[offset] & 255) << 24 | (bytes[offset + 1] & 255) << 16 | (bytes[offset + 2] & 255) << 8 | bytes[offset + 3] & 255;
     }
 
     public static final boolean a(byte var0, int var1) {

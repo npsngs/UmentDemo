@@ -81,20 +81,20 @@ public class StringTool {
         }
     }
 
-    public static byte[] a(byte[] var0, byte[] var1) throws Exception {
-        Cipher var2 = Cipher.getInstance("AES/CBC/PKCS7Padding");
-        SecretKeySpec var3 = new SecretKeySpec(var1, "AES");
-        IvParameterSpec var4 = new IvParameterSpec(a);
-        var2.init(1, var3, var4);
-        return var2.doFinal(var0);
+    public static byte[] encrypt(byte[] data, byte[] key) throws Exception {
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(a);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+        return cipher.doFinal(data);
     }
 
-    public static byte[] b(byte[] var0, byte[] var1) throws Exception {
-        Cipher var2 = Cipher.getInstance("AES/CBC/PKCS7Padding");
-        SecretKeySpec var3 = new SecretKeySpec(var1, "AES");
-        IvParameterSpec var4 = new IvParameterSpec(a);
-        var2.init(2, var3, var4);
-        return var2.doFinal(var0);
+    public static byte[] decrypt(byte[] data, byte[] key) throws Exception {
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(a);
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
+        return cipher.doFinal(data);
     }
 
     public static int a(int var0, String var1) {

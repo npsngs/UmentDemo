@@ -11,7 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
 public class UMBeanCoder_a extends UMBeanCoder {
-    private static final Name h = new Name();
+    private static final UMName h = new UMName();
     protected static final int a = -65536;
     protected static final int b = -2147418112;
     protected boolean c;
@@ -52,10 +52,10 @@ public class UMBeanCoder_a extends UMBeanCoder {
         if(this.d) {
             int var2 = -2147418112 | tMessage.type;
             this.writeUnsignedInt(var2);
-            this.writeString(tMessage.name);
+            this.writeString(tMessage.domain);
             this.writeUnsignedInt(tMessage.seqid);
         } else {
-            this.writeString(tMessage.name);
+            this.writeString(tMessage.domain);
             this.writeByte(tMessage.type);
             this.writeUnsignedInt(tMessage.seqid);
         }
@@ -65,18 +65,18 @@ public class UMBeanCoder_a extends UMBeanCoder {
     public void a() {
     }
 
-    public void startPack(Name var1) {
+    public void startPack(UMName var1) {
     }
 
-    public void endPack() {
+    public void endWriteObj() {
     }
 
-    public void writeTField(TField_c tField) throws UMException {
+    public void writeTField(TField tField) throws UMException {
         this.writeByte(tField.type);
         this.writeUnsignedShort(tField.id);
     }
 
-    public void c() {
+    public void endWriteField() {
     }
 
     public void writeDivider() throws UMException {
@@ -157,10 +157,10 @@ public class UMBeanCoder_a extends UMBeanCoder {
         }
     }
 
-    public void writeByteBuffer(ByteBuffer var1) throws UMException {
-        int var2 = var1.limit() - var1.position();
-        this.writeUnsignedInt(var2);
-        this.ioStream.write(var1.array(), var1.position() + var1.arrayOffset(), var2);
+    public void writeByteBuffer(ByteBuffer byteBuffer) throws UMException {
+        int length = byteBuffer.limit() - byteBuffer.position();
+        this.writeUnsignedInt(length);
+        this.ioStream.write(byteBuffer.array(), byteBuffer.position() + byteBuffer.arrayOffset(), length);
     }
 
     public TMessage readMessageBegin() throws UMException {
@@ -182,20 +182,20 @@ public class UMBeanCoder_a extends UMBeanCoder {
     public void i() {
     }
 
-    public Name startUnpack() {
+    public UMName startUnpack() {
         return h;
     }
 
     public void k() {
     }
 
-    public TField_c readTField() throws UMException {
+    public TField readTField() throws UMException {
         byte type = this.readByte();
         short id = type == 0?0:this.readSignedShort();
-        return new TField_c("", type, id);
+        return new TField("", type, id);
     }
 
-    public void m() {
+    public void endReadObj() {
     }
 
     public MapHeader readMapHeader() throws UMException {
@@ -344,20 +344,20 @@ public class UMBeanCoder_a extends UMBeanCoder {
         }
     }
 
-    public static class a_inner implements UMBeanCoderBuilder {
+    public static class UMBeanCoder_a_Builder implements UMBeanCoderBuilder {
         protected boolean a;
         protected boolean b;
         protected int c;
 
-        public a_inner() {
+        public UMBeanCoder_a_Builder() {
             this(false, true);
         }
 
-        public a_inner(boolean var1, boolean var2) {
+        public UMBeanCoder_a_Builder(boolean var1, boolean var2) {
             this(var1, var2, 0);
         }
 
-        public a_inner(boolean var1, boolean var2, int var3) {
+        public UMBeanCoder_a_Builder(boolean var1, boolean var2, int var3) {
             this.a = false;
             this.b = true;
             this.a = var1;

@@ -76,7 +76,7 @@ public class OptionSetter_c implements OptionSetter {
 
     public void setOption(Option var1) {
         this.half_month = var1.a(1296000000L);
-        int var2 = var1.b(0);
+        int var2 = var1.getLatent(0);
         if(var2 == 0) {
             if(AnalyticsConfig.sLatentWindow > 0 && AnalyticsConfig.sLatentWindow <= 1800000) {
                 this.h = AnalyticsConfig.sLatentWindow;

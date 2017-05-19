@@ -518,7 +518,7 @@ public final class LogPreReport implements Reporter, OptionSetter {
     }
 
     private boolean hasCodex() {
-        switch(this.option.c(-1)) {
+        switch(this.option.getCodex(-1)) {
             case -1:
                 return AnalyticsConfig.sEncrypt;
             case 0:

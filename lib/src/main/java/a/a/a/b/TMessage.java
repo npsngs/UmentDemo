@@ -6,7 +6,7 @@
 package a.a.a.b;
 
 public final class TMessage {
-    public final String name;
+    public final String domain;
     public final byte type;
     public final int seqid;
 
@@ -15,13 +15,13 @@ public final class TMessage {
     }
 
     public TMessage(String name, byte type, int seqid) {
-        this.name = name;
+        this.domain = name;
         this.type = type;
         this.seqid = seqid;
     }
 
     public String toString() {
-        return "<TMessage domain:\'" + this.name + "\' type: " + this.type + " seqid:" + this.seqid + ">";
+        return "<TMessage domain:\'" + this.domain + "\' type: " + this.type + " seqid:" + this.seqid + ">";
     }
 
     public boolean equals(Object var1) {
@@ -29,6 +29,6 @@ public final class TMessage {
     }
 
     public boolean isEqual(TMessage tMessage) {
-        return this.name.equals(tMessage.name) && this.type == tMessage.type && this.seqid == tMessage.seqid;
+        return this.domain.equals(tMessage.domain) && this.type == tMessage.type && this.seqid == tMessage.seqid;
     }
 }

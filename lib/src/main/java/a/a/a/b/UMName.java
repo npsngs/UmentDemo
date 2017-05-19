@@ -5,14 +5,14 @@
 
 package a.a.a.b;
 
-public final class Name {
+public final class UMName {
     public final String name;
 
-    public Name() {
+    public UMName() {
         this("");
     }
 
-    public Name(String name) {
+    public UMName(String name) {
         this.name = name;
     }
 }

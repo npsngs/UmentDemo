@@ -59,6 +59,7 @@ public class UMIOStream extends IOStream {
 
     }
 
+    @Override
     public int read(byte[] data, int offset, int count) throws UMErrCodeException {
         if(this.is == null) {
             throw new UMErrCodeException(1, "Cannot readByteBuffer from null inputStream");

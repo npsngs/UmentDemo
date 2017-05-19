@@ -1,17 +1,37 @@
 package com.yxd.umentdemo;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.analytics.c.UMengItCache;
 import com.umeng.analytics.f.IdTracking;
+import com.umeng.analytics.f.Imprint;
+import com.umeng.analytics.g.UMEnvelope;
+import com.umeng.tool.EncodeUtil;
+import com.umeng.tool.StringTool;
+import com.umeng.tool.ZipTool;
+
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.zip.DataFormatException;
+
+import a.a.a.UMBeanUnpacker;
+import a.a.a.UMBeanUnpacker_old;
+import a.a.a.UMException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +53,134 @@ public class MainActivity extends AppCompatActivity {
 
         MobclickAgent.setDebugMode( true );
         MobclickAgent.enableEncrypt(false);
+
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                parseIosEnvelope();
+                parseEnvelope();
+                parseImprint();
+            }
+        }).start();
     }
+
+    private void parseEnvelope() {
+        UMBeanUnpacker unpacker = new UMBeanUnpacker();
+        File f = new File(Environment.getExternalStorageDirectory()+"/DUOYOU", "um_cache.env");
+        if(f.exists()){
+            try {
+                FileInputStream fis = new FileInputStream(f);
+                byte[] bytes = EncodeUtil.readData(fis);
+                UMEnvelope envelope = new UMEnvelope();
+                unpacker.unpack(envelope, bytes);
+                byte[] entity = envelope.entity.array();
+                byte[] src = ZipTool.inflater(entity);
+                String jsonEntity = new String(src);
+                Log.d("entity",jsonEntity);
+
+
+                JSONObject json = new JSONObject(jsonEntity);
+                JSONObject header = json.getJSONObject("header");
+                String idTrackingStr = header.getString("id_tracking");
+                byte[] idTk = Base64.decode(idTrackingStr,0);
+                IdTracking idTracking = new IdTracking();
+                unpacker.unpack(idTracking, idTk);
+
+                Log.d("idTracking",idTracking.toString());
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (UMException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+    private void parseIosEnvelope() {
+        UMBeanUnpacker_old unpacker = new UMBeanUnpacker_old();
+        try {
+            AssetManager assetManager = getAssets();
+            byte[] bytes = EncodeUtil.readData(assetManager.open("ios_entity2.data"));
+            UMEnvelope envelope = new UMEnvelope();
+            unpacker.unpack(envelope, bytes);
+            byte[] entity = envelope.entity.array();
+            int pos = envelope.entity.position();
+            int limit = envelope.entity.limit();
+            entity = ZipTool.inflater(entity, pos, limit-pos);
+
+            String jsonEntity = new String(entity, "utf-8");
+            Log.d("entity",jsonEntity);
+
+
+            JSONObject json = new JSONObject(jsonEntity);
+            JSONObject header = json.getJSONObject("header");
+            String idTrackingStr = header.getString("id_tracking");
+            byte[] idTk = Base64.decode(idTrackingStr,0);
+            IdTracking idTracking = new IdTracking();
+            unpacker.unpack(idTracking, idTk);
+
+            Log.d("idTracking",idTracking.toString());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UMException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void parseImprint() {
+        UMBeanUnpacker unpacker = new UMBeanUnpacker();
+        File f = new File(Environment.getExternalStorageDirectory()+"/DUOYOU", "um.imprint");
+        if(f.exists()){
+            try {
+                FileInputStream fis = new FileInputStream(f);
+                byte[] bytes = EncodeUtil.readData(fis);
+                Imprint imprint = new Imprint();
+                unpacker.unpack(imprint, bytes);
+                Log.d("imprint",imprint.toString());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (UMException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    private void parseIdTracking() {
+        UMBeanUnpacker unpacker = new UMBeanUnpacker();
+        File f = new File(Environment.getExternalStorageDirectory()+"/DUOYOU", "umeng_it.cache");
+        if(f.exists()){
+            try {
+                FileInputStream fis = new FileInputStream(f);
+                byte[] bytes = EncodeUtil.readData(fis);
+                IdTracking idTracking = new IdTracking();
+                unpacker.unpack(idTracking, bytes);
+                Log.d("imprint",idTracking.toString());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (UMException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     @Override
     public void onResume() {
