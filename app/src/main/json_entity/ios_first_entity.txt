@@ -1,0 +1,32 @@
+{
+    "body": {
+        "activate_msg": {
+            "ts": 1495093396237
+        }
+    },
+    "header": {
+        "sdk_version": "4.1.0",
+        "language": "zh-Hans-CN",
+        "country": "CN",
+        "app_version": "1.4.4",
+        "sdk_type": "IOS",
+        "device_id": "cdb549188d1a1c3336fdcf6762bd6fcee337b103",
+        "channel": "App Store",
+        "id_tracking": "DQABCwwAAAAFAAAABGlkZnYLAAEAAAAkOTRFNEE2NjUtRTg2Ni00QjE1LUI2RkUtQTlBNjFCMkNGODc3CgACAAABXBqC16sIAAMAAAABAAAAAARpZGZhCwABAAAAJEZEQTg4QzEwLUQ4QjQtNDhCOS04Qzc3LTU0QjlFMjA2OUM1RAoAAgAAAVwagtepCAADAAAAAQAAAAADb2lkCwABAAAAKGNkYjU0OTE4OGQxYTFjMzMzNmZkY2Y2NzYyYmQ2ZmNlZTMzN2IxMDMKAAIAAAFcGoLXqwgAAwAAAAEAAAAAAm1jCwABAAAAETAyOjAwOjAwOjAwOjAwOjAwCgACAAABXBqC16cIAAMAAAABAAAAAAV1dGRpZAsAAQAAABhXRlMrZUFLZHV1OERBT2EzaHVmNXpPK08KAAIAAAFcGoLZVQgAAwAAAAEADwACDAAAAAULAAEAAAACbWMLAAMAAAARMDI6MDA6MDA6MDA6MDA6MDAKAAQAAAFcGoLXpwALAAEAAAAEaWRmYQsAAwAAACRGREE4OEMxMC1EOEI0LTQ4QjktOEM3Ny01NEI5RTIwNjlDNUQKAAQAAAFcGoLXqQALAAEAAAAEaWRmdgsAAwAAACQ5NEU0QTY2NS1FODY2LTRCMTUtQjZGRS1BOUE2MUIyQ0Y4NzcKAAQAAAFcGoLXqwALAAEAAAADb2lkCwADAAAAKGNkYjU0OTE4OGQxYTFjMzMzNmZkY2Y2NzYyYmQ2ZmNlZTMzN2IxMDMKAAQAAAFcGoLXqwALAAEAAAAFdXRkaWQLAAMAAAAYV0ZTK2VBS2R1dThEQU9hM2h1ZjV6TytPCgAEAAABXBqC2VUACwADAAAACGNoZWNrc3VtAA==",
+        "resolution": "1136*640",
+        "os": "iOS",
+        "package_name": "com.youxiduo.LionRoaring",
+        "access_subtype": "HSDPA",
+        "access": "wifi",
+        "carrier": "中国联通",
+        "timezone": 8,
+        "mccmnc": "46001",
+        "os_version": "10.3.1",
+        "is_jailbroken": "NO",
+        "mc": "02:00:00:00:00:00",
+        "device_model": "iPhone6,2",
+        "display_name": "狮吼",
+        "appkey": "57d7cd6e67e58e70f700093f",
+        "is_pirated": "NO"
+    }
+}

@@ -1,0 +1,473 @@
+{
+    "body": {
+        "sessions": [
+            {
+                "autopages": [
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 239
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30025
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30142
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30009
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30267
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 29331
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30056
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 16551
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 5608
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 1412
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 4542
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 23816
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30082
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 6125
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 5576
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 4892
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 3844
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 23848
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 4562
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 6910
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 19830
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30000
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 24679
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 2685
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 2153
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 23992
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 2369
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 8536
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 6016
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 29981
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30021
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30057
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30048
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30040
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30039
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30125
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30013
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30040
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30027
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30068
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30035
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30072
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30078
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30054
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30022
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30097
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30040
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 29483
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30057
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 5149
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 28
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 17
+                    }
+                ],
+                "id": "452C0522690C493C8165F18FBBE7F60A",
+                "start_time": "1488967987287",
+                "duration": 1116456,
+                "traffic": {
+                    "download_traffic": 10016,
+                    "upload_traffic": 13675
+                },
+                "end_time": "1488969103743",
+                "pages": [
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 238
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30025
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30142
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30009
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30267
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 29331
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30056
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 16551
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 5608
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 1413
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 4542
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 23816
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30082
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 6125
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 5575
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 4892
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 3844
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 23848
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 4562
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 6910
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 19831
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30000
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 24679
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 2685
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 2153
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 23993
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 2370
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 8536
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 6017
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 29981
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30021
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30057
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30048
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30040
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30039
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30125
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30013
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30040
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30027
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30068
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30035
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30072
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30079
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30054
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30022
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30097
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30040
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 29483
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 30056
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 5149
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 28
+                    },
+                    {
+                        "page_name": "com.yxd.umentdemo.MainActivity",
+                        "duration": 17
+                    }
+                ]
+            }
+        ]
+    },
+    "header": {
+        "failed_requests": 0,
+        "appkey": "58bfcaaf76661379d00008ac",
+        "app_version": "1.0",
+        "resolution": "960*540",
+        "version_code": 1,
+        "device_model": "HUAWEI G6-U00",
+        "timezone": 8,
+        "device_name": "hwG6-U00",
+        "mc": "f8:01:13:3f:4c:f5",
+        "imprint": "GwGMD2ludGVncmF0ZWRfdGVzdBgBMRagxuTV1VYYKGUwZjMzMDlkN2EyMmI5MTQ5OTg0NGZiMDRm\nNWFlYWVmNWIzZWZkM2MAFQIYIGEyZjlkM2ZhZTc5ZmY5YzZmNGE0ZGJkZWE0NzU5YWQzAA==\n",
+        "req_time": 16,
+        "carrier": "null",
+        "successful_requests": 4,
+        "device_board": "G6-U00",
+        "vertical_type": 0,
+        "device_manufacturer": "HUAWEI",
+        "id_tracking": "GwWMCmFuZHJvaWRfaWQYEDNlZDQ1NzI3NDM4MjJmMWUWrLLk1dVWFQIAA21hYxgRZjg6MDE6MTM6\nM2Y6NGM6ZjUWprLk1dVWFQIABnNlcmlhbBgMZjgwMTEzM2Y0MTNjFq6y5NXVVhUCAARpbWVpGA8z\nNTc0ODUwMzUwODA5MTIWrLLk1dVWFQIABWlkbWQ1GB9jZDIzMzQ1NWNmMjJhNDdmNmMxYTQxNjQ4\nZTMyYmE5FrKy5NXVVhUCABkMAA==\n",
+        "os": "Android",
+        "app_signature": "9F:E0:18:70:E3:5A:EC:35:38:EA:61:D0:7B:91:3A:7E",
+        "cpu": "ARMv7 Processor rev 3 (v7l)",
+        "package_name": "com.yxd.umentdemo",
+        "sdk_version": "6.0.9",
+        "device_id": "357485035080912",
+        "device_brand": "Huawei",
+        "access": "wifi",
+        "country": "CN",
+        "os_version": "4.3",
+        "idmd5": "cd233455cf22a47f6c1a41648e32ba9",
+        "display_name": "UmentDemo",
+        "sdk_type": "Android",
+        "device_manuid": "HuaweiG6-U00",
+        "mccmnc": "",
+        "language": "zh",
+        "channel": "yxd_android_demo",
+        "device_manutime": 1404237854000
+    }
+}
