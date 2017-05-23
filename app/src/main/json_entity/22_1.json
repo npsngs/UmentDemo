@@ -1,0 +1,43 @@
+{
+  "body": {
+    "activate_msg": {
+      "ts": 1495425041579
+    }
+  },
+  "header": {
+    "failed_requests": 0,
+    "appkey": "5423af13fd98c5f4b002c8ef",
+    "app_version": "1.0",
+    "resolution": "960*540",
+    "version_code": 1,
+    "device_model": "HUAWEI G6-U00",
+    "timezone": 8,
+    "device_name": "hwG6-U00",
+    "mc": "f8:01:13:3f:4c:f5",
+    "req_time": 0,
+    "carrier": "null",
+    "successful_requests": 0,
+    "device_board": "G6-U00",
+    "vertical_type": 0,
+    "device_manufacturer": "HUAWEI",
+    "id_tracking": "GwWMCmFuZHJvaWRfaWQYEDNlZDQ1NzI3NDM4MjJmMWUWnJW65IVXFQIAA21hYxgRZjg6MDE6MTM6\nM2Y6NGM6ZjUWnpW65IVXFQIABnNlcmlhbBgMZjgwMTEzM2Y0MTNjFoyVuuSFVxUCAARpbWVpGA8z\nNTc0ODUwMzUwODA5MTIWoJW65IVXFQIABWlkbWQ1GB9jZDIzMzQ1NWNmMjJhNDdmNmMxYTQxNjQ4\nZTMyYmE5FpqVuuSFVxUCABlcGAZzZXJpYWwoDGY4MDExMzNmNDEzYxaMlbrkhVcAGAVpZG1kNSgf\nY2QyMzM0NTVjZjIyYTQ3ZjZjMWE0MTY0OGUzMmJhORaalbrkhVcAGAphbmRyb2lkX2lkKBAzZWQ0\nNTcyNzQzODIyZjFlFpyVuuSFVwAYA21hYygRZjg6MDE6MTM6M2Y6NGM6ZjUWnpW65IVXABgEaW1l\naSgPMzU3NDg1MDM1MDgwOTEyFqCVuuSFVwAA\n",
+    "os": "Android",
+    "app_signature": "9F:E0:18:70:E3:5A:EC:35:38:EA:61:D0:7B:91:3A:7E",
+    "cpu": "ARMv7 Processor rev 3 (v7l)",
+    "package_name": "com.yxd.umentdemo",
+    "sdk_version": "6.1.0",
+    "device_id": "357485035080912",
+    "device_brand": "Huawei",
+    "access": "wifi",
+    "country": "CN",
+    "os_version": "4.3",
+    "idmd5": "cd233455cf22a47f6c1a41648e32ba9",
+    "display_name": "UmentDemo",
+    "sdk_type": "Android",
+    "device_manuid": "HuaweiG6-U00",
+    "mccmnc": "",
+    "language": "zh",
+    "channel": "yxd_android_demo",
+    "device_manutime": 1404237854000
+  }
+}
