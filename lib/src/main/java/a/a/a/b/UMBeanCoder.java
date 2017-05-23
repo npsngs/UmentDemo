@@ -37,7 +37,7 @@ public abstract class UMBeanCoder {
 
     public abstract void endWriteField() throws UMException;
 
-    public abstract void writeDivider() throws UMException;
+    public abstract void writeEOF() throws UMException;
 
     public abstract void writeMapHeader(MapHeader var1) throws UMException;
 
@@ -107,7 +107,7 @@ public abstract class UMBeanCoder {
 
     public abstract ByteBuffer readByteBuffer() throws UMException;
 
-    public void B() {
+    public void reset() {
     }
 
     public Class<? extends UMBeanTransfer> getBeanTransferClass() {

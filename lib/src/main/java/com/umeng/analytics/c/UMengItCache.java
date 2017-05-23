@@ -58,13 +58,13 @@ public class UMengItCache {
             }
 
             Oldumid oldumid = new Oldumid(context);
-            if(oldumid.g()) {
+            if(oldumid.hasOld()) {
                 instance.addProperty(oldumid);
                 instance.addProperty(new Newumid(context));
-                oldumid.i();
+                oldumid.writeToCaches();
             }
 
-            instance.init();
+            instance.deleteInvalid();
         }
 
         return instance;
@@ -158,7 +158,7 @@ public class UMengItCache {
         }
     }
 
-    public void init() {
+    public void deleteInvalid() {
         IdTracking idTracking = this.readFromFile();
         if(idTracking != null) {
             ArrayList arrayList = new ArrayList(this.properties.size());

@@ -283,8 +283,7 @@ public final class LogPreReport implements Reporter, OptionSetter {
                 } else {
                     try {
                         jsonObject.remove("body");
-                    } catch (Throwable var24) {
-                        ;
+                    } catch (Throwable t) {
                     }
                 }
 

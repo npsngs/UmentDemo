@@ -2912,7 +2912,6 @@
         "device_name": "hwG6-U00",
         "mc": "f8:01:13:3f:4c:f5",
         "imprint": "GwGMD2ludGVncmF0ZWRfdGVzdBgBMRagxuTV1VYYKGUwZjMzMDlkN2EyMmI5MTQ5OTg0NGZiMDRm\nNWFlYWVmNWIzZWZkM2MAFQIYIGEyZjlkM2ZhZTc5ZmY5YzZmNGE0ZGJkZWE0NzU5YWQzAA==\n",
-        "req_time": 108,
         "carrier": "null",
         "successful_requests": 21,
         "device_board": "G6-U00",

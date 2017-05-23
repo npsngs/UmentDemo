@@ -182,6 +182,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
             this.address = null;
         }
 
+
     }
 
     public String getSignature() {
@@ -550,7 +551,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
         private c() {
         }
 
-        public void unpack(UMBeanCoder var1, UMEnvelope var2) throws UMException {
+        public void pack(UMBeanCoder var1, UMEnvelope var2) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
             var3.writeString(var2.version);
             var3.writeString(var2.address);
@@ -573,7 +574,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
 
         }
 
-        public void pack(UMBeanCoder var1, UMEnvelope var2) throws UMException {
+        public void unpack(UMBeanCoder var1, UMEnvelope var2) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
             var2.version = var3.readString();
             var2.a(true);
@@ -781,7 +782,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                 umBeanCoder.endWriteField();
             }
 
-            umBeanCoder.writeDivider();
+            umBeanCoder.writeEOF();
             umBeanCoder.endWriteObj();
         }
     }

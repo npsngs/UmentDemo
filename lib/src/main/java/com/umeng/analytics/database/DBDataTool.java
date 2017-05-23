@@ -26,7 +26,7 @@ import org.json.JSONObject;
 
 public class DBDataTool {
     private static Context context = null;
-    private static String d = null;
+    private static String key = null;
     private List<String> list;
     public static final int a = 2049;
     public static final int b = 2050;
@@ -71,7 +71,7 @@ public class DBDataTool {
                     values.put("__t", Integer.valueOf(jsonObject.optInt("__t")));
                     jsonObject.remove("__i");
                     jsonObject.remove("__t");
-                    values.put("__s", this.a(jsonObject.toString()));
+                    values.put("__s", this.encode(jsonObject.toString()));
                     database.insert("__et", null, values);
                 } catch (Exception e) {
                 }
@@ -94,7 +94,7 @@ public class DBDataTool {
             database.beginTransaction();
             ContentValues values = new ContentValues();
             values.put("__i", var1);
-            String var6 = this.a(var2);
+            String var6 = this.encode(var2);
             if(!TextUtils.isEmpty(var6)) {
                 values.put("__a", var6);
                 values.put("__t", Integer.valueOf(var3));
@@ -111,7 +111,7 @@ public class DBDataTool {
         return false;
     }
 
-    public boolean insertIntoSd(String var1, JSONObject jsonObject, a_enum var3) {
+    public boolean insertIntoSd(String id, JSONObject jsonObject, a_enum var3) {
         if(jsonObject == null) {
             return false;
         } else {
@@ -125,19 +125,19 @@ public class DBDataTool {
                 if(var3 == a_enum.c) {
                     var24 = (Long) jsonObject.get("__e");
                     ContentValues var28 = new ContentValues();
-                    var28.put("__ii", var1);
+                    var28.put("__ii", id);
                     var28.put("__e", String.valueOf(var24));
                     database.insert("__sd", null, var28);
                 } else {
                     String var8;
                     if(var3 == a_enum.d) {
                         var24 = (Long) jsonObject.get("__f");
-                        var8 = "update __sd set __f=\"" + var24 + "\" where " + "__ii" + "=\"" + var1 + "\"";
+                        var8 = "update __sd set __f=\"" + var24 + "\" where " + "__ii" + "=\"" + id + "\"";
                         database.execSQL(var8);
                     } else if(var3 == a_enum.b) {
-                        this.a(var1, jsonObject, database, "__a");
+                        this.a(id, jsonObject, database, "__a");
                     } else if(var3 == a_enum.a) {
-                        this.a(var1, jsonObject, database, "__b");
+                        this.a(id, jsonObject, database, "__b");
                     } else if(var3 == a_enum.e) {
                         JSONObject var6 = null;
 
@@ -148,12 +148,12 @@ public class DBDataTool {
 
                         String var7 = null;
                         if(var6 != null) {
-                            var8 = "select __d from __sd where __ii=\"" + var1 + "\"";
+                            var8 = "select __d from __sd where __ii=\"" + id + "\"";
                             cursor = database.rawQuery(var8, null);
                             if(cursor != null) {
                                 while(cursor.moveToNext()) {
                                     var7 = cursor.getString(cursor.getColumnIndex("__d"));
-                                    var7 = this.b(var7);
+                                    var7 = this.decode(var7);
                                 }
                             }
                         }
@@ -168,47 +168,42 @@ public class DBDataTool {
                                 }
 
                                 var25.put(var6);
-                                var9 = this.a(var25.toString());
+                                var9 = this.encode(var25.toString());
                                 if(!TextUtils.isEmpty(var9)) {
-                                    var10 = "update  __sd set __d=\"" + var9 + "\" where " + "__ii" + "=\"" + var1 + "\"";
+                                    var10 = "update  __sd set __d=\"" + var9 + "\" where " + "__ii" + "=\"" + id + "\"";
                                     database.execSQL(var10);
                                 }
                             }
-                        } catch (Exception var20) {
-                            ;
+                        } catch (Exception e) {
                         }
 
                         try {
                             JSONObject var26 = jsonObject.getJSONObject("__c");
                             if(var26 != null) {
-                                var9 = this.a(var26.toString());
+                                var9 = this.encode(var26.toString());
                                 if(!TextUtils.isEmpty(var9)) {
-                                    var10 = "update  __sd set __c=\"" + var9 + "\" where " + "__ii" + "=\"" + var1 + "\"";
+                                    var10 = "update  __sd set __c=\"" + var9 + "\" where " + "__ii" + "=\"" + id + "\"";
                                     database.execSQL(var10);
                                 }
                             }
-                        } catch (Exception var19) {
-                            ;
+                        } catch (Exception e) {
                         }
 
                         try {
                             long var27 = jsonObject.getLong("__f");
-                            var10 = "update  __sd set __f=\"" + String.valueOf(var27) + "\" where " + "__ii" + "=\"" + var1 + "\"";
+                            var10 = "update  __sd set __f=\"" + String.valueOf(var27) + "\" where " + "__ii" + "=\"" + id + "\"";
                             database.execSQL(var10);
-                        } catch (Exception var18) {
-                            ;
+                        } catch (Exception e) {
                         }
                     }
                 }
 
                 database.setTransactionSuccessful();
-            } catch (Throwable var22) {
-                ;
+            } catch (Throwable t) {
             } finally {
                 if(cursor != null) {
                     cursor.close();
                 }
-
                 database.endTransaction();
                 DBUtil.getInstance(context).closeDB();
             }
@@ -217,17 +212,17 @@ public class DBDataTool {
         }
     }
 
-    private void a(String var1, JSONObject var2, SQLiteDatabase database, String var4) throws JSONException {
+    private void a(String id, JSONObject var2, SQLiteDatabase database, String var4) throws JSONException {
         Cursor cursor = null;
 
         try {
-            String sql = "select " + var4 + " from " + "__sd" + " where " + "__ii" + "=\"" + var1 + "\"";
+            String sql = "select " + var4 + " from " + "__sd" + " where " + "__ii" + "=\"" + id + "\"";
             cursor = database.rawQuery(sql, null);
             String var7 = null;
             if(cursor != null) {
                 while(cursor.moveToNext()) {
                     var7 = cursor.getString(cursor.getColumnIndex(var4));
-                    var7 = this.b(var7);
+                    var7 = this.decode(var7);
                 }
             }
 
@@ -237,9 +232,9 @@ public class DBDataTool {
             }
 
             jsonArray.put(var2);
-            String var9 = this.a(jsonArray.toString());
+            String var9 = this.encode(jsonArray.toString());
             if(!TextUtils.isEmpty(var9)) {
-                sql = "update __sd set " + var4 + "=\"" + var9 + "\" where " + "__ii" + "=\"" + var1 + "\"";
+                sql = "update __sd set " + var4 + "=\"" + var9 + "\" where " + "__ii" + "=\"" + id + "\"";
                 database.execSQL(sql);
             }
         } catch (Throwable t) {
@@ -277,10 +272,10 @@ public class DBDataTool {
             database = DBUtil.getInstance(context).getWritableDatabase();
             database.beginTransaction();
             String var4 = "select *  from __et";
-            cursor = database.rawQuery(var4, (String[])null);
+            cursor = database.rawQuery(var4, null);
             if(cursor != null) {
-                JSONObject var5 = null;
-                JSONArray var6 = null;
+                JSONObject var5;
+                JSONArray var6;
                 JSONObject var7 = new JSONObject();
                 JSONObject var8 = new JSONObject();
 
@@ -296,7 +291,7 @@ public class DBDataTool {
                     switch(var9) {
                         case 2049:
                             if(!TextUtils.isEmpty(var11)) {
-                                var5 = new JSONObject(this.b(var11));
+                                var5 = new JSONObject(this.decode(var11));
                                 if(var7.has(var10)) {
                                     var6 = var7.optJSONArray(var10);
                                 } else {
@@ -309,7 +304,7 @@ public class DBDataTool {
                             break;
                         case 2050:
                             if(!TextUtils.isEmpty(var11)) {
-                                var5 = new JSONObject(this.b(var11));
+                                var5 = new JSONObject(this.decode(var11));
                                 if(var8.has(var10)) {
                                     var6 = var8.optJSONArray(var10);
                                 } else {
@@ -350,7 +345,6 @@ public class DBDataTool {
                 if(var8.length() > 0) {
                     var19 = new JSONArray();
                     var20 = var8.keys();
-                    var11 = null;
 
                     while(var20.hasNext()) {
                         var21 = new JSONObject();
@@ -366,16 +360,10 @@ public class DBDataTool {
                         outJson.put("gkv", var19);
                     }
                 }
-
-                var5 = null;
-                var6 = null;
-                var7 = null;
-                var8 = null;
             }
 
             database.setTransactionSuccessful();
-        } catch (Throwable var17) {
-            ;
+        } catch (Throwable t) {
         } finally {
             if(cursor != null) {
                 cursor.close();
@@ -395,22 +383,20 @@ public class DBDataTool {
             database = DBUtil.getInstance(context).getWritableDatabase();
             database.beginTransaction();
             String var4 = "select *  from __er";
-            cursor = database.rawQuery(var4, (String[])null);
+            cursor = database.rawQuery(var4, null);
             if(cursor != null) {
                 JSONArray var5 = new JSONArray();
 
                 while(cursor.moveToNext()) {
                     String var6 = cursor.getString(cursor.getColumnIndex("__a"));
                     if(!TextUtils.isEmpty(var6)) {
-                        var5.put(new JSONObject(this.b(var6)));
+                        var5.put(new JSONObject(this.decode(var6)));
                     }
                 }
 
                 if(var5.length() > 0) {
                     outJson.put("error", var5);
                 }
-
-                var5 = null;
             }
 
             database.setTransactionSuccessful();
@@ -446,8 +432,8 @@ public class DBDataTool {
                     String endTime = cursor.getString(cursor.getColumnIndex("__f"));
                     String startTime = cursor.getString(cursor.getColumnIndex("__e"));
                     if(!TextUtils.isEmpty(endTime) && !TextUtils.isEmpty(startTime)) {
-                        long var9 = Long.parseLong(endTime) - Long.parseLong(startTime);
-                        if(var9 > 0L) {
+                        long duration = Long.parseLong(endTime) - Long.parseLong(startTime);
+                        if(duration > 0L) {
                             String var11 = cursor.getString(cursor.getColumnIndex("__a"));
                             String var12 = cursor.getString(cursor.getColumnIndex("__b"));
                             String var13 = cursor.getString(cursor.getColumnIndex("__c"));
@@ -459,19 +445,19 @@ public class DBDataTool {
                             json.put("end_time", endTime);
                             json.put("duration", Long.parseLong(endTime) - Long.parseLong(startTime));
                             if(!TextUtils.isEmpty(var11)) {
-                                json.put("pages", new JSONArray(this.b(var11)));
+                                json.put("pages", new JSONArray(this.decode(var11)));
                             }
 
                             if(!TextUtils.isEmpty(var12)) {
-                                json.put("autopages", new JSONArray(this.b(var12)));
+                                json.put("autopages", new JSONArray(this.decode(var12)));
                             }
 
                             if(!TextUtils.isEmpty(var13)) {
-                                json.put("traffic", new JSONObject(this.b(var13)));
+                                json.put("traffic", new JSONObject(this.decode(var13)));
                             }
 
                             if(!TextUtils.isEmpty(var14)) {
-                                json.put("locations", new JSONArray(this.b(var14)));
+                                json.put("locations", new JSONArray(this.decode(var14)));
                             }
 
                             if(json.length() > 0) {
@@ -536,7 +522,7 @@ public class DBDataTool {
 
     private void b() {
         try {
-            if(TextUtils.isEmpty(d)) {
+            if(TextUtils.isEmpty(key)) {
                 SharedPreferences sp = SP_Util.getSp(context);
                 String ekId = sp.getString("ek__id",null);
                 if(TextUtils.isEmpty(ekId)) {
@@ -563,15 +549,15 @@ public class DBDataTool {
                         }
                     }
 
-                    d = stringBuilder.toString();
+                    key = stringBuilder.toString();
                 }
 
-                if(!TextUtils.isEmpty(d)) {
-                    d = d + (new StringBuilder(d)).reverse().toString();
+                if(!TextUtils.isEmpty(key)) {
+                    key = key + (new StringBuilder(key)).reverse().toString();
                     ekId = sp.getString("ek_key", null);
                     if(TextUtils.isEmpty(ekId)) {
-                        sp.edit().putString("ek_key", this.a("umeng+")).commit();
-                    } else if(!"umeng+".equals(this.b(ekId))) {
+                        sp.edit().putString("ek_key", this.encode("umeng+")).commit();
+                    } else if(!"umeng+".equals(this.decode(ekId))) {
                         this.deleteData(true, false);
                     }
                 }
@@ -581,36 +567,36 @@ public class DBDataTool {
 
     }
 
-    public String a(String var1) {
-        String var2 = null;
+    public String encode(String str) {
+        String ret = null;
 
         try {
-            if(TextUtils.isEmpty(d)) {
-                var2 = var1;
+            if(TextUtils.isEmpty(key)) {
+                ret = str;
             } else {
-                byte[] var3 = StringTool.encrypt(var1.getBytes(), d.getBytes());
-                var2 = Base64.encodeToString(var3, 0);
+                byte[] data = StringTool.encrypt(str.getBytes(), key.getBytes());
+                ret = Base64.encodeToString(data, 0);
             }
         } catch (Exception e) {
         }
 
-        return var2;
+        return ret;
     }
 
-    public String b(String source) {
-        String var2 = null;
+    public String decode(String source) {
+        String ret = null;
 
         try {
-            if(TextUtils.isEmpty(d)) {
-                var2 = source;
+            if(TextUtils.isEmpty(key)) {
+                ret = source;
             } else {
-                byte[] var3 = Base64.decode(source.getBytes(), 0);
-                var2 = new String(StringTool.decrypt(var3, d.getBytes()));
+                byte[] data = Base64.decode(source.getBytes(), 0);
+                ret = new String(StringTool.decrypt(data, key.getBytes()));
             }
         } catch (Exception e) {
         }
 
-        return var2;
+        return ret;
     }
 
     public enum a_enum {

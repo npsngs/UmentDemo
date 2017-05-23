@@ -232,14 +232,14 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
         private c_inner() {
         }
 
-        public void unpack(UMBeanCoder var1, IdSnapshot_c var2) throws UMException {
+        public void pack(UMBeanCoder var1, IdSnapshot_c var2) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
             var3.writeString(var2.identity);
             var3.writeUnsignedLong(var2.ts);
             var3.writeUnsignedInt(var2.version);
         }
 
-        public void pack(UMBeanCoder var1, IdSnapshot_c var2) throws UMException {
+        public void unpack(UMBeanCoder var1, IdSnapshot_c var2) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
             var2.identity = var3.readString();
             var2.a(true);
@@ -330,7 +330,7 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
             var1.writeTField(IdSnapshot_c.VERSION_FIELD);
             var1.writeUnsignedInt(var2.version);
             var1.endWriteField();
-            var1.writeDivider();
+            var1.writeEOF();
             var1.endWriteObj();
         }
     }

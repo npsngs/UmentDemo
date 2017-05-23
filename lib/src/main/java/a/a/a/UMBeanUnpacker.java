@@ -33,7 +33,7 @@ public class UMBeanUnpacker {
             umBean.unpackFrom(this.umBeanCoder);
         } finally {
             this.bis.clearBuffer();
-            this.umBeanCoder.B();
+            this.umBeanCoder.reset();
         }
 
     }
@@ -44,7 +44,7 @@ public class UMBeanUnpacker {
         } catch (UnsupportedEncodingException var8) {
             throw new UMException("JVM DOES NOT SUPPORT ENCODING: " + charsetName);
         } finally {
-            this.umBeanCoder.B();
+            this.umBeanCoder.reset();
         }
 
     }
@@ -58,7 +58,7 @@ public class UMBeanUnpacker {
             throw new UMException(e);
         } finally {
             this.bis.clearBuffer();
-            this.umBeanCoder.B();
+            this.umBeanCoder.reset();
         }
 
     }
@@ -110,7 +110,7 @@ public class UMBeanUnpacker {
             throw new UMException(var9);
         } finally {
             this.bis.clearBuffer();
-            this.umBeanCoder.B();
+            this.umBeanCoder.reset();
         }
 
         return var5;
@@ -178,7 +178,7 @@ public class UMBeanUnpacker {
             throw new UMException(var10);
         } finally {
             this.bis.clearBuffer();
-            this.umBeanCoder.B();
+            this.umBeanCoder.reset();
         }
     }
 

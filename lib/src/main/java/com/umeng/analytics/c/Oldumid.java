@@ -16,7 +16,7 @@ public class Oldumid extends UMProperty {
     private static final String a = "oldumid";
     private Context context;
     private String value = null;
-    private String d = null;
+    private String umid = null;
 
     public Oldumid(Context context) {
         super("oldumid");
@@ -27,35 +27,35 @@ public class Oldumid extends UMProperty {
         return this.value;
     }
 
-    public boolean g() {
-        return this.h();
+    public boolean hasOld() {
+        return this.isExistOld();
     }
 
-    public boolean h() {
-        this.d = ImprintTool.getInstance(this.context).getOption().getUmid(null);
-        if(!TextUtils.isEmpty(this.d)) {
-            this.d = StringTool.sha1(this.d);
-            String var1 = EncodeUtil.readStr(new File("/sdcard/Android/data/.um/sysid.dat"));
-            String var2 = EncodeUtil.readStr(new File("/sdcard/Android/obj/.um/sysid.dat"));
-            String var3 = EncodeUtil.readStr(new File("/data/local/tmp/.um/sysid.dat"));
-            if(TextUtils.isEmpty(var1)) {
-                this.l();
-            } else if(!this.d.equals(var1)) {
-                this.value = var1;
+    public boolean isExistOld() {
+        this.umid = ImprintTool.getInstance(this.context).getOption().getUmid(null);
+        if(!TextUtils.isEmpty(this.umid)) {
+            this.umid = StringTool.sha1(this.umid);
+            String cacheUmid1 = EncodeUtil.readStr(new File("/sdcard/Android/data/.um/sysid.dat"));
+            String cacheUmid2 = EncodeUtil.readStr(new File("/sdcard/Android/obj/.um/sysid.dat"));
+            String cacheUmid3 = EncodeUtil.readStr(new File("/data/local/tmp/.um/sysid.dat"));
+            if(TextUtils.isEmpty(cacheUmid1)) {
+                this.writeToDataCache();
+            } else if(!this.umid.equals(cacheUmid1)) {
+                this.value = cacheUmid1;
                 return true;
             }
 
-            if(TextUtils.isEmpty(var2)) {
-                this.k();
-            } else if(!this.d.equals(var2)) {
-                this.value = var2;
+            if(TextUtils.isEmpty(cacheUmid2)) {
+                this.writeToObjCache();
+            } else if(!this.umid.equals(cacheUmid2)) {
+                this.value = cacheUmid2;
                 return true;
             }
 
-            if(TextUtils.isEmpty(var3)) {
-                this.j();
-            } else if(!this.d.equals(var3)) {
-                this.value = var3;
+            if(TextUtils.isEmpty(cacheUmid3)) {
+                this.writeToTmpCache();
+            } else if(!this.umid.equals(cacheUmid3)) {
+                this.value = cacheUmid3;
                 return true;
             }
         }
@@ -63,42 +63,39 @@ public class Oldumid extends UMProperty {
         return false;
     }
 
-    public void i() {
+    public void writeToCaches() {
         try {
-            this.l();
-            this.k();
-            this.j();
+            this.writeToDataCache();
+            this.writeToObjCache();
+            this.writeToTmpCache();
         } catch (Exception e) {
         }
 
     }
 
-    private void j() {
+    private void writeToTmpCache() {
         try {
             this.checkDirFile("/data/local/tmp/.um");
-            EncodeUtil.writeToFile(new File("/data/local/tmp/.um/sysid.dat"), this.d);
-        } catch (Throwable var2) {
-            ;
+            EncodeUtil.writeToFile(new File("/data/local/tmp/.um/sysid.dat"), this.umid);
+        } catch (Throwable t) {
         }
 
     }
 
-    private void k() {
+    private void writeToObjCache() {
         try {
             this.checkDirFile("/sdcard/Android/obj/.um");
-            EncodeUtil.writeToFile(new File("/sdcard/Android/obj/.um/sysid.dat"), this.d);
-        } catch (Throwable var2) {
-            ;
+            EncodeUtil.writeToFile(new File("/sdcard/Android/obj/.um/sysid.dat"), this.umid);
+        } catch (Throwable t) {
         }
 
     }
 
-    private void l() {
+    private void writeToDataCache() {
         try {
             this.checkDirFile("/sdcard/Android/data/.um");
-            EncodeUtil.writeToFile(new File("/sdcard/Android/data/.um/sysid.dat"), this.d);
-        } catch (Throwable var2) {
-            ;
+            EncodeUtil.writeToFile(new File("/sdcard/Android/data/.um/sysid.dat"), this.umid);
+        } catch (Throwable t) {
         }
 
     }

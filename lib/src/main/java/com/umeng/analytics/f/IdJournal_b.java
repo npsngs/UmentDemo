@@ -58,11 +58,11 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
         this.o = new e_enum[]{e_enum.b};
     }
 
-    public IdJournal_b(String var1, String var2, long var3) {
+    public IdJournal_b(String domain, String new_id, long ts) {
         this();
-        this.domain = var1;
-        this.new_id = var2;
-        this.ts = var3;
+        this.domain = domain;
+        this.new_id = new_id;
+        this.ts = ts;
         this.d(true);
     }
 
@@ -294,7 +294,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
         private c() {
         }
 
-        public void unpack(UMBeanCoder var1, IdJournal_b var2) throws UMException {
+        public void pack(UMBeanCoder var1, IdJournal_b var2) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
             var3.writeString(var2.domain);
             var3.writeString(var2.new_id);
@@ -311,7 +311,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
 
         }
 
-        public void pack(UMBeanCoder var1, IdJournal_b var2) throws UMException {
+        public void unpack(UMBeanCoder var1, IdJournal_b var2) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
             var2.domain = var3.readString();
             var2.a(true);
@@ -421,7 +421,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
             umBeanCoder.writeTField(IdJournal_b.K_bc);
             umBeanCoder.writeUnsignedLong(idJournal_b.ts);
             umBeanCoder.endWriteField();
-            umBeanCoder.writeDivider();
+            umBeanCoder.writeEOF();
             umBeanCoder.endWriteObj();
         }
     }

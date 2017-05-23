@@ -240,7 +240,7 @@ public class ImprintTool {
         }
     }
 
-    public boolean e() {
+    public boolean delete() {
         File var1 = new File(this.context.getFilesDir(), ".imprint");
         return var1.delete();
     }
@@ -269,23 +269,23 @@ public class ImprintTool {
             this.init(var1);
         }
 
-        public void init(Imprint var1) {
-            if(var1 != null) {
-                this.defcon = this.a(var1, "defcon");
-                this.latent = this.a(var1, "latent");
-                this.codex = this.a(var1, "codex");
-                this.report_policy = this.a(var1, "report_policy");
-                this.report_interval = this.a(var1, "report_interval");
-                this.client_test = this.getValue(var1, "client_test");
-                this.test_report_interval = this.a(var1, "test_report_interval");
-                this.umid = this.getValue(var1, "umid");
-                this.integrated_test = this.a(var1, "integrated_test");
-                this.latent_hours = this.a(var1, "latent_hours");
-                this.country = this.getValue(var1, "country");
-                this.domain_p = this.getValue(var1, "getDomainP");
-                this.domain_s = this.getValue(var1, "getDomain_s");
-                this.initial_view_time = this.getValue(var1, "initial_view_time");
-                this.track_list = this.getValue(var1, "track_list");
+        public void init(Imprint imprint) {
+            if(imprint != null) {
+                this.defcon = this.getIntValue(imprint, "defcon");
+                this.latent = this.getIntValue(imprint, "latent");
+                this.codex = this.getIntValue(imprint, "codex");
+                this.report_policy = this.getIntValue(imprint, "report_policy");
+                this.report_interval = this.getIntValue(imprint, "report_interval");
+                this.client_test = this.getValue(imprint, "client_test");
+                this.test_report_interval = this.getIntValue(imprint, "test_report_interval");
+                this.umid = this.getValue(imprint, "umid");
+                this.integrated_test = this.getIntValue(imprint, "integrated_test");
+                this.latent_hours = this.getIntValue(imprint, "latent_hours");
+                this.country = this.getValue(imprint, "country");
+                this.domain_p = this.getValue(imprint, "getDomainP");
+                this.domain_s = this.getValue(imprint, "getDomain_s");
+                this.initial_view_time = this.getValue(imprint, "initial_view_time");
+                this.track_list = this.getValue(imprint, "track_list");
             }
         }
 
@@ -357,24 +357,23 @@ public class ImprintTool {
             return this.latent_hours == -1?var1:(this.latent_hours < 48?var1:3600000L * (long)this.latent_hours);
         }
 
-        private int a(Imprint var1, String var2) {
+        private int getIntValue(Imprint imprint, String key) {
             try {
-                if(var1 == null || !var1.hasProperty()) {
+                if(imprint == null || !imprint.hasProperty()) {
                     return -1;
                 }
 
-                ImprintValue var3 = (ImprintValue)var1.getProperty().get(var2);
-                if(var3 == null || TextUtils.isEmpty(var3.getValue())) {
+                ImprintValue imprintValue = imprint.getProperty().get(key);
+                if(imprintValue == null || TextUtils.isEmpty(imprintValue.getValue())) {
                     return -1;
                 }
 
                 try {
-                    return Integer.parseInt(var3.getValue().trim());
+                    return Integer.parseInt(imprintValue.getValue().trim());
                 } catch (Exception var5) {
-                    ;
                 }
-            } catch (Exception var6) {
-                var6.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             return -1;

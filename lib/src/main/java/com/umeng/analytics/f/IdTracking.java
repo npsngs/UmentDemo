@@ -64,13 +64,13 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
     }
 
     public IdTracking(IdTracking idTracking) {
-        Iterator var3;
+        Iterator iterator;
         if(idTracking.isSnapshotNotNull()) {
             HashMap var2 = new HashMap();
-            var3 = idTracking.snapshots.entrySet().iterator();
+            iterator = idTracking.snapshots.entrySet().iterator();
 
-            while(var3.hasNext()) {
-                Entry var4 = (Entry)var3.next();
+            while(iterator.hasNext()) {
+                Entry var4 = (Entry)iterator.next();
                 String var5 = (String)var4.getKey();
                 IdSnapshot_c var6 = (IdSnapshot_c)var4.getValue();
                 IdSnapshot_c var8 = new IdSnapshot_c(var6);
@@ -82,10 +82,10 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
 
         if(idTracking.k()) {
             ArrayList var9 = new ArrayList();
-            var3 = idTracking.journals.iterator();
+            iterator = idTracking.journals.iterator();
 
-            while(var3.hasNext()) {
-                IdJournal_b var10 = (IdJournal_b)var3.next();
+            while(iterator.hasNext()) {
+                IdJournal_b var10 = (IdJournal_b)iterator.next();
                 var9.add(new IdJournal_b(var10));
             }
 
@@ -188,8 +188,8 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
         return this.checksum;
     }
 
-    public IdTracking a(String var1) {
-        this.checksum = var1;
+    public IdTracking setChecksum(String checksum) {
+        this.checksum = checksum;
         return this;
     }
 
@@ -300,15 +300,15 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
         private c() {
         }
 
-        public void unpack(UMBeanCoder var1, IdTracking var2) throws UMException {
-            UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
-            var3.writeUnsignedInt(var2.snapshots.size());
+        public void pack(UMBeanCoder var1, IdTracking var2) throws UMException {
+            UMBeanCoder_n beanCoderN = (UMBeanCoder_n)var1;
+            beanCoderN.writeUnsignedInt(var2.snapshots.size());
             Iterator var4 = var2.snapshots.entrySet().iterator();
 
             while(var4.hasNext()) {
                 Entry var5 = (Entry)var4.next();
-                var3.writeString((String)var5.getKey());
-                ((IdSnapshot_c)var5.getValue()).packTo(var3);
+                beanCoderN.writeString((String)var5.getKey());
+                ((IdSnapshot_c)var5.getValue()).packTo(beanCoderN);
             }
 
             BitSet var7 = new BitSet();
@@ -320,24 +320,24 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
                 var7.set(1);
             }
 
-            var3.a(var7, 2);
+            beanCoderN.a(var7, 2);
             if(var2.k()) {
-                var3.writeUnsignedInt(var2.journals.size());
+                beanCoderN.writeUnsignedInt(var2.journals.size());
                 Iterator var8 = var2.journals.iterator();
 
                 while(var8.hasNext()) {
                     IdJournal_b var6 = (IdJournal_b)var8.next();
-                    var6.packTo(var3);
+                    var6.packTo(beanCoderN);
                 }
             }
 
             if(var2.isNotNullChecksum()) {
-                var3.writeString(var2.checksum);
+                beanCoderN.writeString(var2.checksum);
             }
 
         }
 
-        public void pack(UMBeanCoder umBeanCoder, IdTracking idTracking) throws UMException {
+        public void unpack(UMBeanCoder umBeanCoder, IdTracking idTracking) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)umBeanCoder;
             MapHeader var4 = new MapHeader((byte)11, (byte)12, var3.readSignedInt());
             idTracking.snapshots = new HashMap(2 * var4.size);
@@ -490,7 +490,7 @@ public class IdTracking implements UMBean<IdTracking, IdTracking.e_enum>, Serial
                 umBeanCoder.endWriteField();
             }
 
-            umBeanCoder.writeDivider();
+            umBeanCoder.writeEOF();
             umBeanCoder.endWriteObj();
         }
     }

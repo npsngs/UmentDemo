@@ -170,7 +170,7 @@ public class StringTool {
         }
     }
 
-    static String toHexStr(byte[] data) {
+    public static String toHexStr(byte[] data) {
         String var1 = "";
         String var2;
 

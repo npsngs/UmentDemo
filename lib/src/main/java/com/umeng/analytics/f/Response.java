@@ -244,7 +244,7 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
         private c() {
         }
 
-        public void unpack(UMBeanCoder var1, Response var2) throws UMException {
+        public void pack(UMBeanCoder var1, Response var2) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
             var3.writeUnsignedInt(var2.respCode);
             BitSet var4 = new BitSet();
@@ -267,7 +267,7 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
 
         }
 
-        public void pack(UMBeanCoder beanCoder, Response response) throws UMException {
+        public void unpack(UMBeanCoder beanCoder, Response response) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)beanCoder;
             response.respCode = var3.readSignedInt();
             response.a(true);
@@ -366,7 +366,7 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
                 beanCoder.endWriteField();
             }
 
-            beanCoder.writeDivider();
+            beanCoder.writeEOF();
             beanCoder.endWriteObj();
         }
     }

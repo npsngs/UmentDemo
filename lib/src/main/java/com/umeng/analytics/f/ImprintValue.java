@@ -245,7 +245,7 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
         private c() {
         }
 
-        public void unpack(UMBeanCoder var1, ImprintValue var2) throws UMException {
+        public void pack(UMBeanCoder var1, ImprintValue var2) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
             var3.writeUnsignedLong(var2.ts);
             var3.writeString(var2.guid);
@@ -261,7 +261,7 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
 
         }
 
-        public void pack(UMBeanCoder var1, ImprintValue var2) throws UMException {
+        public void unpack(UMBeanCoder var1, ImprintValue var2) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
             var2.ts = var3.readSignedLong();
             var2.b(true);
@@ -355,7 +355,7 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
                 var1.endWriteField();
             }
 
-            var1.writeDivider();
+            var1.writeEOF();
             var1.endWriteObj();
         }
     }

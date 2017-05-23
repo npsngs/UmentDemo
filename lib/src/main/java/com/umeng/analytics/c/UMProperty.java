@@ -25,7 +25,7 @@ public abstract class UMProperty {
     }
 
     public boolean a() {
-        return this.g();
+        return this.isHasOld();
     }
 
     public String getName() {
@@ -36,7 +36,7 @@ public abstract class UMProperty {
         return this.idSnapshot == null || this.idSnapshot.getVersion() <= 20;
     }
 
-    private boolean g() {
+    private boolean isHasOld() {
         IdSnapshot_c idSnapshot = this.idSnapshot;
         String identity = idSnapshot == null?null:idSnapshot.getIdentity();
         int version = idSnapshot == null?0:idSnapshot.getVersion();
@@ -50,7 +50,7 @@ public abstract class UMProperty {
             idSnapshot.setTS(System.currentTimeMillis());
             idSnapshot.setVersion(version + 1);
             IdJournal_b idJournal = new IdJournal_b();
-            idJournal.b(this.name);
+            idJournal.p(this.name);
             idJournal.c(value);
             idJournal.b(identity);
             idJournal.a(idSnapshot.getTS());

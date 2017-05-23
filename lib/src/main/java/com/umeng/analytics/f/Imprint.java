@@ -267,7 +267,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
         private c() {
         }
 
-        public void unpack(UMBeanCoder var1, Imprint var2) throws UMException {
+        public void pack(UMBeanCoder var1, Imprint var2) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
             var3.writeUnsignedInt(var2.property.size());
             Iterator var4 = var2.property.entrySet().iterator();
@@ -282,7 +282,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
             var3.writeString(var2.checksum);
         }
 
-        public void pack(UMBeanCoder var1, Imprint var2) throws UMException {
+        public void unpack(UMBeanCoder var1, Imprint var2) throws UMException {
             UMBeanCoder_n var3 = (UMBeanCoder_n)var1;
             MapHeader var4 = new MapHeader((byte)11, (byte)12, var3.readSignedInt());
             var2.property = new HashMap(2 * var4.size);
@@ -401,7 +401,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
                 umBeanCoder.endWriteField();
             }
 
-            umBeanCoder.writeDivider();
+            umBeanCoder.writeEOF();
             umBeanCoder.endWriteObj();
         }
     }

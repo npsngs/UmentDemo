@@ -111,14 +111,14 @@ public class SessionHelper {
         SharedPreferences sp = SP_Util.getSp(context);
         if(sp != null) {
             String session;
-            Editor edit = sp.edit();
+            Editor editor = sp.edit();
             int lastVersionCode = sp.getInt("versioncode", 0);
             int versionCode = Integer.parseInt(SystemUtil.getVersionCode(SessionHelper.context));
             if(lastVersionCode != 0 && versionCode != lastVersionCode) {
                 try {
-                    edit.putInt("vers_code", lastVersionCode);
-                    edit.putString("vers_name", sp.getString("versionname", ""));
-                    edit.apply();
+                    editor.putInt("vers_code", lastVersionCode);
+                    editor.putString("vers_name", sp.getString("versionname", ""));
+                    editor.apply();
                 } catch (Throwable t) {
                 }
 
@@ -136,9 +136,9 @@ public class SessionHelper {
                     ULog.c("Start new session: " + session);
                 } else {
                     session = sp.getString("session_id", null);
-                    edit.putLong("a_start_time", System.currentTimeMillis());
-                    edit.putLong("a_end_time", 0L);
-                    edit.commit();
+                    editor.putLong("a_start_time", System.currentTimeMillis());
+                    editor.putLong("a_end_time", 0L);
+                    editor.commit();
                     ULog.c("Extend current session: " + session);
                 }
 
@@ -209,24 +209,24 @@ public class SessionHelper {
     }
 
     public boolean pause(Context context) {
-        boolean var2 = false;
+        boolean ret = false;
         SharedPreferences sp = SP_Util.getSp(context);
         if(sp == null) {
-            return var2;
+            return ret;
         } else {
             String sessionId = sp.getString("session_id", null);
             if(sessionId == null) {
-                return var2;
+                return ret;
             } else {
                 long start_time = sp.getLong("a_start_time", 0L);
                 long end_time = sp.getLong("a_end_time", 0L);
                 if(start_time > 0L && end_time == 0L) {
-                    var2 = true;
+                    ret = true;
                     this.onPause(context);
                 }
 
                 this.commitSession(context);
-                return var2;
+                return ret;
             }
         }
     }

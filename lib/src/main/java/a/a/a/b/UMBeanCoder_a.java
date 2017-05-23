@@ -79,7 +79,7 @@ public class UMBeanCoder_a extends UMBeanCoder {
     public void endWriteField() {
     }
 
-    public void writeDivider() throws UMException {
+    public void writeEOF() throws UMException {
         this.writeByte((byte)0);
     }
 

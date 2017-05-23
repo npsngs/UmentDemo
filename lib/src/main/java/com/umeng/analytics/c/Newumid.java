@@ -17,6 +17,6 @@ public class Newumid extends UMProperty {
     }
 
     public String getValue() {
-        return ImprintTool.getInstance(this.b).getOption().getUmid((String)null);
+        return ImprintTool.getInstance(this.b).getOption().getUmid(null);
     }
 }

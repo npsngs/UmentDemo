@@ -46,7 +46,7 @@ class c implements g {
     private final String v = "duration";
     private final String w = "curtype";
     private final String x = "orderid";
-    private final String y = "UMGameAgent.init(Context) should be called before any game api";
+    private final String y = "UMGameAgent.deleteInvalid(Context) should be called before any game api";
     private Context context;
 
     public c() {
@@ -55,7 +55,7 @@ class c implements g {
 
     void a(Context context) {
         if(context == null) {
-            ULog.e("Context is null, can\'getPackageName init GameAgent");
+            ULog.e("Context is null, can\'getPackageName deleteInvalid GameAgent");
         } else {
             this.context = context.getApplicationContext();
             this.mobclick.a(this);
@@ -81,7 +81,7 @@ class c implements g {
 
     void b(final String var1) {
         if(this.context == null) {
-            ULog.e("UMGameAgent.init(Context) should be called before any game api");
+            ULog.e("UMGameAgent.deleteInvalid(Context) should be called before any game api");
         } else {
             this.b.a = var1;
             TaskExecutor.execute(new SafeRunnable() {
@@ -102,7 +102,7 @@ class c implements g {
 
     private void a(final String var1, final int var2) {
         if(this.context == null) {
-            ULog.e("UMGameAgent.init(Context) should be called before any game api");
+            ULog.e("UMGameAgent.deleteInvalid(Context) should be called before any game api");
         } else {
             TaskExecutor.execute(new SafeRunnable() {
                 public void safeRun() {
@@ -134,7 +134,7 @@ class c implements g {
 
     void c(String var1) {
         if(this.context == null) {
-            ULog.e("UMGameAgent.init(Context) should be called before any game api");
+            ULog.e("UMGameAgent.deleteInvalid(Context) should be called before any game api");
         } else {
             this.a(var1, 1);
         }
@@ -142,7 +142,7 @@ class c implements g {
 
     void d(String var1) {
         if(this.context == null) {
-            ULog.e("UMGameAgent.init(Context) should be called before any game api");
+            ULog.e("UMGameAgent.deleteInvalid(Context) should be called before any game api");
         } else {
             this.a(var1, -1);
         }
@@ -150,7 +150,7 @@ class c implements g {
 
     void a(double var1, double var3, int var5) {
         if(this.context == null) {
-            ULog.e("UMGameAgent.init(Context) should be called before any game api");
+            ULog.e("UMGameAgent.deleteInvalid(Context) should be called before any game api");
         } else {
             HashMap hashMap = new HashMap();
             hashMap.put("cash", Long.valueOf((long)(var1 * 100.0D)));
@@ -175,7 +175,7 @@ class c implements g {
 
     void a(String var1, int var2, double var3) {
         if(this.context == null) {
-            ULog.e("UMGameAgent.init(Context) should be called before any game api");
+            ULog.e("UMGameAgent.deleteInvalid(Context) should be called before any game api");
         } else {
             HashMap var5 = new HashMap();
             var5.put("item", var1);
@@ -195,7 +195,7 @@ class c implements g {
 
     void b(String var1, int var2, double var3) {
         if(this.context == null) {
-            ULog.e("UMGameAgent.init(Context) should be called before any game api");
+            ULog.e("UMGameAgent.deleteInvalid(Context) should be called before any game api");
         } else {
             HashMap var5 = new HashMap();
             var5.put("item", var1);
@@ -215,7 +215,7 @@ class c implements g {
 
     void a(double var1, int var3) {
         if(this.context == null) {
-            ULog.e("UMGameAgent.init(Context) should be called before any game api");
+            ULog.e("UMGameAgent.deleteInvalid(Context) should be called before any game api");
         } else {
             HashMap var4 = new HashMap();
             var4.put("coin", Long.valueOf((long)(var1 * 100.0D)));
@@ -240,7 +240,7 @@ class c implements g {
     public void a() {
         ULog.b("App resume from background");
         if(this.context == null) {
-            ULog.e("UMGameAgent.init(Context) should be called before any game api");
+            ULog.e("UMGameAgent.deleteInvalid(Context) should be called before any game api");
         } else {
             if(com.umeng.analytics.game.a.a) {
                 this.b.b();
@@ -251,7 +251,7 @@ class c implements g {
 
     public void b() {
         if(this.context == null) {
-            ULog.e("UMGameAgent.init(Context) should be called before any game api");
+            ULog.e("UMGameAgent.deleteInvalid(Context) should be called before any game api");
         } else {
             if(com.umeng.analytics.game.a.a) {
                 this.b.a();
@@ -262,7 +262,7 @@ class c implements g {
 
     void a(double var1, String var3, double var4, int var6, String var7) {
         if(this.context == null) {
-            ULog.e("UMGameAgent.init(Context) should be called before any game api");
+            ULog.e("UMGameAgent.deleteInvalid(Context) should be called before any game api");
         } else {
             if(var1 >= 0.0D && var4 >= 0.0D) {
                 HashMap var8 = new HashMap();
