@@ -15,6 +15,7 @@ public class ConfigBean {
     private String cpu;
     private String osVersion;
     private String idmd5;
+    private String signature;
     private String idTracking;
     private String imprint;
 
@@ -157,5 +158,13 @@ public class ConfigBean {
 
     public void setSeed(String seed) {
         this.seed = seed;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 }

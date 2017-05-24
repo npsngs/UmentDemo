@@ -3,7 +3,7 @@
 // (powered by Fernflower decompiler)
 //
 
-package com.yxd.sum.report;
+package com.yxd.ums;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,27 +14,18 @@ import android.os.Build;
 import android.os.Build.VERSION;
 import android.text.TextUtils;
 
+import com.umeng.analytics.AnalyticsConfig;
+import com.umeng.analytics.UMConst;
 import com.umeng.analytics.c.ImprintTool;
-import com.yxd.sum.track.RequestCallback;
-import com.yxd.sum.tool.SPTool;
+import com.umeng.analytics.d.RequestCallback;
+import com.umeng.analytics.d.SP_Util;
+import com.umeng.analytics.d.UMSSLSocket;
 import com.umeng.analytics.e.OptionSetter_a;
+import com.umeng.tool.EncodeUtil;
 import com.umeng.tool.StringTool;
 import com.umeng.tool.SystemUtil;
 import com.umeng.tool.ULog;
-import com.yxd.sum.tool.EncodeTool;
-import com.umeng.analytics.AnalyticsConfig;
-import com.umeng.analytics.UMConst;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.net.Proxy.Type;
-import java.security.KeyStore;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.HttpGet;
@@ -49,16 +40,29 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpProtocolParams;
 
-public class HttpSender {
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.Proxy.Type;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.security.KeyStore;
+
+public class LogSender {
     private String systemInfo;
+    private String userAgent;
     private String ip = "10.0.0.172";
     private int port = 80;
     private Context context;
     private RequestCallback requestCallback;
 
-    public HttpSender(Context context) {
+    public LogSender(Context context,SeedConfig seedConfig, PublicConfig publicConfig) {
         this.context = context;
-        this.systemInfo = this.getSystemInfo(context);
+        this.systemInfo = getSystemInfo(seedConfig, publicConfig);
+        this.userAgent = buildUserAgent(seedConfig);
     }
 
     public void setRequestCallback(RequestCallback requestCallback) {
@@ -149,7 +153,8 @@ public class HttpSender {
             } else {
                 connection = (HttpURLConnection)(new URL(url)).openConnection();
             }
-            connection.setRequestProperty("User-Agent","android");
+
+            connection.setRequestProperty("User-agent", userAgent);
             connection.setRequestProperty("X-Umeng-UTC", String.valueOf(System.currentTimeMillis()));
             connection.setRequestProperty("X-Umeng-Sdk", this.systemInfo);
             connection.setRequestProperty("Msg-Type", "envelope/json");
@@ -187,9 +192,9 @@ public class HttpSender {
             InputStream is = connection.getInputStream();
 
             try {
-                responseData = EncodeTool.readData(is);
+                responseData = EncodeUtil.readData(is);
             } finally {
-                EncodeTool.close(is);
+                EncodeUtil.close(is);
             }
         } catch (Throwable t) {
             ULog.e("IOException,Failed to setRequestCallback message.", t);
@@ -204,39 +209,14 @@ public class HttpSender {
         return responseData;
     }
 
-    private String getSystemInfo(Context context) {
-        return "Android/6.1.0";
-//        StringBuffer sb = new StringBuffer();
-//        sb.append("Android");
-//        sb.append("/");
-//        sb.append("6.1.0");
-//        sb.append(" ");
-//
-//        try {
-//            StringBuffer var3 = new StringBuffer();
-//            var3.append(SystemUtil.getApplicationLabel(context));
-//            var3.append("/");
-//            var3.append(SystemUtil.getVersionName(context));
-//            var3.append(" ");
-//            var3.append(Build.MODEL);
-//            var3.append("/");
-//            var3.append(VERSION.RELEASE);
-//            var3.append(" ");
-//            var3.append(EncodeTool.getMD5_2(AnalyticsConfig.getAppkey(context)));
-//            sb.append(URLEncoder.encode(var3.toString(), "UTF-8"));
-//        } catch (Throwable throwable) {
-//        }
-//
-//        return sb.toString();
-    }
 
-    public void sendHttps() {
+    protected void send() {
         InputStream is = null;
 
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             keyStore.load(null, null);
-            MSSLSocketFactory umsslSocket = new MSSLSocketFactory(keyStore);
+            UMSSLSocket umsslSocket = new UMSSLSocket(keyStore);
             umsslSocket.setHostnameVerifier(SSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
             HttpGet httpGet = new HttpGet("https://uop.umeng.com");
             BasicHttpParams httpParams = new BasicHttpParams();
@@ -264,7 +244,7 @@ public class HttpSender {
                 bos.close();
                 String resp = new String(bos.toByteArray(), "UTF-8");
                 if(!TextUtils.isEmpty(resp) && resp.length() > 0 && resp.length() < 50) {
-                    SharedPreferences sp = SPTool.getSp(this.context);
+                    SharedPreferences sp = SP_Util.getSp(this.context);
                     if(sp != null) {
                         sp.edit().putString("uopdta", resp).apply();
                     }
@@ -278,6 +258,47 @@ public class HttpSender {
                 } catch (Throwable t2) {
                 }
             }
+
         }
+
+    }
+
+
+    private String getSystemInfo(SeedConfig seedConfig, PublicConfig publicConfig) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("Android");
+        sb.append("/");
+        sb.append("6.1.0");
+        sb.append(" ");
+
+        try {
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(SystemUtil.getApplicationLabel(context));
+            stringBuffer.append("/");
+            stringBuffer.append(SystemUtil.getVersionName(context));
+            stringBuffer.append(" ");
+            stringBuffer.append(seedConfig.getDeviceModel());
+            stringBuffer.append("/");
+            stringBuffer.append(seedConfig.getOsVersion());
+            stringBuffer.append(" ");
+            stringBuffer.append(EncodeUtil.getMD5_2(publicConfig.getAppkey()));
+            sb.append(URLEncoder.encode(stringBuffer.toString(), "UTF-8"));
+        } catch (Throwable throwable) {
+        }
+
+        return sb.toString();
+    }
+
+    private String buildUserAgent(SeedConfig seedConfig) {
+        StringBuffer sb = new StringBuffer("Linux; Android ");
+        try {
+            sb
+                    .append(seedConfig.getOsVersion()).append("; ")
+                    .append(seedConfig.getDeviceBrand()).append("/")
+                    .append(seedConfig.getDeviceName());
+        } catch (Throwable throwable) {
+        }
+
+        return sb.toString();
     }
 }

@@ -17,7 +17,7 @@ public class ConfigGetter {
     }
 
     public String getResolution(){
-        return "960*540";
+        return "1960*1540";
     }
 
     public int getVerionCode(){
@@ -25,7 +25,7 @@ public class ConfigGetter {
     }
 
     public String getDeviceModel(){
-        return "HUAWEI G6-U00";
+        return "xiaomi";
     }
 
     public int getTimezone(){
@@ -33,27 +33,27 @@ public class ConfigGetter {
     }
 
     public String getDeviceName(){
-        return "hwG6-U00";
+        return "xiaomi";
     }
 
     public String getMacAddress(){
-        return "f8:01:13:3f:4c:f5";
+        return "88:88:88:88:88:88";
     }
 
     public int getRequestTime(){
-        return 108;
+        return 1;
     }
 
     public String getCarrier(){
-        return "null";
+        return "";
     }
 
     public int getSuccessfulRequests(){
-        return 21;
+        return 1;
     }
 
     public String getDeviceBoard(){
-        return "G6-U00";
+        return "XIAOMI";
     }
 
     public int getVerticalType(){
@@ -61,7 +61,7 @@ public class ConfigGetter {
     }
 
     public String getDeviceManufacturer(){
-        return "HUAWEI";
+        return "XIAOMI";
     }
 
     public String getOS(){
@@ -69,15 +69,15 @@ public class ConfigGetter {
     }
 
     public String getAppSignature(){
-        return "9F:E0:18:70:E3:5A:EC:35:38:EA:61:D0:7B:91:3A:7E";
+        return "11:11:11:11:11:11:11:11:11:11:11:11:11:11:11:11";
     }
 
     public String getCpu(){
-        return "ARMv7 Processor rev 3 (v7l)";
+        return "ARMv7";
     }
 
     public String getPackageName(){
-        return  "com.yxd.umentdemo";
+        return  "com.yxd.umenstdemo";
     }
 
     public String getDeviceId(){
@@ -85,7 +85,7 @@ public class ConfigGetter {
     }
 
     public String getDeviceBrand(){
-        return  "Huawei";
+        return  "Hsuawei";
     }
 
     public String getAccess(){
@@ -97,11 +97,11 @@ public class ConfigGetter {
     }
 
     public String getOsVersion(){
-        return "4.3";
+        return "9.3";
     }
 
     public String getIdMd5(){
-        return EncodeTool.getMD5(getDeviceId());
+        return EncodeTool.getMD5(getDeviceId()+"sdsd");
     }
 
     public String getDisplayName(){
@@ -113,7 +113,7 @@ public class ConfigGetter {
     }
 
     public String getDeviceManuId(){
-        return "HuaweiG6-U00";
+        return "HuaweiG6s-U00";
     }
 
     public String getMccmnc(){
@@ -125,7 +125,7 @@ public class ConfigGetter {
     }
 
     public String getChannel(){
-        return "yxd_android_demo";
+        return "yxd_androisd_demo";
     }
 
     public long getDeviceManutime(){
@@ -133,6 +133,6 @@ public class ConfigGetter {
     }
 
     public String getSdkVersion(){
-        return "6.0.9";
+        return "6.1.0";
     }
 }

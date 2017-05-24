@@ -84,9 +84,17 @@ public class EntityBuilder {
         return body;
     }
 
+    private JSONObject buildBody2() throws JSONException{
+        JSONObject body = new JSONObject();
+        JSONObject msg = new JSONObject();
+        msg.put("ts",System.currentTimeMillis());
+        body.put("activate_msg", msg);
+        return body;
+    }
+
     public JSONObject build(String deviceID) throws JSONException {
         JSONObject entity = new JSONObject();
-        JSONObject body = buildBody();
+        JSONObject body = buildBody2();
         JSONObject header = buildHeader(deviceID);
         entity.put("header", header)
                 .put("body", body);

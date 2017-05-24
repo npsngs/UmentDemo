@@ -6,41 +6,50 @@ import com.umeng.analytics.f.IdJournal_b;
 import com.umeng.analytics.f.IdSnapshot_c;
 import com.umeng.analytics.f.IdTracking;
 import com.umeng.tool.EncodeUtil;
-import com.umeng.tool.StringTool;
 
 import a.a.a.UMBeanPacker;
-import a.a.a.UMException;
 
 public class UniqueID {
-    private String md5;
     private String imei;
     private String android_id;
     private String idmd5;
     private String mac;
     private String serial;
+    private String signature;
     public UniqueID(String seed) {
-        md5 = StringTool.toHexStr(StringTool.md5(seed.getBytes()));
-        android_id = md5.substring(8, 24).toLowerCase();
-        imei = hex2Dec(md5, 15);
+        android_id = seed.substring(8, 24).toLowerCase();
+        imei = hex2Dec(seed, 15);
         idmd5 = EncodeUtil.getMD5(imei);
 
         StringBuilder sb = new StringBuilder();
-        sb.append(sb.substring(24, 26)).append(":");
-        sb.append(sb.substring(4, 6)).append(":");
-        sb.append(sb.substring(8, 10)).append(":");
-        sb.append(sb.substring(11, 13)).append(":");
-        sb.append(sb.substring(15, 17)).append(":");
-        sb.append(sb.substring(27, 29));
-        mac = sb.toString().toUpperCase();
+        sb.append(seed.substring(24, 26)).append(":");
+        sb.append(seed.substring(4, 6)).append(":");
+        sb.append(seed.substring(8, 10)).append(":");
+        sb.append(seed.substring(11, 13)).append(":");
+        sb.append(seed.substring(15, 17)).append(":");
+        sb.append(seed.substring(27, 29));
+        mac = sb.toString().toLowerCase();
 
         sb = new StringBuilder();
-        sb.append(sb.substring(1, 3));
-        sb.append(sb.substring(3, 5));
-        sb.append(sb.substring(20, 22));
-        sb.append(sb.substring(10, 12));
-        sb.append(sb.substring(8, 10));
-        sb.append(sb.substring(25, 27));
-        serial = sb.toString().toUpperCase();
+        sb.append(seed.substring(1, 3));
+        sb.append(seed.substring(3, 5));
+        sb.append(seed.substring(20, 22));
+        sb.append(seed.substring(10, 12));
+        sb.append(seed.substring(8, 10));
+        sb.append(seed.substring(25, 27));
+        serial = sb.toString().toLowerCase();
+
+
+        sb = new StringBuilder();
+        sb.append(seed.substring(21, 29));
+        sb.append(seed.substring(23, 31));
+        sb.append(seed.substring(2, 10));
+        sb.append(seed.substring(3, 11));
+        sb.append(seed.substring(4, 12));
+        sb.append(seed.substring(10, 18));
+        sb.append(seed.substring(11, 19));
+        sb.append(seed.substring(20, 28));
+        signature = sb.toString().toLowerCase();
     }
 
     public String getImei(){
@@ -53,6 +62,10 @@ public class UniqueID {
 
     public String getMacAddress(){
         return mac;
+    }
+
+    public String getSignature() {
+        return signature;
     }
 
     public String getIdTracking(){

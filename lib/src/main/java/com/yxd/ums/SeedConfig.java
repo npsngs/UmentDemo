@@ -36,16 +36,14 @@ public class SeedConfig {
         configBean.setDeviceId(uniqueID.getImei());
         configBean.setIdmd5(uniqueID.getIdmd5());
         configBean.setMac(uniqueID.getMacAddress());
+        configBean.setSignature(uniqueID.getSignature());
         configBean.setIdTracking(uniqueID.getIdTracking());
 
         return configBean;
     }
 
-    public void updateSuccessfulRequestsToDB(){
-        seedDB.updateSuccessTimes(configBean);
-    }
-
-    public void updateImprintToDB(){
+    public void updateImprintToDB(String imprint){
+        configBean.setImprint(imprint);
         seedDB.updateImprint(configBean);
     }
 
@@ -58,7 +56,9 @@ public class SeedConfig {
     }
 
     public int getSuccessfulRequests(){
-        return configBean.addSuccessfulRequests();
+        int s = configBean.addSuccessfulRequests();
+        seedDB.updateSuccessTimes(configBean);
+        return s;
     }
 
     public String getResolution(){
@@ -113,4 +113,7 @@ public class SeedConfig {
         return configBean.getIdmd5();
     }
 
+    public String getSignature() {
+        return configBean.getSignature();
+    }
 }

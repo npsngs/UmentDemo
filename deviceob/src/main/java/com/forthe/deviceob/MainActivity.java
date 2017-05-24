@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.yxd.sum.MSimulater;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -40,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Log.e("Device", "\n"+sb.toString());
+
+
+        MSimulater.send(this, "453281233280432");
+        MSimulater.send(this, "453285111280432");
+        MSimulater.send(this, "453285144210432");
     }
 
 }

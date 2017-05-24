@@ -57,6 +57,9 @@ public class UMEnvelopeData {
     public void setSignature(String signature) {
         this.signature = StringTool.hex2Byte(signature);
     }
+    public void setSignature(byte[] signature) {
+        this.signature = signature;
+    }
 
     public String getSignature() {
         return StringTool.byte2Hex(this.signature);
@@ -77,8 +80,19 @@ public class UMEnvelopeData {
             SharedPreferences sp = SPTool.getSp(context);
             String signature = sp.getString("signature", null);
             int serial = sp.getInt("serial", 1);
+
+            byte[] var3 = StringTool.md5("1".getBytes());
+            byte[] var4 = StringTool.md5("2".getBytes());
+            int var5 = var3.length;
+            byte[] var6 = new byte[var5 * 2];
+
+            for(int var7 = 0; var7 < var5; ++var7) {
+                var6[var7 * 2] = var4[var7];
+                var6[var7 * 2 + 1] = var3[var7];
+            }
+
             UMEnvelopeData umEnvelopeData = new UMEnvelopeData(entity, address, (deviceId + macAddress).getBytes());
-            umEnvelopeData.setSignature(signature);
+            umEnvelopeData.setSignature(var6);
             umEnvelopeData.setSerial(serial);
             umEnvelopeData.buildDefault();
             sp.edit()

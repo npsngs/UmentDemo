@@ -13,18 +13,19 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.umeng.analytics.MobclickAgent;
 
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.analytics.f.IdTracking;
 import com.umeng.analytics.f.Imprint;
 import com.umeng.analytics.g.UMEnvelope;
 import com.umeng.tool.EncodeUtil;
 import com.umeng.tool.ZipTool;
-
 import org.json.JSONObject;
+
 
 import java.io.File;
 import java.io.FileInputStream;
+
 
 import a.a.a.UMBeanUnpacker;
 import a.a.a.UMBeanUnpacker_old;
@@ -50,14 +51,14 @@ public class MainActivity extends AppCompatActivity {
 
         MobclickAgent.setDebugMode( true );
         MobclickAgent.enableEncrypt(false);
-
-//        MSimulater.send(this, "453285133280432");
+//        Simulator simulator = new Simulator(this);
+//        simulator.addNews();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-//                parseIosEnvelope();
-                parseEnvelope();
+                parseIosEnvelope();
+//                parseEnvelope();
 //                parseImprint();
             }
         }).start();
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         UMBeanUnpacker unpacker = new UMBeanUnpacker();
         try {
             AssetManager assetManager = getAssets();
-            byte[] bytes = EncodeUtil.readData(assetManager.open("android_entity1.data"));
+            byte[] bytes = EncodeUtil.readData(assetManager.open("524_2.et"));
 
             UMEnvelope envelope = new UMEnvelope();
             unpacker.unpack(envelope, bytes);
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         UMBeanUnpacker_old unpacker = new UMBeanUnpacker_old();
         try {
             AssetManager assetManager = getAssets();
-            byte[] bytes = EncodeUtil.readData(assetManager.open("ios_entity2.data"));
+            byte[] bytes = EncodeUtil.readData(assetManager.open("524_ios1.et"));
             UMEnvelope envelope = new UMEnvelope();
             unpacker.unpack(envelope, bytes);
             byte[] entity = envelope.entity.array();

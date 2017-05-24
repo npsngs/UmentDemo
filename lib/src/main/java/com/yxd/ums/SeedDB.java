@@ -40,8 +40,9 @@ public class SeedDB {
                 configBean.setCpu(cursor.getString(11));
                 configBean.setOsVersion(cursor.getString(12));
                 configBean.setIdmd5(cursor.getString(13));
-                configBean.setIdTracking(cursor.getString(14));
-                configBean.setImprint(cursor.getString(15));
+                configBean.setSignature(cursor.getString(14));
+                configBean.setIdTracking(cursor.getString(15));
+                configBean.setImprint(cursor.getString(16));
             }
             cursor.close();
         }finally {
@@ -73,8 +74,9 @@ public class SeedDB {
             insertStatement.bindString(12, configBean.getCpu());
             insertStatement.bindString(13, configBean.getOsVersion());
             insertStatement.bindString(14, configBean.getIdmd5());
-            insertStatement.bindString(15, configBean.getIdTracking());
-            insertStatement.bindString(16, configBean.getImprint()==null?"":configBean.getImprint());
+            insertStatement.bindString(15, configBean.getSignature());
+            insertStatement.bindString(16, configBean.getIdTracking());
+            insertStatement.bindString(17, configBean.getImprint()==null?"":configBean.getImprint());
             insertStatement.executeInsert();
         }catch (Exception e){
         }finally {

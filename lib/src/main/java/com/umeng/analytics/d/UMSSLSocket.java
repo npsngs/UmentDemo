@@ -19,7 +19,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 
-class UMSSLSocket extends SSLSocketFactory {
+public class UMSSLSocket extends SSLSocketFactory {
     SSLContext sslContext = SSLContext.getInstance("TLS");
 
     public UMSSLSocket(KeyStore var1) throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException, UnrecoverableKeyException {

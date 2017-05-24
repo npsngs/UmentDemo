@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data android:value="5423af13fd98c5f4b002c8ef" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="yxd_android_demo" android:name="UMENG_CHANNEL"/>
     </application>
 
 </manifest>

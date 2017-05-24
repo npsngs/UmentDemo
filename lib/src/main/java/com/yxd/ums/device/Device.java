@@ -29,9 +29,9 @@ public class Device {
     private int deviceIndex;
     private int osIndex;
     public Device(String seed) {
-        int seedInt = SeedTool.seed2Int(seed);
+        int seedInt = Math.abs(SeedTool.seed2Int(seed));
         deviceIndex = seedInt%DEVICE.length;
-        seedInt = seed.charAt(0);
+        seedInt = Math.abs(seed.charAt(0));
         osIndex = seedInt%OS.length;
     }
 

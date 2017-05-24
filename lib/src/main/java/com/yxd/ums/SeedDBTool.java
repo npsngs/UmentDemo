@@ -14,7 +14,7 @@ public class SeedDBTool {
     private SQLiteDatabase database;
 
     public SeedDBTool(Context context) {
-        sqLiteOpenHelper = new SeedDBHelper(context, "sbs", null, 1);
+        sqLiteOpenHelper = new SeedDBHelper(context, "sbs.db", null, 1);
     }
 
     public synchronized SQLiteDatabase getWritableDatabase() {
@@ -39,8 +39,8 @@ public class SeedDBTool {
     public String createInsertSql(){
         return "INSERT INTO seed_configs(seed, success, resolution, deviceModel, " +
                 "deviceName, deviceBoard, deviceBrand, deviceManuid, deviceManutime, " +
-                "deviceId, mac, cpu, osVersion, idmd5, idTracking, imprint) " +
-                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                "deviceId, mac, cpu, osVersion, idmd5, signature, idTracking, imprint) " +
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     }
 
     public String createSelectSql(){
@@ -79,6 +79,7 @@ public class SeedDBTool {
                         "cpu VARCHAR(40) NOT NULL," +
                         "osVersion VARCHAR(6) NOT NULL," +
                         "idmd5 VARCHAR(32) NOT NULL," +
+                        "signature VARCHAR(64) NOT NULL," +
                         "idTracking TEXT NOT NULL," +
                         "imprint TEXT)");
             }catch (Exception e){

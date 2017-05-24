@@ -34,16 +34,16 @@ public class UMEnvelopeData {
     private int timeStamp = 0;
     private int length = 0;
     private byte[] entity = null;
-    private byte[] m = null;
+    private byte[] uid = null;
     private boolean isCodex = false;
 
-    private UMEnvelopeData(byte[] entity, String address, byte[] var3) throws Exception {
+    private UMEnvelopeData(byte[] entity, String address, byte[] uid) throws Exception {
         if(entity != null && entity.length != 0) {
             this.address = address;
             this.length = entity.length;
             this.entity = ZipTool.deflate(entity);
             this.timeStamp = (int)(System.currentTimeMillis() / 1000L);
-            this.m = var3;
+            this.uid = uid;
         } else {
             throw new Exception("entity is null or empty");
         }
@@ -137,30 +137,30 @@ public class UMEnvelopeData {
     }
 
     private byte[] encode(byte[] var1, int var2) {
-        byte[] var3 = StringTool.md5(this.m);
-        byte[] var4 = StringTool.md5(this.entity);
-        int var5 = var3.length;
-        byte[] var6 = new byte[var5 * 2];
+        byte[] uidMd5 = StringTool.md5(this.uid);
+        byte[] entityMd5 = StringTool.md5(this.entity);
+        int size = uidMd5.length;
+        byte[] ret = new byte[size * 2];
 
-        for(int var7 = 0; var7 < var5; ++var7) {
-            var6[var7 * 2] = var4[var7];
-            var6[var7 * 2 + 1] = var3[var7];
+        for(int i = 0; i < size; ++i) {
+            ret[i * 2] = entityMd5[i];
+            ret[i * 2 + 1] = uidMd5[i];
         }
 
         byte[] var10 = var1;
 
         for(int i = 0; i < 2; ++i) {
-            var6[i] = var10[i];
-            var6[var6.length - i - 1] = var10[var10.length - i - 1];
+            ret[i] = var10[i];
+            ret[ret.length - i - 1] = var10[var10.length - i - 1];
         }
 
         byte[] var11 = new byte[]{(byte)(var2 & 255), (byte)(var2 >> 8 & 255), (byte)(var2 >> 16 & 255), (byte)(var2 >>> 24)};
 
-        for(int i = 0; i < var6.length; ++i) {
-            var6[i] ^= var11[i % 4];
+        for(int i = 0; i < ret.length; ++i) {
+            ret[i] ^= var11[i % 4];
         }
 
-        return var6;
+        return ret;
     }
 
     private byte[] createDefaultSignature() {
