@@ -31,6 +31,7 @@ import com.umeng.tool.J;
 import com.umeng.tool.J.UMPolicy_j;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.f.IdTracking;
+import com.yxd.ums.Simulator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -228,28 +229,28 @@ public final class LogPreReport implements Reporter, OptionSetter {
                     }
                 }
 
-                JSONObject activate_msgJson;
+                JSONObject tmpJson;
                 if(this.requestTracker.hasNotRequest() && this.ts != 0L) {
-                    activate_msgJson = new JSONObject();
-                    activate_msgJson.put("ts", this.ts);
-                    bodyJson.put("activate_msg", activate_msgJson);
-                    headerJson.put("activate_msg", activate_msgJson);
+                    tmpJson = new JSONObject();
+                    tmpJson.put("ts", this.ts);
+                    bodyJson.put("activate_msg", tmpJson);
+                    headerJson.put("activate_msg", tmpJson);
                 }
 
-                activate_msgJson = new JSONObject();
+                tmpJson = new JSONObject();
                 JSONObject agJson = AggTool.getInstance(context).getAG();
                 if(agJson != null && agJson.length() > 0) {
-                    activate_msgJson.put("ag", agJson);
+                    tmpJson.put("ag", agJson);
                 }
 
                 JSONObject ve_metaJson = AggTool.getInstance(context).getVe_mate();
                 if(ve_metaJson != null && ve_metaJson.length() > 0) {
-                    activate_msgJson.put("ve_meta", ve_metaJson);
+                    tmpJson.put("ve_meta", ve_metaJson);
                 }
 
-                if(activate_msgJson.length() > 0) {
-                    bodyJson.put("cc", activate_msgJson);
-                    headerJson.put("cc", activate_msgJson);
+                if(tmpJson.length() > 0) {
+                    bodyJson.put("cc", tmpJson);
+                    headerJson.put("cc", tmpJson);
                 }
 
                 String[] au = AU.getAU(context);
@@ -422,6 +423,12 @@ public final class LogPreReport implements Reporter, OptionSetter {
                         editor.remove("vers_pre_version");
                         editor.apply();
                     }
+                } catch (Throwable throwable) {
+                }
+
+                try {
+                    JSONObject body = jsonObject.getJSONObject("body");
+                    Simulator.writeToCache(context, body);
                 } catch (Throwable throwable) {
                 }
 

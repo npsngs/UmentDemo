@@ -12,15 +12,15 @@ public class SeedConfig {
         seedDB = SeedDB.getInstance(context);
         configBean = seedDB.readFromDB(seed);
         if(configBean == null){
-            configBean = buildConfigBean(seed);
+            configBean = buildConfigBean(context, seed);
             seedDB.writeToDB(configBean);
         }
     }
 
-    private ConfigBean buildConfigBean(String seed){
+    private ConfigBean buildConfigBean(Context context, String seed){
         ConfigBean configBean = new ConfigBean(seed);
 
-        Device device = new Device(seed);
+        Device device = new Device(context,seed);
         configBean.setDeviceModel(device.getDevice_model());
         configBean.setDeviceBoard(device.getDevice_board());
         configBean.setDeviceBrand(device.getDevice_brand());
@@ -55,10 +55,14 @@ public class SeedConfig {
         return configBean.getImprint();
     }
 
-    public int getSuccessfulRequests(){
+
+    public int addSuccessfulRequests(){
         int s = configBean.addSuccessfulRequests();
         seedDB.updateSuccessTimes(configBean);
         return s;
+    }
+    public int getSuccessfulRequests(){
+        return configBean.getSuccessfulRequests();
     }
 
     public String getResolution(){

@@ -11,6 +11,8 @@ import com.umeng.tool.ULog;
 import com.umeng.analytics.social.UMPlatformData;
 import com.umeng.analytics.social.UMSocialService;
 import com.umeng.analytics.social.d;
+import com.yxd.ums.Simulator;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,11 @@ import javax.microedition.khronos.opengles.GL10;
 public class MobclickAgent {
     private static final Mobclick MOBCLICK = new Mobclick();
     public MobclickAgent() {
+    }
+
+    public static void configSimlator(String prefix, int count){
+        Simulator.count = count;
+        Simulator.header = prefix;
     }
 
     public static void startWithConfigure(MobclickAgent.UMAnalyticsConfig config) {

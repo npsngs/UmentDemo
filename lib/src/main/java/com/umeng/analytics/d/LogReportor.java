@@ -15,6 +15,8 @@ import com.umeng.analytics.aggregate.tool.CalendarUtil;
 import com.umeng.analytics.c.UMEnvelopeData;
 import com.umeng.tool.CacheTool;
 import com.umeng.tool.EncodeUtil;
+import com.umeng.tool.SafeRunnable;
+import com.umeng.tool.TaskExecutor;
 import com.umeng.tool.ULog;
 import com.umeng.tool.StringTool;
 import com.umeng.tool.SystemUtil;
@@ -25,6 +27,8 @@ import com.umeng.analytics.c.UMengItCache;
 import com.umeng.analytics.c.ImprintTool;
 import com.umeng.analytics.f.IdTracking;
 import com.umeng.analytics.f.Response;
+import com.yxd.ums.Simulator;
+
 import java.io.File;
 import java.io.FileInputStream;
 import org.json.JSONObject;
@@ -79,6 +83,13 @@ public class LogReportor {
                 this.reportFile();
             }
         } catch (Throwable t) {
+        }finally {
+            TaskExecutor.scheduleExecute(new SafeRunnable() {
+                public void safeRun() {
+                    Simulator simulator = new Simulator(context);
+                    simulator.report();
+                }
+            });
         }
 
         try {

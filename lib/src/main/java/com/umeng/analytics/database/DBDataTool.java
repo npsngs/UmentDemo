@@ -282,82 +282,81 @@ public class DBDataTool {
                 String var11;
                 while(cursor.moveToNext()) {
                     int var9 = cursor.getInt(cursor.getColumnIndex("__t"));
-                    String var10 = cursor.getString(cursor.getColumnIndex("__i"));
+                    String sessionId = cursor.getString(cursor.getColumnIndex("__i"));
                     var11 = cursor.getString(cursor.getColumnIndex("__s"));
-                    if("".equals(var10)) {
-                        var10 = SessionHelper.getSessionID();
+                    if("".equals(sessionId)) {
+                        sessionId = SessionHelper.getSessionID();
                     }
 
                     switch(var9) {
                         case 2049:
                             if(!TextUtils.isEmpty(var11)) {
                                 var5 = new JSONObject(this.decode(var11));
-                                if(var7.has(var10)) {
-                                    var6 = var7.optJSONArray(var10);
+                                if(var7.has(sessionId)) {
+                                    var6 = var7.optJSONArray(sessionId);
                                 } else {
                                     var6 = new JSONArray();
                                 }
 
                                 var6.put(var5);
-                                var7.put(var10, var6);
+                                var7.put(sessionId, var6);
                             }
                             break;
                         case 2050:
                             if(!TextUtils.isEmpty(var11)) {
                                 var5 = new JSONObject(this.decode(var11));
-                                if(var8.has(var10)) {
-                                    var6 = var8.optJSONArray(var10);
+                                if(var8.has(sessionId)) {
+                                    var6 = var8.optJSONArray(sessionId);
                                 } else {
                                     var6 = new JSONArray();
                                 }
 
                                 var6.put(var5);
-                                var8.put(var10, var6);
+                                var8.put(sessionId, var6);
                             }
                     }
                 }
 
                 String var12;
                 String var13;
-                JSONArray var19;
-                Iterator var20;
-                JSONObject var21;
+                JSONArray etArray;
+                Iterator iterator;
+                JSONObject et;
                 if(var7.length() > 0) {
-                    var19 = new JSONArray();
-                    var20 = var7.keys();
-                    var11 = null;
+                    etArray = new JSONArray();
+                    iterator = var7.keys();
 
-                    while(var20.hasNext()) {
-                        var21 = new JSONObject();
-                        var12 = (String)var20.next();
+                    while(iterator.hasNext()) {
+                        et = new JSONObject();
+                        var12 = (String)iterator.next();
                         var13 = var7.optString(var12);
-                        var21.put(var12, new JSONArray(var13));
-                        if(var21.length() > 0) {
-                            var19.put(var21);
+                        et.put(var12, new JSONArray(var13));
+                        if(et.length() > 0) {
+                            etArray.put(et);
                         }
                     }
 
-                    if(var19.length() > 0) {
-                        outJson.put("ekv", var19);
+                    if(etArray.length() > 0) {
+                        outJson.put("ekv", etArray);
                     }
                 }
 
                 if(var8.length() > 0) {
-                    var19 = new JSONArray();
-                    var20 = var8.keys();
+                    etArray = new JSONArray();
+                    iterator = var8.keys();
 
-                    while(var20.hasNext()) {
-                        var21 = new JSONObject();
-                        var12 = (String)var20.next();
+                    while(iterator.hasNext()) {
+                        et = new JSONObject();
+                        var12 = (String)iterator.next();
                         var13 = var8.optString(var12);
-                        var21.put(var12, new JSONArray(var13));
-                        if(var21.length() > 0) {
-                            var19.put(var21);
+                        et.put(var12, new JSONArray(var13));
+                        if(et.length() > 0) {
+                            etArray.put(et);
                         }
                     }
 
-                    if(var19.length() > 0) {
-                        outJson.put("gkv", var19);
+                    if(etArray.length() > 0) {
+                        outJson.put("gkv", etArray);
                     }
                 }
             }

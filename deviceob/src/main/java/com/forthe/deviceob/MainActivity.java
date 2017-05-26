@@ -5,9 +5,12 @@ import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 
 import com.yxd.sum.MSimulater;
+
+import java.io.UnsupportedEncodingException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         MSimulater.send(this, "453281233280432");
         MSimulater.send(this, "453285111280432");
         MSimulater.send(this, "453285144210432");
+
+        byte[] bas = Base64.decode("WFS+eAKduu8DAOa3huf5zO+O", 0);
+        Log.e("Base64", bas.length+"");
     }
 
 }

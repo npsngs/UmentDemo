@@ -25,6 +25,7 @@ import com.umeng.tool.EncodeUtil;
 import com.umeng.tool.StringTool;
 import com.umeng.tool.SystemUtil;
 import com.umeng.tool.ULog;
+import com.yxd.ums.ios.IOSConfig;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
@@ -63,6 +64,12 @@ public class LogSender {
         this.context = context;
         this.systemInfo = getSystemInfo(seedConfig, publicConfig);
         this.userAgent = buildUserAgent(seedConfig);
+    }
+
+    public LogSender(Context context, IOSConfig iosConfig) {
+        this.context = context;
+        this.systemInfo = getSystemInfo(iosConfig);
+        this.userAgent = "Darwin/16.5.0";
     }
 
     public void setRequestCallback(RequestCallback requestCallback) {
@@ -262,7 +269,16 @@ public class LogSender {
         }
 
     }
-
+    private String getSystemInfo(IOSConfig iosConfig) {
+        StringBuffer sb = new StringBuffer("iOS/4.1.0 ");
+        try {
+            sb.append("app_version/1.4.4 ").append(iosConfig.getDeviceModel());
+            sb.append("/");
+            sb.append(iosConfig.getOsVersion());
+        } catch (Throwable throwable) {
+        }
+        return sb.toString();
+    }
 
     private String getSystemInfo(SeedConfig seedConfig, PublicConfig publicConfig) {
         StringBuffer sb = new StringBuffer();
@@ -288,6 +304,7 @@ public class LogSender {
 
         return sb.toString();
     }
+
 
     private String buildUserAgent(SeedConfig seedConfig) {
         StringBuffer sb = new StringBuffer("Linux; Android ");

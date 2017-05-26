@@ -2,7 +2,7 @@ package com.yxd.ums;
 
 public class ConfigBean {
     private String seed;
-    private int successfulRequests = 1;
+    private int successfulRequests = 0;
     private String resolution;
     private String deviceModel;
     private String deviceName;

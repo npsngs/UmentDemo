@@ -17,7 +17,7 @@ public class SBox {
     private PublicConfig publicConfig;
     public SBox(Context context, String sd) {
         this.context = context;
-        this.seed = StringTool.byte2Hex(StringTool.md5(sd.getBytes()));
+        this.seed = StringTool.byte2Hex(StringTool.md5(sd.getBytes())).toLowerCase();
         seedConfig = new SeedConfig(context, seed);
         publicConfig = PublicConfig.getInstance(context);
     }
@@ -78,6 +78,8 @@ public class SBox {
     }
 
 
+
+
     public JSONObject buildActiveEntity() throws JSONException {
         JSONObject entity = new JSONObject();
         JSONObject boby = new JSONObject();
@@ -90,9 +92,29 @@ public class SBox {
         return entity;
     }
 
+    public JSONObject buildNoBodyEntity() throws JSONException {
+        JSONObject entity = new JSONObject();
+        entity.put("header", buildHeader());
+        return entity;
+    }
+
     public UMEnvelope buildEnvelope() throws Exception {
         JSONObject jsonObject = buildActiveEntity();
         byte[] entity = String.valueOf(jsonObject).getBytes();
+        return  buildEnvelope(entity);
+    }
+
+
+    public UMEnvelope buildEnvelopeWithBody(JSONObject body) throws Exception {
+        JSONObject jsonObject = buildNoBodyEntity();
+        jsonObject.put("body", body);
+
+        byte[] entity = String.valueOf(jsonObject).getBytes();
+        return buildEnvelope(entity);
+    }
+
+
+    public UMEnvelope buildEnvelope(byte[] entity) throws Exception {
         if(entity == null || StringTool.isTooLong(context, entity)) {
             return null;
         }
@@ -100,6 +122,7 @@ public class SBox {
         UMEnvelope umEnvelope = new UMEnvelope();
         umEnvelope.setVersion("1.0");
         umEnvelope.setAddress(publicConfig.getAppkey());
+        seedConfig.addSuccessfulRequests();
         umEnvelope.setSerial(seedConfig.getSuccessfulRequests());
         umEnvelope.setTimestamp((int)(System.currentTimeMillis() / 1000L));
         umEnvelope.setLength(entity.length);
@@ -122,13 +145,6 @@ public class SBox {
         umEnvelope.setCheckSum(StringTool.byte2Hex(checkSum));
         return  umEnvelope;
     }
-
-
-
-
-
-
-
 
 
     private String buildGuid(byte[] var1, int var2, byte[] entity){
@@ -157,4 +173,5 @@ public class SBox {
 
         return StringTool.byte2Hex(ret);
     }
+
 }

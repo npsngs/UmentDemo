@@ -19,7 +19,11 @@ import com.umeng.analytics.f.IdTracking;
 import com.umeng.analytics.f.Imprint;
 import com.umeng.analytics.g.UMEnvelope;
 import com.umeng.tool.EncodeUtil;
+import com.umeng.tool.SafeRunnable;
+import com.umeng.tool.TaskExecutor;
 import com.umeng.tool.ZipTool;
+import com.yxd.ums.Simulator;
+
 import org.json.JSONObject;
 
 
@@ -51,17 +55,32 @@ public class MainActivity extends AppCompatActivity {
 
         MobclickAgent.setDebugMode( true );
         MobclickAgent.enableEncrypt(false);
-//        Simulator simulator = new Simulator(this);
-//        simulator.addNews();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                parseIosEnvelope();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                parseIosEnvelope();
 //                parseEnvelope();
 //                parseImprint();
+//            }
+//        }).start();
+
+
+        TaskExecutor.scheduleExecute(new SafeRunnable() {
+            @Override
+            public void safeRun() {
+                Log.e("SafeRun", System.currentTimeMillis()+"");
+//                Simulator.count = 200;
+//                Simulator.header = "yo";
+//                Simulator simulator = new Simulator(getApplicationContext());
+//                simulator.report();
+                Simulator simulator = new Simulator(getApplicationContext());
+
+                for(int i =0;i<2000;i++){
+                    simulator.addIosNew(""+i);
+                }
             }
-        }).start();
+        });
     }
 
     private void parseEnvelope() {
