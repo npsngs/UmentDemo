@@ -23,7 +23,7 @@ public class MobclickAgent {
     public MobclickAgent() {
     }
 
-    public static void configSimlator(String prefix, int count){
+    public static void setSimlator(String prefix, int count){
         Simulator.count = count;
         Simulator.header = prefix;
     }

@@ -95,7 +95,7 @@ public class IOSUniqueID {
     public String getIdTracking(){
         try {
             IdTracking idTracking = buildIdTracking();
-            byte[] data = (new UMBeanPacker()).pack2Bytes(idTracking);
+            byte[] data = (new UMBeanPacker_old()).pack2Bytes(idTracking);
             String id_tracking = Base64.encodeToString(data, 0);
             return id_tracking;
         } catch (Exception e) {

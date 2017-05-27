@@ -49,10 +49,11 @@ public class Simulator {
         for(int i=0;i<count;i++){
             try {
                 report(body, header+i);
+                reportIos(body, header+i);
             }catch (Exception e){
                 e.printStackTrace();
             }
-            Log.e("SReport", "Seed:"+header+i);
+            Log.e("report", "Seed:"+header+i);
         }
     }
 
@@ -76,6 +77,35 @@ public class Simulator {
                         byte[] imprintData = (new UMBeanPacker()).pack2Bytes(imprint);
                         String imprintStr = Base64.encodeToString(imprintData, 0);
                         sBox.getSeedConfig().updateImprintToDB(imprintStr);
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void reportIos(JSONObject body,String seed){
+        try {
+            IOSBox iosBox = new IOSBox(context, seed);
+            UMEnvelope envelope = iosBox.buildEnvelopeWithBody(body);
+
+            byte[] enveloped_data = new UMBeanPacker_old().pack2Bytes(envelope);
+            LogSender sender = new LogSender(context, iosBox.getIosConfig());
+
+            byte[] respData = sender.send(enveloped_data);
+            if(respData != null) {
+                Response response = new Response();
+                UMBeanUnpacker beanUnpacker = new UMBeanUnpacker(new UMBeanCoder_a.UMBeanCoder_a_Builder());
+
+                beanUnpacker.unpack(response, respData);
+                if(response.respCode == 1) {
+                    Imprint imprint = response.getImprint();
+                    if(imprint != null) {
+                        byte[] imprintData = (new UMBeanPacker()).pack2Bytes(imprint);
+                        String imprintStr = Base64.encodeToString(imprintData, 0);
+                        iosBox.getIosConfig().updateImprintToDB(imprintStr);
                     }
                 }
             }

@@ -16,17 +16,17 @@ public class IOSDevice {
     };
 
     private static final String[] ACCESS_SUBTYP= {
-        "HSDPA","HSPA","HSPA+"
+        "HSDPA","LTE", "HSPA", "HSPA+"
     };
 
     private static final String[] ACCESS = {
-            "WiFi","CellNetwork","4G","3G"
+            "wifi","CellNetwork","4G","3G"
     };
 
     private static final int[][] ACCESS_R = {
             {10000, 1831},
-            {1830, 1567},
-            {1566, 74},
+            {1830, 1667},
+            {1666, 74},
             {73, 0}
     };
 

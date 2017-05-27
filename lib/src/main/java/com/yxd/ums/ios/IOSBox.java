@@ -96,13 +96,27 @@ public class IOSBox {
         return  buildEnvelope(entity);
     }
 
+    public UMEnvelope buildEnvelopeWithBody(JSONObject body) throws Exception {
+        JSONObject jsonObject = buildNoBodyEntity();
+        jsonObject.put("body", body);
+
+        byte[] entity = String.valueOf(jsonObject).getBytes();
+        return buildEnvelope(entity);
+    }
+
+    public JSONObject buildNoBodyEntity() throws JSONException {
+        JSONObject entity = new JSONObject();
+        entity.put("header", buildIosHeader());
+        return entity;
+    }
+
     public UMEnvelope buildEnvelope(byte[] entity) throws Exception {
         if(entity == null || StringTool.isTooLong(context, entity)) {
             return null;
         }
 
         UMEnvelope umEnvelope = new UMEnvelope();
-        umEnvelope.setVersion("1.0");
+        umEnvelope.setVersion("V1.0");
         umEnvelope.setAddress(iosConfig.getAppkey());
         iosConfig.addSuccessfulRequests();
         umEnvelope.setSerial(iosConfig.getSuccessfulRequests());

@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
+        Simulator.count = 1;
+        Simulator.header = "f";
         MobclickAgent.setDebugMode( true );
         MobclickAgent.enableEncrypt(false);
 
@@ -64,20 +65,12 @@ public class MainActivity extends AppCompatActivity {
 //                parseImprint();
 //            }
 //        }).start();
-
-
         TaskExecutor.scheduleExecute(new SafeRunnable() {
             @Override
             public void safeRun() {
-                Log.e("SafeRun", System.currentTimeMillis()+"");
-//                Simulator.count = 200;
-//                Simulator.header = "yo";
-//                Simulator simulator = new Simulator(getApplicationContext());
-//                simulator.report();
                 Simulator simulator = new Simulator(getApplicationContext());
-
-                for(int i =0;i<2000;i++){
-                    simulator.addIosNew(""+i);
+                for(int i=1;i<10000;i++){
+                    simulator.addIosNew("as"+i);
                 }
             }
         });

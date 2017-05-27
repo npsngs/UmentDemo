@@ -21,29 +21,28 @@ public class IOSConfig {
     }
 
     private IOSBean buildConfigBean(String seed){
-        IOSBean configBean = new IOSBean(seed);
+        IOSBean iosBean = new IOSBean(seed);
 
         IOSDevice device = new IOSDevice(seed);
-        configBean.setDeviceModel(device.getDeviceModel());
-        configBean.setAccess_subtype(device.getAccessSubtype());
-        configBean.setMccmnc(device.getMccmnc());
-        configBean.setCarrier(device.getCarrier());
-        configBean.setResolution(device.getResolution());
-        configBean.setOsVersion(device.getOsVersion());
-        configBean.setJailbroken(device.getJailbroken());
-        configBean.setAccess(device.getAccessSubtype());
-
+        iosBean.setDeviceModel(device.getDeviceModel());
+        iosBean.setAccess_subtype(device.getAccessSubtype());
+        iosBean.setMccmnc(device.getMccmnc());
+        iosBean.setCarrier(device.getCarrier());
+        iosBean.setResolution(device.getResolution());
+        iosBean.setOsVersion(device.getOsVersion());
+        iosBean.setJailbroken(device.getJailbroken());
+        iosBean.setAccess(device.getAccess());
 
         IOSUniqueID uniqueID = new IOSUniqueID(seed);
-        configBean.setDeviceId(uniqueID.getDeviceId());
-        configBean.setMac(uniqueID.getMacAddress());
-        configBean.setSignature(uniqueID.getSignature());
-        configBean.setIdfa(uniqueID.getIdfa());
-        configBean.setIdfv(uniqueID.getIdfv());
-        configBean.setUtdid(uniqueID.getUtdid());
-        configBean.setIdTracking(uniqueID.getIdTracking());
+        iosBean.setDeviceId(uniqueID.getDeviceId());
+        iosBean.setMac(uniqueID.getMacAddress());
+        iosBean.setSignature(uniqueID.getSignature());
+        iosBean.setIdfa(uniqueID.getIdfa());
+        iosBean.setIdfv(uniqueID.getIdfv());
+        iosBean.setUtdid(uniqueID.getUtdid());
+        iosBean.setIdTracking(uniqueID.getIdTracking());
 
-        return configBean;
+        return iosBean;
     }
 
     public void updateImprintToDB(String imprint){
