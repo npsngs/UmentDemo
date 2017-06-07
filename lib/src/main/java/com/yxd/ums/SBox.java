@@ -19,7 +19,7 @@ public class SBox {
     private String channel;
     public SBox(Context context, DevBean devBean) {
         this.context = context;
-        this.seed = devBean.getDeviceID().toLowerCase();
+        this.seed = StringTool.byte2Hex(StringTool.md5(devBean.getDeviceID().getBytes())).toLowerCase();
         this.appkey = devBean.getAppKey().toLowerCase();
         this.channel = devBean.getChannel();
         seedConfig = new SeedConfig(context, seed);

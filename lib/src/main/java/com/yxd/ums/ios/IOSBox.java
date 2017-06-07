@@ -20,7 +20,7 @@ public class IOSBox {
     private String version;
     public IOSBox(Context context, DevBean devBean) {
         this.context = context;
-        this.seed = devBean.getDeviceID().toLowerCase();
+        this.seed = StringTool.byte2Hex(StringTool.md5(devBean.getDeviceID().getBytes())).toLowerCase();
         this.appKey = devBean.getAppKey().toLowerCase();
         this.channel = devBean.getChannel();
         this.version = devBean.getVersion();
