@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RemoteConfig {
-    private static final long INTERVAL = 28800000L;
+    private static final long INTERVAL = 300000L;
     private SharedPreferences sp;
     private Context context;
     public RemoteConfig(Context context) {
@@ -158,9 +158,10 @@ public class RemoteConfig {
         for(int i=0;i<jsonArray.length();i++){
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             DevBean devBean = new DevBean();
-            devBean.setDeviceID(jsonObject.getString("devId"));
-            devBean.setAppKey(jsonObject.getString("appKey"));
-            devBean.setOsType(jsonObject.getString("osType"));
+            devBean.setDeviceID(jsonObject.getString("d"));
+            devBean.setAppKey(jsonObject.getString("k"));
+            devBean.setOsType(jsonObject.getString("o"));
+            devBean.setChannel(jsonObject.getString("c"));
             list.add(devBean);
         }
         return list;

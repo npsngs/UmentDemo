@@ -16,10 +16,12 @@ public class SBox {
     private SeedConfig seedConfig;
     private PublicConfig publicConfig;
     private String appkey;
+    private String channel;
     public SBox(Context context, DevBean devBean) {
         this.context = context;
         this.seed = devBean.getDeviceID().toLowerCase();
         this.appkey = devBean.getAppKey().toLowerCase();
+        this.channel = devBean.getChannel();
         seedConfig = new SeedConfig(context, seed);
         publicConfig = PublicConfig.getInstance(context);
     }
@@ -55,7 +57,7 @@ public class SBox {
                 .put("app_version", publicConfig.getAppVersion())
                 .put("package_name", publicConfig.getPackageName())
                 .put("display_name", publicConfig.getDisplayName())
-                .put("channel", publicConfig.getChannel())
+                .put("channel", channel)
                 .put("app_signature", publicConfig.getApp_signature())
                 .put("appkey", appkey)
 

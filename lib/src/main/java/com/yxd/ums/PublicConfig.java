@@ -1,7 +1,6 @@
 package com.yxd.ums;
 
 import android.content.Context;
-import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.tool.SystemUtil;
 
 public class PublicConfig {
@@ -14,12 +13,10 @@ public class PublicConfig {
         return instance;
     }
 
-
     private int appVersionCode;
     private String appVersion;
     private String packageName;
     private String displayName;
-    private String channel;
     private String app_signature;
 
     private PublicConfig(Context context) {
@@ -27,7 +24,6 @@ public class PublicConfig {
         appVersion = SystemUtil.getVersionName(context);
         packageName = SystemUtil.getPackageName(context);
         displayName = SystemUtil.loadLabel(context);
-        channel = AnalyticsConfig.getChannel(context);
         app_signature = SystemUtil.getAppSignatures(context);
     }
 
@@ -45,10 +41,6 @@ public class PublicConfig {
 
     public String getDisplayName(){
         return displayName;
-    }
-
-    public String getChannel(){
-        return channel;
     }
 
     public String getApp_signature() {

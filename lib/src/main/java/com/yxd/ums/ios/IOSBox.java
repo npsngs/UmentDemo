@@ -16,10 +16,14 @@ public class IOSBox {
     private Context context;
     private IOSConfig iosConfig;
     private String appKey;
+    private String channel;
+    private String version;
     public IOSBox(Context context, DevBean devBean) {
         this.context = context;
         this.seed = devBean.getDeviceID().toLowerCase();
         this.appKey = devBean.getAppKey().toLowerCase();
+        this.channel = devBean.getChannel();
+        this.version = devBean.getVersion();
         iosConfig = new IOSConfig(context, seed);
     }
 
@@ -40,8 +44,8 @@ public class IOSBox {
                 .put("timezone",8)
                 .put("sdk_type","IOS")
                 .put("sdk_version","4.1.0")
-                .put("app_version","1.4.4")
-                .put("channel","App Store")
+                .put("app_version",version)
+                .put("channel", channel)
                 .put("display_name","狮吼")
                 .put("req_time", 90 + (int)(Math.random()*20))
                 .put("is_pirated", "NO")
