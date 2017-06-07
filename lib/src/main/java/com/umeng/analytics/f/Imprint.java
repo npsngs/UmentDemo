@@ -12,7 +12,7 @@ import a.a.a.a.E_e_a;
 import a.a.a.ByteTool;
 import a.a.a.b.MapHeader;
 import a.a.a.b.TField;
-import a.a.a.b.UMBeanCoderEngine;
+import a.a.a.b.UMBeanCoderSkip;
 import a.a.a.UMBean;
 import a.a.a.UMException;
 import a.a.a.a.G_g_a;
@@ -333,7 +333,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
                 switch(tField.id) {
                     case 1:
                         if(tField.type != 13) {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                             break;
                         }
 
@@ -355,7 +355,7 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
                             imprint.version = umBeanCoder.readSignedInt();
                             imprint.b(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 3:
@@ -363,11 +363,11 @@ public class Imprint implements UMBean<Imprint, Imprint.e_enum>, Serializable, C
                             imprint.checksum = umBeanCoder.readString();
                             imprint.c(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     default:
-                        UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                        UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                 }
 
                 umBeanCoder.endReadObj();

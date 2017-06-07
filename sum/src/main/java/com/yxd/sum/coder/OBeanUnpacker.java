@@ -5,6 +5,7 @@
 
 package com.yxd.sum.coder;
 
+import com.yxd.sum.BeanCoder;
 import com.yxd.sum.bean.SerialBean;
 
 import java.io.UnsupportedEncodingException;
@@ -12,17 +13,17 @@ import java.nio.ByteBuffer;
 
 import a.a.a.UMException;
 import a.a.a.UMField;
-import com.yxd.sum.obj.TField;
+import com.yxd.sum.TField;
 
 import com.yxd.sum.obj.BeanCoderBuilder;
-import com.yxd.sum.obj.BeanCoderSkiper;
+import com.yxd.sum.BeanCoderSkiper;
 
 public class OBeanUnpacker {
-    private final BeanCoder umBeanCoder;
+    private final com.yxd.sum.coder.BeanCoder umBeanCoder;
     private final BufferIOStream bis;
 
     public OBeanUnpacker() {
-        this(new OBeanCoder.UMBeanCoder_a_Builder());
+        this(new BeanCoder.UMBeanCoder_a_Builder());
     }
 
     public OBeanUnpacker(BeanCoderBuilder umBeanCoderBuilder) {
@@ -207,7 +208,7 @@ public class OBeanUnpacker {
 
             if(var6.id != var4[i].getFieldId()) {
                 BeanCoderSkiper a = new BeanCoderSkiper();
-                a.read(this.umBeanCoder, var6.type);
+                a.skip(this.umBeanCoder, var6.type);
                 this.umBeanCoder.endReadObj();
             } else {
                 ++i;

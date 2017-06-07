@@ -7,8 +7,8 @@ package com.yxd.sum.bean;
 
 import a.a.a.ByteTool;
 
-import com.yxd.sum.obj.TField;
-import com.yxd.sum.obj.BeanCoderSkiper;
+import com.yxd.sum.TField;
+import com.yxd.sum.BeanCoderSkiper;
 
 import a.a.a.UMException;
 import com.yxd.sum.coder.BeanCoder;
@@ -275,7 +275,7 @@ public class Response implements SerialBean, Serializable, Cloneable {
                             response.respCode = beanCoder.readSignedInt();
                             response.a(true);
                         } else {
-                            BeanCoderSkiper.read(beanCoder, tField.type);
+                            //BeanCoderSkiper.skip(beanCoder, tField.type);
                         }
                         break;
                     case 2:
@@ -283,7 +283,7 @@ public class Response implements SerialBean, Serializable, Cloneable {
                             response.msg = beanCoder.readString();
                             response.b(true);
                         } else {
-                            BeanCoderSkiper.read(beanCoder, tField.type);
+                           // BeanCoderSkiper.skip(beanCoder, tField.type);
                         }
                         break;
                     case 3:
@@ -292,11 +292,11 @@ public class Response implements SerialBean, Serializable, Cloneable {
                             response.imprint.unpackFrom(beanCoder);
                             response.c(true);
                         } else {
-                            BeanCoderSkiper.read(beanCoder, tField.type);
+                           // BeanCoderSkiper.skip(beanCoder, tField.type);
                         }
                         break;
                     default:
-                        BeanCoderSkiper.read(beanCoder, tField.type);
+                       // BeanCoderSkiper.skip(beanCoder, tField.type);
                 }
 
                 beanCoder.endReadObj();

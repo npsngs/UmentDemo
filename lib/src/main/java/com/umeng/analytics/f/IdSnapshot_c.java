@@ -15,7 +15,7 @@ import a.a.a.b.TField;
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMBeanCoder_b;
 import a.a.a.b.UMMsgException;
-import a.a.a.b.UMBeanCoderEngine;
+import a.a.a.b.UMBeanCoderSkip;
 import a.a.a.b.UMName;
 import a.a.a.b.UMBeanCoder_n;
 import a.a.a.c.BeanTransferGetter;
@@ -288,7 +288,7 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
                             var2.identity = var1.readString();
                             var2.a(true);
                         } else {
-                            UMBeanCoderEngine.read(var1, var3.type);
+                            UMBeanCoderSkip.skip(var1, var3.type);
                         }
                         break;
                     case 2:
@@ -296,7 +296,7 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
                             var2.ts = var1.readSignedLong();
                             var2.b(true);
                         } else {
-                            UMBeanCoderEngine.read(var1, var3.type);
+                            UMBeanCoderSkip.skip(var1, var3.type);
                         }
                         break;
                     case 3:
@@ -304,11 +304,11 @@ public class IdSnapshot_c implements UMBean<IdSnapshot_c, IdSnapshot_c.e_enum>, 
                             var2.version = var1.readSignedInt();
                             var2.c(true);
                         } else {
-                            UMBeanCoderEngine.read(var1, var3.type);
+                            UMBeanCoderSkip.skip(var1, var3.type);
                         }
                         break;
                     default:
-                        UMBeanCoderEngine.read(var1, var3.type);
+                        UMBeanCoderSkip.skip(var1, var3.type);
                 }
 
                 var1.endReadObj();

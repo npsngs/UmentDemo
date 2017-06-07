@@ -7,7 +7,6 @@ import com.umeng.tool.TaskExecutor;
 import com.umeng.tool.ULog;
 import com.yxd.sum.bean.Response;
 import com.yxd.sum.coder.NBeanUnpacker;
-import com.yxd.sum.coder.OBeanCoder;
 import com.yxd.sum.report.HttpSender;
 
 import org.json.JSONException;
@@ -42,7 +41,7 @@ public class MSimulater {
 
     private static int parseResponse(byte[] respData) {
         Response response = new Response();
-        NBeanUnpacker beanUnpacker = new NBeanUnpacker(new OBeanCoder.UMBeanCoder_a_Builder());
+        NBeanUnpacker beanUnpacker = new NBeanUnpacker(new BeanCoder.UMBeanCoder_a_Builder());
 
         try {
             beanUnpacker.unpack(response, respData);

@@ -22,6 +22,8 @@ import com.umeng.tool.EncodeUtil;
 import com.umeng.tool.SafeRunnable;
 import com.umeng.tool.TaskExecutor;
 import com.umeng.tool.ZipTool;
+import com.yxd.ums.DevBean;
+import com.yxd.ums.RemoteConfig;
 import com.yxd.ums.Simulator;
 
 import org.json.JSONObject;
@@ -29,6 +31,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.List;
 
 
 import a.a.a.UMBeanUnpacker;
@@ -52,10 +55,17 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        Simulator.count = 1;
-        Simulator.header = "f";
         MobclickAgent.setDebugMode( true );
         MobclickAgent.enableEncrypt(false);
+
+
+        TaskExecutor.scheduleExecute(new SafeRunnable() {
+            @Override
+            public void safeRun() {
+                Simulator simulator = new Simulator(getApplicationContext());
+                simulator.report();
+            }
+        });
 
 //        new Thread(new Runnable() {
 //            @Override
@@ -65,15 +75,7 @@ public class MainActivity extends AppCompatActivity {
 //                parseImprint();
 //            }
 //        }).start();
-        TaskExecutor.scheduleExecute(new SafeRunnable() {
-            @Override
-            public void safeRun() {
-                Simulator simulator = new Simulator(getApplicationContext());
-                for(int i=1;i<10000;i++){
-                    simulator.addIosNew("as"+i);
-                }
-            }
-        });
+
     }
 
     private void parseEnvelope() {

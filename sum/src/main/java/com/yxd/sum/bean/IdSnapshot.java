@@ -10,11 +10,11 @@ import a.a.a.a.B_b;
 import a.a.a.a.C_c;
 import a.a.a.ByteTool;
 import a.a.a.UMException;
-import com.yxd.sum.obj.TField;
+import com.yxd.sum.TField;
 import com.yxd.sum.coder.BeanCoder;
 import com.yxd.sum.coder.NBeanCoder;
 import com.yxd.sum.obj.UMMsgException;
-import com.yxd.sum.obj.BeanCoderSkiper;
+import com.yxd.sum.BeanCoderSkiper;
 import com.yxd.sum.obj.BeanName;
 import com.yxd.sum.coder.BSBeanCoder;
 import com.yxd.sum.coder.SerializerGetter;
@@ -285,7 +285,7 @@ public class IdSnapshot implements SerialBean{
                             var2.identity = var1.readString();
                             var2.a(true);
                         } else {
-                            BeanCoderSkiper.read(var1, var3.type);
+                            BeanCoderSkiper.skip(var1, var3.type);
                         }
                         break;
                     case 2:
@@ -293,7 +293,7 @@ public class IdSnapshot implements SerialBean{
                             var2.ts = var1.readSignedLong();
                             var2.b(true);
                         } else {
-                            BeanCoderSkiper.read(var1, var3.type);
+                            BeanCoderSkiper.skip(var1, var3.type);
                         }
                         break;
                     case 3:
@@ -301,11 +301,11 @@ public class IdSnapshot implements SerialBean{
                             var2.version = var1.readSignedInt();
                             var2.c(true);
                         } else {
-                            BeanCoderSkiper.read(var1, var3.type);
+                            BeanCoderSkiper.skip(var1, var3.type);
                         }
                         break;
                     default:
-                        BeanCoderSkiper.read(var1, var3.type);
+                        BeanCoderSkiper.skip(var1, var3.type);
                 }
 
                 var1.endReadObj();

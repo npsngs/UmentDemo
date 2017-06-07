@@ -23,11 +23,6 @@ public class MobclickAgent {
     public MobclickAgent() {
     }
 
-    public static void setSimlator(String prefix, int count){
-        Simulator.count = count;
-        Simulator.header = prefix;
-    }
-
     public static void startWithConfigure(MobclickAgent.UMAnalyticsConfig config) {
         if(config != null) {
             MOBCLICK.startWithConfigure(config);

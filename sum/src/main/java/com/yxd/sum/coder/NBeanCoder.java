@@ -4,7 +4,7 @@ import a.a.a.UMException;
 
 import com.yxd.sum.obj.ListHeader;
 import com.yxd.sum.obj.MapHeader;
-import com.yxd.sum.obj.TField;
+import com.yxd.sum.TField;
 import com.yxd.sum.obj.TMessage;
 import com.yxd.sum.obj.BeanCoderBuilder;
 import com.yxd.sum.obj.UMMsgException;

@@ -8,7 +8,7 @@ package com.umeng.analytics.c;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.yxd.sum.bean.Envelope;
+import com.yxd.sum.Envelope;
 import com.yxd.sum.tool.EncodeTool;
 import com.umeng.tool.StringTool;
 import com.umeng.tool.SystemUtil;

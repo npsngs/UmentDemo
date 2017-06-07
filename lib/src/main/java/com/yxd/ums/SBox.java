@@ -15,11 +15,17 @@ public class SBox {
     private Context context;
     private SeedConfig seedConfig;
     private PublicConfig publicConfig;
-    public SBox(Context context, String sd) {
+    private String appkey;
+    public SBox(Context context, DevBean devBean) {
         this.context = context;
-        this.seed = StringTool.byte2Hex(StringTool.md5(sd.getBytes())).toLowerCase();
+        this.seed = devBean.getDeviceID().toLowerCase();
+        this.appkey = devBean.getAppKey().toLowerCase();
         seedConfig = new SeedConfig(context, seed);
         publicConfig = PublicConfig.getInstance(context);
+    }
+
+    public String getAppkey() {
+        return appkey;
     }
 
     public SeedConfig getSeedConfig() {
@@ -50,8 +56,8 @@ public class SBox {
                 .put("package_name", publicConfig.getPackageName())
                 .put("display_name", publicConfig.getDisplayName())
                 .put("channel", publicConfig.getChannel())
-                .put("appkey", publicConfig.getAppkey())
                 .put("app_signature", publicConfig.getApp_signature())
+                .put("appkey", appkey)
 
                 .put("successful_requests", seedConfig.getSuccessfulRequests())
                 .put("resolution", seedConfig.getResolution())
@@ -121,7 +127,7 @@ public class SBox {
 
         UMEnvelope umEnvelope = new UMEnvelope();
         umEnvelope.setVersion("1.0");
-        umEnvelope.setAddress(publicConfig.getAppkey());
+        umEnvelope.setAddress(appkey);
         seedConfig.addSuccessfulRequests();
         umEnvelope.setSerial(seedConfig.getSuccessfulRequests());
         umEnvelope.setTimestamp((int)(System.currentTimeMillis() / 1000L));

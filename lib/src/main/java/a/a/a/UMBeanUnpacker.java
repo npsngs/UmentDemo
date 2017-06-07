@@ -7,7 +7,7 @@ package a.a.a;
 
 import a.a.a.b.TField;
 import a.a.a.b.UMBeanCoder;
-import a.a.a.b.UMBeanCoderEngine;
+import a.a.a.b.UMBeanCoderSkip;
 import a.a.a.b.UMBeanCoderBuilder;
 import a.a.a.b.UMBeanCoder_b.UMBeanCoder_b_Builder;
 import a.a.a.d.BufferIOStream;
@@ -203,8 +203,8 @@ public class UMBeanUnpacker {
             }
 
             if(var6.id != var4[i].getFieldId()) {
-                UMBeanCoderEngine a = new UMBeanCoderEngine();
-                a.read(this.umBeanCoder, var6.type);
+                UMBeanCoderSkip a = new UMBeanCoderSkip();
+                a.skip(this.umBeanCoder, var6.type);
                 this.umBeanCoder.endReadObj();
             } else {
                 ++i;

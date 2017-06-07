@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.umeng.analytics.g.UMEnvelope;
 import com.umeng.tool.StringTool;
 import com.umeng.tool.ZipTool;
+import com.yxd.ums.DevBean;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,10 +15,16 @@ public class IOSBox {
     private String seed;
     private Context context;
     private IOSConfig iosConfig;
-    public IOSBox(Context context, String sd) {
+    private String appKey;
+    public IOSBox(Context context, DevBean devBean) {
         this.context = context;
-        this.seed = StringTool.byte2Hex(StringTool.md5(("ios"+sd).getBytes())).toLowerCase();
+        this.seed = devBean.getDeviceID().toLowerCase();
+        this.appKey = devBean.getAppKey().toLowerCase();
         iosConfig = new IOSConfig(context, seed);
+    }
+
+    public String getAppKey() {
+        return appKey;
     }
 
     public IOSConfig getIosConfig() {
@@ -42,7 +49,7 @@ public class IOSBox {
 
                 .put("access", iosConfig.getAccess())
                 .put("is_jailbroken", iosConfig.getJailbroken())
-                .put("appkey", iosConfig.getAppkey())
+                .put("appkey", appKey)
                 .put("carrier", iosConfig.getCarrier())
                 .put("mccmnc",iosConfig.getMccmnc())
                 .put("successful_requests",iosConfig.getSuccessfulRequests())
@@ -117,7 +124,7 @@ public class IOSBox {
 
         UMEnvelope umEnvelope = new UMEnvelope();
         umEnvelope.setVersion("V1.0");
-        umEnvelope.setAddress(iosConfig.getAppkey());
+        umEnvelope.setAddress(appKey);
         iosConfig.addSuccessfulRequests();
         umEnvelope.setSerial(iosConfig.getSuccessfulRequests());
         umEnvelope.setTimestamp((int)(System.currentTimeMillis() / 1000L));

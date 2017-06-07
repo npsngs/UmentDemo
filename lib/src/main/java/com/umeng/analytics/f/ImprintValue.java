@@ -10,7 +10,7 @@ import a.a.a.a.B_b;
 import a.a.a.a.C_c;
 import a.a.a.ByteTool;
 import a.a.a.b.TField;
-import a.a.a.b.UMBeanCoderEngine;
+import a.a.a.b.UMBeanCoderSkip;
 import a.a.a.UMBean;
 import a.a.a.UMException;
 import a.a.a.b.UMBeanCoder;
@@ -310,7 +310,7 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
                             var2.value = var1.readString();
                             var2.a(true);
                         } else {
-                            UMBeanCoderEngine.read(var1, var3.type);
+                            UMBeanCoderSkip.skip(var1, var3.type);
                         }
                         break;
                     case 2:
@@ -318,7 +318,7 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
                             var2.ts = var1.readSignedLong();
                             var2.b(true);
                         } else {
-                            UMBeanCoderEngine.read(var1, var3.type);
+                            UMBeanCoderSkip.skip(var1, var3.type);
                         }
                         break;
                     case 3:
@@ -326,11 +326,11 @@ public class ImprintValue implements UMBean<ImprintValue, ImprintValue.e_enum>, 
                             var2.guid = var1.readString();
                             var2.c(true);
                         } else {
-                            UMBeanCoderEngine.read(var1, var3.type);
+                            UMBeanCoderSkip.skip(var1, var3.type);
                         }
                         break;
                     default:
-                        UMBeanCoderEngine.read(var1, var3.type);
+                        UMBeanCoderSkip.skip(var1, var3.type);
                 }
 
                 var1.endReadObj();

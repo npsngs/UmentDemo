@@ -20,7 +20,6 @@ public class PublicConfig {
     private String packageName;
     private String displayName;
     private String channel;
-    private String appkey;
     private String app_signature;
 
     private PublicConfig(Context context) {
@@ -29,7 +28,6 @@ public class PublicConfig {
         packageName = SystemUtil.getPackageName(context);
         displayName = SystemUtil.loadLabel(context);
         channel = AnalyticsConfig.getChannel(context);
-        appkey = AnalyticsConfig.getAppkey(context);
         app_signature = SystemUtil.getAppSignatures(context);
     }
 
@@ -51,10 +49,6 @@ public class PublicConfig {
 
     public String getChannel(){
         return channel;
-    }
-
-    public String getAppkey(){
-        return appkey;
     }
 
     public String getApp_signature() {

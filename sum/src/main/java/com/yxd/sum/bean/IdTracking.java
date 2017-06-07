@@ -15,11 +15,11 @@ import a.a.a.a.E_e_a;
 import a.a.a.a.G_g_a;
 import com.yxd.sum.obj.ListHeader;
 import com.yxd.sum.obj.MapHeader;
-import com.yxd.sum.obj.TField;
+import com.yxd.sum.TField;
 import com.yxd.sum.coder.BeanCoder;
 import com.yxd.sum.coder.NBeanCoder;
 import com.yxd.sum.obj.UMMsgException;
-import com.yxd.sum.obj.BeanCoderSkiper;
+import com.yxd.sum.BeanCoderSkiper;
 import com.yxd.sum.obj.BeanName;
 import com.yxd.sum.coder.BSBeanCoder;
 import com.yxd.sum.coder.SerializerGetter;
@@ -398,7 +398,7 @@ public class IdTracking implements SerialBean{
                 switch(tField.id) {
                     case 1:
                         if(tField.type != 13) {
-                            BeanCoderSkiper.read(umBeanCoder, tField.type);
+                            BeanCoderSkiper.skip(umBeanCoder, tField.type);
                             break;
                         }
 
@@ -417,7 +417,7 @@ public class IdTracking implements SerialBean{
                         break;
                     case 2:
                         if(tField.type != 15) {
-                            BeanCoderSkiper.read(umBeanCoder, tField.type);
+                            BeanCoderSkiper.skip(umBeanCoder, tField.type);
                             break;
                         }
 
@@ -438,11 +438,11 @@ public class IdTracking implements SerialBean{
                             idTracking.checksum = umBeanCoder.readString();
                             idTracking.c(true);
                         } else {
-                            BeanCoderSkiper.read(umBeanCoder, tField.type);
+                            BeanCoderSkiper.skip(umBeanCoder, tField.type);
                         }
                         break;
                     default:
-                        BeanCoderSkiper.read(umBeanCoder, tField.type);
+                        BeanCoderSkiper.skip(umBeanCoder, tField.type);
                 }
 
                 umBeanCoder.endReadObj();

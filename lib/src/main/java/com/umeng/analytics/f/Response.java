@@ -11,7 +11,7 @@ import a.a.a.a.C_c;
 import a.a.a.a.G_g_a;
 import a.a.a.ByteTool;
 import a.a.a.b.TField;
-import a.a.a.b.UMBeanCoderEngine;
+import a.a.a.b.UMBeanCoderSkip;
 import a.a.a.UMBean;
 import a.a.a.UMException;
 import a.a.a.b.UMBeanCoder;
@@ -320,7 +320,7 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
                             response.respCode = beanCoder.readSignedInt();
                             response.a(true);
                         } else {
-                            UMBeanCoderEngine.read(beanCoder, tField.type);
+                            UMBeanCoderSkip.skip(beanCoder, tField.type);
                         }
                         break;
                     case 2:
@@ -328,7 +328,7 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
                             response.msg = beanCoder.readString();
                             response.b(true);
                         } else {
-                            UMBeanCoderEngine.read(beanCoder, tField.type);
+                            UMBeanCoderSkip.skip(beanCoder, tField.type);
                         }
                         break;
                     case 3:
@@ -337,11 +337,11 @@ public class Response implements UMBean<Response, Response.RespField>, Serializa
                             response.imprint.unpackFrom(beanCoder);
                             response.c(true);
                         } else {
-                            UMBeanCoderEngine.read(beanCoder, tField.type);
+                            UMBeanCoderSkip.skip(beanCoder, tField.type);
                         }
                         break;
                     default:
-                        UMBeanCoderEngine.read(beanCoder, tField.type);
+                        UMBeanCoderSkip.skip(beanCoder, tField.type);
                 }
 
                 beanCoder.endReadObj();

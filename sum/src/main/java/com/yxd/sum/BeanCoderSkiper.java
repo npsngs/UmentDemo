@@ -1,28 +1,20 @@
-//
-// Source code recreated from setRequestCallback .class file by IntelliJ IDEA
-// (powered by Fernflower decompiler)
-//
-
-package a.a.a.b;
+package com.yxd.sum;
 
 import a.a.a.UMException;
-import a.a.a.b.UMBeanCoder_b.UMBeanCoder_b_Builder;
+import com.yxd.sum.obj.ArrayHeader;
+import com.yxd.sum.obj.ListHeader;
+import com.yxd.sum.obj.MapHeader;
 
-public class UMBeanCoderEngine {
+public class BeanCoderSkiper {
     private static int skip = Integer.MAX_VALUE;
-
-    public UMBeanCoderEngine() {
+    public BeanCoderSkiper() {
     }
 
-    public static void setSkip(int skip) {
-        UMBeanCoderEngine.skip = skip;
+    public static void skip(BeanCoder beanCoder, byte fieldType) throws UMException {
+        skip(beanCoder, fieldType, skip);
     }
 
-    public static void read(UMBeanCoder beanCoder, byte fieldType) throws UMException {
-        read(beanCoder, fieldType, skip);
-    }
-
-    public static void read(UMBeanCoder beanCoder, byte fieldType, int skip) throws UMException {
+    public static void skip(BeanCoder beanCoder, byte fieldType, int skip) throws UMException {
         if(skip <= 0) {
             throw new UMException("Maximum skip depth exceeded");
         } else {
@@ -53,51 +45,36 @@ public class UMBeanCoderEngine {
                     beanCoder.readByteBuffer();
                     break;
                 case 12:
-                    beanCoder.startUnpack();
-
                     while(true) {
                         TField tField = beanCoder.readTField();
                         if(tField.type == 0) {
-                            beanCoder.k();
                             return;
                         }
-
-                        read(beanCoder, tField.type, skip - 1);
-                        beanCoder.endReadObj();
+                        skip(beanCoder, tField.type, skip - 1);
                     }
                 case 13:
                     MapHeader var3 = beanCoder.readMapHeader();
 
                     for(int var8 = 0; var8 < var3.size; ++var8) {
-                        read(beanCoder, var3.keyType, skip - 1);
-                        read(beanCoder, var3.valueType, skip - 1);
+                        skip(beanCoder, var3.keyType, skip - 1);
+                        skip(beanCoder, var3.valueType, skip - 1);
                     }
-
-                    beanCoder.o();
                     break;
                 case 14:
-                    l var4 = beanCoder.r();
+                    ArrayHeader var4 = beanCoder.readArrayHeader();
 
-                    for(int i = 0; i < var4.b; ++i) {
-                        read(beanCoder, var4.a, skip - 1);
+                    for(int i = 0; i < var4.size; ++i) {
+                        skip(beanCoder, var4.type, skip - 1);
                     }
-
-                    beanCoder.s();
                     break;
                 case 15:
                     ListHeader var5 = beanCoder.readListHeader();
 
                     for(int i = 0; i < var5.size; ++i) {
-                        read(beanCoder, var5.type, skip - 1);
+                        skip(beanCoder, var5.type, skip - 1);
                     }
-
-                    beanCoder.q();
             }
 
         }
-    }
-
-    public static UMBeanCoderBuilder read(byte[] var0, UMBeanCoderBuilder coderBuilder) {
-        return var0[0] > 16?new UMBeanCoder_b_Builder():(var0.length > 1 && (var0[1] & 128) != 0?new UMBeanCoder_b_Builder():coderBuilder);
     }
 }

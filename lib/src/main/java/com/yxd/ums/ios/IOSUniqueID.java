@@ -5,9 +5,6 @@ import android.util.Base64;
 import com.umeng.analytics.f.IdJournal_b;
 import com.umeng.analytics.f.IdSnapshot_c;
 import com.umeng.analytics.f.IdTracking;
-import com.umeng.tool.EncodeUtil;
-
-import a.a.a.UMBeanPacker;
 
 public class IOSUniqueID {
     private String deviceId;

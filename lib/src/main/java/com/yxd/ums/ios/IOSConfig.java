@@ -3,13 +3,10 @@ package com.yxd.ums.ios;
 import android.content.Context;
 
 import com.yxd.ums.SeedDB;
-import com.yxd.ums.device.UniqueID;
 
 public class IOSConfig {
     private IOSBean iosBean;
     private SeedDB seedDB;
-    private String appkey = "592532e05312dd78be0020b8";//test_ios
-//    private String appkey = "57d7cd6e67e58e70f700093f";//lion_ios
 
     public IOSConfig(Context context, String seed) {
         seedDB = SeedDB.getInstance(context);
@@ -120,16 +117,8 @@ public class IOSConfig {
         return iosBean.getUtdid();
     }
 
-    public String getAppkey() {
-        return appkey;
-    }
-
     public String getJailbroken() {
         return iosBean.getJailbroken();
-    }
-
-    public void setAppkey(String appkey) {
-        this.appkey = appkey;
     }
 
     public String getAccess() {

@@ -15,7 +15,7 @@ import a.a.a.UMException;
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMBeanCoder_b;
 import a.a.a.b.UMMsgException;
-import a.a.a.b.UMBeanCoderEngine;
+import a.a.a.b.UMBeanCoderSkip;
 import a.a.a.b.UMName;
 import a.a.a.b.UMBeanCoder_n;
 import a.a.a.c.BeanTransferGetter;
@@ -362,7 +362,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
                             idJournal_b.domain = umBeanCoder.readString();
                             idJournal_b.a(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 2:
@@ -370,7 +370,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
                             idJournal_b.old_id = umBeanCoder.readString();
                             idJournal_b.b(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 3:
@@ -378,7 +378,7 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
                             idJournal_b.new_id = umBeanCoder.readString();
                             idJournal_b.c(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 4:
@@ -386,11 +386,11 @@ public class IdJournal_b implements UMBean<IdJournal_b, IdJournal_b.e_enum>, Ser
                             idJournal_b.ts = umBeanCoder.readSignedLong();
                             idJournal_b.d(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     default:
-                        UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                        UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                 }
 
                 umBeanCoder.endReadObj();

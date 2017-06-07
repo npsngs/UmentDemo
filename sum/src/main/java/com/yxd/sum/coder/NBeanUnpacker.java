@@ -9,9 +9,9 @@ import com.yxd.sum.bean.SerialBean;
 
 import a.a.a.UMException;
 import a.a.a.UMField;
-import com.yxd.sum.obj.TField;
+import com.yxd.sum.TField;
 
-import com.yxd.sum.obj.BeanCoderSkiper;
+import com.yxd.sum.BeanCoderSkiper;
 import com.yxd.sum.obj.BeanCoderBuilder;
 import com.yxd.sum.coder.NBeanCoder.NBeanCoderBuilder;
 
@@ -208,7 +208,7 @@ public class NBeanUnpacker {
 
             if(var6.id != var4[i].getFieldId()) {
                 BeanCoderSkiper a = new BeanCoderSkiper();
-                a.read(this.umBeanCoder, var6.type);
+                a.skip(this.umBeanCoder, var6.type);
                 this.umBeanCoder.endReadObj();
             } else {
                 ++i;

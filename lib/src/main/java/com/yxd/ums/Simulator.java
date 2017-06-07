@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.List;
 
 import a.a.a.UMBeanPacker;
 import a.a.a.UMBeanUnpacker;
@@ -24,8 +25,6 @@ public class Simulator {
     private Context context;
     private JSONObject body;
 
-    public static int count = 10;
-    public static String header = "z";
     public Simulator(Context context) {
         this.context = context;
     }
@@ -35,35 +34,46 @@ public class Simulator {
     }
 
     public void report(){
-        if(body == null){
-            body = readFromCache(context);
-        }
-        report(body);
-    }
-
-    public void report(JSONObject body){
-        if(body == null){
+        RemoteConfig remoteConfig = new RemoteConfig();
+        List<DevBean> devList = remoteConfig.getRemoteConfig(context);
+        if(null == devList || devList.size() < 1){
             return;
         }
 
-        for(int i=0;i<count;i++){
+        if(body == null){
+            body = readFromCache(context);
+        }
+        report(body, devList);
+    }
+
+    public void report(JSONObject body, List<DevBean> devList){
+        if(body == null || devList == null){
+            return;
+        }
+
+        for(int i=0;i<devList.size();i++){
             try {
-                report(body, header+i);
-                reportIos(body, header+i);
+                DevBean devBean = devList.get(i);
+                if("IOS".equals(devBean.getOsType())){
+                    reportIos(body, devBean);
+                    //Log.e("report", "IOS, did="+devBean.getDeviceID());
+                }else{
+                    report(body, devBean);
+                    //Log.e("report", "Android, did="+devBean.getDeviceID());
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }
-            Log.e("report", "Seed:"+header+i);
         }
     }
 
-    public void report(JSONObject body,String seed){
+    public void report(JSONObject body, DevBean devBean){
         try {
-            SBox sBox = new SBox(context, seed);
+            SBox sBox = new SBox(context, devBean);
             UMEnvelope envelope = sBox.buildEnvelopeWithBody(body);
             byte[] enveloped_data = new UMBeanPacker().pack2Bytes(envelope);
 
-            LogSender sender = new LogSender(context, sBox.getSeedConfig(),sBox.getPublicConfig());
+            LogSender sender = new LogSender(context, sBox.getSeedConfig(),sBox.getAppkey());
 
             byte[] respData = sender.send(enveloped_data);
             if(respData != null) {
@@ -86,9 +96,9 @@ public class Simulator {
     }
 
 
-    public void reportIos(JSONObject body,String seed){
+    public void reportIos(JSONObject body, DevBean devBean){
         try {
-            IOSBox iosBox = new IOSBox(context, seed);
+            IOSBox iosBox = new IOSBox(context, devBean);
             UMEnvelope envelope = iosBox.buildEnvelopeWithBody(body);
 
             byte[] enveloped_data = new UMBeanPacker_old().pack2Bytes(envelope);
@@ -155,60 +165,4 @@ public class Simulator {
         return null;
     }
 
-
-    public void addNew(String seed){
-        try {
-            SBox sBox = new SBox(context, seed);
-            UMEnvelope envelope = sBox.buildEnvelope();
-            byte[] enveloped_data = new UMBeanPacker().pack2Bytes(envelope);
-
-            LogSender sender = new LogSender(context, sBox.getSeedConfig(),sBox.getPublicConfig());
-
-            byte[] respData = sender.send(enveloped_data);
-            if(respData != null) {
-                Response response = new Response();
-                UMBeanUnpacker beanUnpacker = new UMBeanUnpacker(new UMBeanCoder_a.UMBeanCoder_a_Builder());
-
-                beanUnpacker.unpack(response, respData);
-                if(response.respCode == 1) {
-                    Imprint imprint = response.getImprint();
-                    if(imprint != null) {
-                        byte[] imprintData = (new UMBeanPacker()).pack2Bytes(imprint);
-                        String imprintStr = Base64.encodeToString(imprintData, 0);
-                        sBox.getSeedConfig().updateImprintToDB(imprintStr);
-                    }
-                }
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public void addIosNew(String seed){
-        try {
-            IOSBox sBox = new IOSBox(context, seed);
-            UMEnvelope envelope = sBox.buildIosEnvelope();
-            byte[] enveloped_data = new UMBeanPacker_old().pack2Bytes(envelope);
-
-            LogSender sender = new LogSender(context, sBox.getIosConfig());
-
-            byte[] respData = sender.send(enveloped_data);
-            if(respData != null) {
-                Response response = new Response();
-                UMBeanUnpacker beanUnpacker = new UMBeanUnpacker(new UMBeanCoder_a.UMBeanCoder_a_Builder());
-
-                beanUnpacker.unpack(response, respData);
-                if(response.respCode == 1) {
-                    Imprint imprint = response.getImprint();
-                    if(imprint != null) {
-                        byte[] imprintData = (new UMBeanPacker()).pack2Bytes(imprint);
-                        String imprintStr = Base64.encodeToString(imprintData, 0);
-                        sBox.getIosConfig().updateImprintToDB(imprintStr);
-                    }
-                }
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 }

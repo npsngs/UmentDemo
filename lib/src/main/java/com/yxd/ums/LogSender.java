@@ -60,9 +60,9 @@ public class LogSender {
     private Context context;
     private RequestCallback requestCallback;
 
-    public LogSender(Context context,SeedConfig seedConfig, PublicConfig publicConfig) {
+    public LogSender(Context context,SeedConfig seedConfig, String appkey) {
         this.context = context;
-        this.systemInfo = getSystemInfo(seedConfig, publicConfig);
+        this.systemInfo = getSystemInfo(seedConfig, appkey);
         this.userAgent = buildUserAgent(seedConfig);
     }
 
@@ -280,7 +280,7 @@ public class LogSender {
         return sb.toString();
     }
 
-    private String getSystemInfo(SeedConfig seedConfig, PublicConfig publicConfig) {
+    private String getSystemInfo(SeedConfig seedConfig, String appkey) {
         StringBuffer sb = new StringBuffer();
         sb.append("Android");
         sb.append("/");
@@ -297,7 +297,7 @@ public class LogSender {
             stringBuffer.append("/");
             stringBuffer.append(seedConfig.getOsVersion());
             stringBuffer.append(" ");
-            stringBuffer.append(EncodeUtil.getMD5_2(publicConfig.getAppkey()));
+            stringBuffer.append(EncodeUtil.getMD5_2(appkey));
             sb.append(URLEncoder.encode(stringBuffer.toString(), "UTF-8"));
         } catch (Throwable throwable) {
         }

@@ -11,7 +11,7 @@ import java.nio.ByteBuffer;
 import a.a.a.b.TField;
 import a.a.a.b.UMBeanCoder;
 import a.a.a.b.UMBeanCoderBuilder;
-import a.a.a.b.UMBeanCoderEngine;
+import a.a.a.b.UMBeanCoderSkip;
 import a.a.a.b.UMBeanCoder_a;
 import a.a.a.d.BufferIOStream;
 
@@ -204,8 +204,8 @@ public class UMBeanUnpacker_old {
             }
 
             if(var6.id != var4[i].getFieldId()) {
-                UMBeanCoderEngine a = new UMBeanCoderEngine();
-                a.read(this.umBeanCoder, var6.type);
+                UMBeanCoderSkip a = new UMBeanCoderSkip();
+                a.skip(this.umBeanCoder, var6.type);
                 this.umBeanCoder.endReadObj();
             } else {
                 ++i;

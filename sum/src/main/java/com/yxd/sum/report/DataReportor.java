@@ -29,7 +29,7 @@ import org.json.JSONObject;
 
 import com.yxd.sum.coder.NBeanUnpacker;
 import com.yxd.sum.coder.NBeanPacker;
-import com.yxd.sum.coder.OBeanCoder;
+import com.yxd.sum.BeanCoder;
 
 public class DataReportor {
     private UMengItCache uMengItCache;
@@ -214,7 +214,7 @@ public class DataReportor {
 
     private int parseResponse(byte[] respData) {
         Response response = new Response();
-        NBeanUnpacker beanUnpacker = new NBeanUnpacker(new OBeanCoder.UMBeanCoder_a_Builder());
+        NBeanUnpacker beanUnpacker = new NBeanUnpacker(new BeanCoder.UMBeanCoder_a_Builder());
 
         try {
             beanUnpacker.unpack(response, respData);

@@ -12,8 +12,8 @@ import a.a.a.a.E_e_a;
 import a.a.a.ByteTool;
 
 import com.yxd.sum.obj.MapHeader;
-import com.yxd.sum.obj.TField;
-import com.yxd.sum.obj.BeanCoderSkiper;
+import com.yxd.sum.TField;
+import com.yxd.sum.BeanCoderSkiper;
 
 import a.a.a.UMException;
 import a.a.a.a.G_g_a;
@@ -332,7 +332,7 @@ public class Imprint implements SerialBean{
                 switch(tField.id) {
                     case 1:
                         if(tField.type != 13) {
-                            BeanCoderSkiper.read(umBeanCoder, tField.type);
+                            BeanCoderSkiper.skip(umBeanCoder, tField.type);
                             break;
                         }
 
@@ -354,7 +354,7 @@ public class Imprint implements SerialBean{
                             imprint.version = umBeanCoder.readSignedInt();
                             imprint.b(true);
                         } else {
-                            BeanCoderSkiper.read(umBeanCoder, tField.type);
+                            BeanCoderSkiper.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 3:
@@ -362,11 +362,11 @@ public class Imprint implements SerialBean{
                             imprint.checksum = umBeanCoder.readString();
                             imprint.c(true);
                         } else {
-                            BeanCoderSkiper.read(umBeanCoder, tField.type);
+                            BeanCoderSkiper.skip(umBeanCoder, tField.type);
                         }
                         break;
                     default:
-                        BeanCoderSkiper.read(umBeanCoder, tField.type);
+                        BeanCoderSkiper.skip(umBeanCoder, tField.type);
                 }
 
                 umBeanCoder.endReadObj();

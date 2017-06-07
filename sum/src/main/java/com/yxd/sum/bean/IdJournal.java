@@ -9,13 +9,13 @@ import a.a.a.UMField;
 import a.a.a.a.B_b;
 import a.a.a.a.C_c;
 import a.a.a.ByteTool;
-import com.yxd.sum.obj.TField;
+import com.yxd.sum.TField;
 
 import a.a.a.UMException;
 import com.yxd.sum.coder.BeanCoder;
 import com.yxd.sum.coder.NBeanCoder;
 import com.yxd.sum.obj.UMMsgException;
-import com.yxd.sum.obj.BeanCoderSkiper;
+import com.yxd.sum.BeanCoderSkiper;
 import com.yxd.sum.obj.BeanName;
 import com.yxd.sum.coder.BSBeanCoder;
 import com.yxd.sum.coder.SerializerGetter;
@@ -360,7 +360,7 @@ public class IdJournal implements SerialBean {
                             idJournal_b.domain = umBeanCoder.readString();
                             idJournal_b.a(true);
                         } else {
-                            BeanCoderSkiper.read(umBeanCoder, tField.type);
+                            BeanCoderSkiper.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 2:
@@ -368,7 +368,7 @@ public class IdJournal implements SerialBean {
                             idJournal_b.old_id = umBeanCoder.readString();
                             idJournal_b.b(true);
                         } else {
-                            BeanCoderSkiper.read(umBeanCoder, tField.type);
+                            BeanCoderSkiper.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 3:
@@ -376,7 +376,7 @@ public class IdJournal implements SerialBean {
                             idJournal_b.new_id = umBeanCoder.readString();
                             idJournal_b.c(true);
                         } else {
-                            BeanCoderSkiper.read(umBeanCoder, tField.type);
+                            BeanCoderSkiper.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 4:
@@ -384,11 +384,11 @@ public class IdJournal implements SerialBean {
                             idJournal_b.ts = umBeanCoder.readSignedLong();
                             idJournal_b.d(true);
                         } else {
-                            BeanCoderSkiper.read(umBeanCoder, tField.type);
+                            BeanCoderSkiper.skip(umBeanCoder, tField.type);
                         }
                         break;
                     default:
-                        BeanCoderSkiper.read(umBeanCoder, tField.type);
+                        BeanCoderSkiper.skip(umBeanCoder, tField.type);
                 }
 
                 umBeanCoder.endReadObj();

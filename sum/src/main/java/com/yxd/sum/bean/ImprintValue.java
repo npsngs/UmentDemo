@@ -6,8 +6,8 @@
 package com.yxd.sum.bean;
 
 import a.a.a.ByteTool;
-import com.yxd.sum.obj.TField;
-import com.yxd.sum.obj.BeanCoderSkiper;
+import com.yxd.sum.TField;
+import com.yxd.sum.BeanCoderSkiper;
 
 import a.a.a.UMException;
 import com.yxd.sum.coder.BeanCoder;
@@ -263,7 +263,7 @@ public class ImprintValue implements SerialBean{
                             var2.value = var1.readString();
                             var2.a(true);
                         } else {
-                            BeanCoderSkiper.read(var1, var3.type);
+                            BeanCoderSkiper.skip(var1, var3.type);
                         }
                         break;
                     case 2:
@@ -271,7 +271,7 @@ public class ImprintValue implements SerialBean{
                             var2.ts = var1.readSignedLong();
                             var2.b(true);
                         } else {
-                            BeanCoderSkiper.read(var1, var3.type);
+                            BeanCoderSkiper.skip(var1, var3.type);
                         }
                         break;
                     case 3:
@@ -279,11 +279,11 @@ public class ImprintValue implements SerialBean{
                             var2.guid = var1.readString();
                             var2.c(true);
                         } else {
-                            BeanCoderSkiper.read(var1, var3.type);
+                            BeanCoderSkiper.skip(var1, var3.type);
                         }
                         break;
                     default:
-                        BeanCoderSkiper.read(var1, var3.type);
+                        BeanCoderSkiper.skip(var1, var3.type);
                 }
 
                 var1.endReadObj();

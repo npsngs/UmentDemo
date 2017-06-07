@@ -16,7 +16,7 @@ import a.a.a.c.UMBeanTransfer_d;
 import a.a.a.d.UMIOStream;
 import a.a.a.e_j;
 import a.a.a.ByteTool;
-import a.a.a.b.UMBeanCoderEngine;
+import a.a.a.b.UMBeanCoderSkip;
 import a.a.a.UMBean;
 import a.a.a.UMException;
 import a.a.a.b.UMBeanCoder;
@@ -645,7 +645,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                             umEnvelope.version = umBeanCoder.readString();
                             umEnvelope.a(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 2:
@@ -653,7 +653,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                             umEnvelope.address = umBeanCoder.readString();
                             umEnvelope.b(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 3:
@@ -661,7 +661,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                             umEnvelope.signature = umBeanCoder.readString();
                             umEnvelope.c(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 4:
@@ -669,7 +669,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                             umEnvelope.serial_num = umBeanCoder.readSignedInt();
                             umEnvelope.d(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 5:
@@ -677,7 +677,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                             umEnvelope.ts_secs = umBeanCoder.readSignedInt();
                             umEnvelope.e(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 6:
@@ -685,7 +685,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                             umEnvelope.length = umBeanCoder.readSignedInt();
                             umEnvelope.f(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 7:
@@ -693,7 +693,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                             umEnvelope.entity = umBeanCoder.readByteBuffer();
                             umEnvelope.g(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 8:
@@ -701,7 +701,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                             umEnvelope.guid = umBeanCoder.readString();
                             umEnvelope.h(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 9:
@@ -709,7 +709,7 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                             umEnvelope.checksum = umBeanCoder.readString();
                             umEnvelope.i(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     case 10:
@@ -717,11 +717,11 @@ public class UMEnvelope implements UMBean<UMEnvelope, UMEnvelope.e_enum>, Serial
                             umEnvelope.codex = umBeanCoder.readSignedInt();
                             umEnvelope.j(true);
                         } else {
-                            UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                            UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                         }
                         break;
                     default:
-                        UMBeanCoderEngine.read(umBeanCoder, tField.type);
+                        UMBeanCoderSkip.skip(umBeanCoder, tField.type);
                 }
 
                 umBeanCoder.endReadObj();
