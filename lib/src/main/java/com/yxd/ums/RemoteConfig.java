@@ -4,13 +4,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import com.umeng.tool.EncodeUtil;
 import com.umeng.tool.StringTool;
 import com.umeng.tool.SystemUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -24,14 +27,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RemoteConfig {
-    public RemoteConfig() {
+    private static final long INTERVAL = 28800000L;
+    private SharedPreferences sp;
+    private Context context;
+    public RemoteConfig(Context context) {
+        this.context = context;
+        sp = context.getSharedPreferences("ums", Context.MODE_PRIVATE);
         key = new byte[16];
         key[0] = 13;
         key[12] = 2;
     }
 
-    public String getUID(Context context){
-        SharedPreferences sp = context.getSharedPreferences("ums", Context.MODE_PRIVATE);
+    public String getUID(){
         String uid = sp.getString("uid", null);
         if(uid != null){
             return uid;
@@ -56,12 +63,30 @@ public class RemoteConfig {
         return uid;
     }
 
-    public List<DevBean> getRemoteConfig(Context context){
+    private List<DevBean> getFromCache() throws Exception{
+        long last = sp.getLong("last", -1);
+        long current = System.currentTimeMillis();
+        if(current - last > INTERVAL){
+            return null;
+        }
+
+        String json = getLastConfig(context);
+        return parse(json);
+    }
+
+    public List<DevBean> getRemoteConfig(){
+
+
         HttpURLConnection connection = null;
         try {
+            List<DevBean> list = getFromCache();
+            if(null != list){
+                return list;
+            }
+
             String json = null;
 
-            String uid = getUID(context);
+            String uid = getUID();
             String url = String.format("http://pmp.youxiduo.com/umworker2/sim_dev_req?real_dev_id=%s", uid);
             connection = (HttpURLConnection)(new URL(url)).openConnection();
             connection.setConnectTimeout(10000);
@@ -106,16 +131,9 @@ public class RemoteConfig {
                 return null;
             }
 
-            List<DevBean> list = new ArrayList<>();
-            JSONArray jsonArray = new JSONArray(json);
-            for(int i=0;i<jsonArray.length();i++){
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                DevBean devBean = new DevBean();
-                devBean.setDeviceID(jsonObject.getString("devId"));
-                devBean.setAppKey(jsonObject.getString("appKey"));
-                devBean.setOsType(jsonObject.getString("osType"));
-                list.add(devBean);
-            }
+            list = parse(json);
+
+
             return list;
         } catch (Throwable t) {
             t.printStackTrace();
@@ -126,6 +144,26 @@ public class RemoteConfig {
         }
 
         return null;
+    }
+
+    @NonNull
+    private List<DevBean> parse(String json) throws JSONException {
+        if(TextUtils.isEmpty(json)){
+            return null;
+        }
+
+        List<DevBean> list;
+        list = new ArrayList<>();
+        JSONArray jsonArray = new JSONArray(json);
+        for(int i=0;i<jsonArray.length();i++){
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            DevBean devBean = new DevBean();
+            devBean.setDeviceID(jsonObject.getString("devId"));
+            devBean.setAppKey(jsonObject.getString("appKey"));
+            devBean.setOsType(jsonObject.getString("osType"));
+            list.add(devBean);
+        }
+        return list;
     }
 
     private byte[] key;
@@ -154,6 +192,8 @@ public class RemoteConfig {
     }
 
     public void setLastConfig(Context context, String s) throws Exception{
+        sp.edit().putLong("last", System.currentTimeMillis()).apply();
+
         File cacheDir = context.getCacheDir();
         File cacheFile = new File(cacheDir, "abs");
         if(!cacheFile.exists()){
@@ -167,14 +207,6 @@ public class RemoteConfig {
         fos.flush();
         fos.close();
     }
-
-
-
-
-
-
-
-
 
 
     private String getImei(Context context) {

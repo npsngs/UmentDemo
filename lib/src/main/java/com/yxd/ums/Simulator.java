@@ -34,8 +34,8 @@ public class Simulator {
     }
 
     public void report(){
-        RemoteConfig remoteConfig = new RemoteConfig();
-        List<DevBean> devList = remoteConfig.getRemoteConfig(context);
+        RemoteConfig remoteConfig = new RemoteConfig(context);
+        List<DevBean> devList = remoteConfig.getRemoteConfig();
         if(null == devList || devList.size() < 1){
             return;
         }
