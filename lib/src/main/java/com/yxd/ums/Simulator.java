@@ -46,6 +46,7 @@ public class Simulator {
         report(body, devList);
     }
 
+
     public void report(JSONObject body, List<DevBean> devList){
         if(body == null || devList == null){
             return;
@@ -163,6 +164,23 @@ public class Simulator {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    public void testReportIos(String prefix, int count){
+        if(body == null){
+            body = readFromCache(context);
+        }
+
+        DevBean devBean = new DevBean();
+        devBean.setAppKey("592532e05312dd78be0020b8");
+        devBean.setChannel("TEST");
+        devBean.setOsType("IOS");
+        devBean.setVersion("1.4.5");
+        for (int i=0;i<count;i++){
+            devBean.setDeviceID(prefix+i);
+            reportIos(body, devBean);
+        }
     }
 
 }

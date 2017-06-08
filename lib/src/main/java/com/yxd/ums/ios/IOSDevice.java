@@ -15,12 +15,11 @@ public class IOSDevice {
         {"46001", "中国联通"}
     };
 
-    private static final String[] ACCESS_SUBTYP= {
-        "HSDPA","LTE", "HSPA", "HSPA+"
-    };
-
-    private static final String[] ACCESS = {
-            "wifi","CellNetwork","4G","3G"
+    private static final String[][] ACCESS = {
+            {"wifi", "HSDPA"},
+            {"wifi", "LTE"},
+            {"4G", "LTE"},
+            {"3G", "HSDPA"}
     };
 
     private static final int[][] ACCESS_R = {
@@ -122,10 +121,8 @@ public class IOSDevice {
             {632, 0}
     };
 
-    private String seed;
-    private int mccmncIndex, subtypeIndex, accessIndex, osIndex, deviceIndex, jailbroken;
+    private int mccmncIndex, accessIndex, osIndex, deviceIndex, jailbroken;
     public IOSDevice(String seed) {
-        this.seed = seed;
         int seedInt = Math.abs(SeedTool.seed2Int(seed));
         this.deviceIndex = findIndex(DEVICE_R, seedInt % 10000);
 
@@ -135,8 +132,6 @@ public class IOSDevice {
         seedInt = (int) (Math.random()*10000);
         this.accessIndex = findIndex(ACCESS_R, seedInt);
 
-        seedInt = Math.abs(seed.charAt(0));
-        this.subtypeIndex = seedInt % ACCESS_SUBTYP.length;
         seedInt = Math.abs(seed.charAt(2));
         this.mccmncIndex = seedInt % MCCMNC.length;
         seedInt = Integer.parseInt(seed.substring(0,2), 16);
@@ -173,11 +168,11 @@ public class IOSDevice {
     }
 
     public String getAccessSubtype(){
-        return ACCESS_SUBTYP[subtypeIndex];
+        return ACCESS[accessIndex][1];
     }
 
     public String getAccess(){
-        return ACCESS[accessIndex];
+        return ACCESS[accessIndex][0];
     }
 
     public String getMccmnc(){
