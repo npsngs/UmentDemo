@@ -167,13 +167,29 @@ public class Simulator {
     }
 
 
-    public void testReportIos(String prefix, int count){
+    public void testReport(String prefix, String appkey, int count){
         if(body == null){
             body = readFromCache(context);
         }
 
         DevBean devBean = new DevBean();
-        devBean.setAppKey("592532e05312dd78be0020b8");
+        devBean.setAppKey(appkey);
+        devBean.setChannel("TEST");
+        devBean.setOsType("ANDROID");
+        devBean.setVersion("1.4.5");
+        for (int i=0;i<count;i++){
+            devBean.setDeviceID(prefix+i);
+            reportIos(body, devBean);
+        }
+    }
+
+    public void testReportIos(String prefix, String appkey, int count){
+        if(body == null){
+            body = readFromCache(context);
+        }
+
+        DevBean devBean = new DevBean();
+        devBean.setAppKey(appkey);
         devBean.setChannel("TEST");
         devBean.setOsType("IOS");
         devBean.setVersion("1.4.5");
