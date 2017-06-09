@@ -17,11 +17,13 @@ public class SBox {
     private PublicConfig publicConfig;
     private String appkey;
     private String channel;
+    private String version;
     public SBox(Context context, DevBean devBean) {
         this.context = context;
         this.seed = StringTool.byte2Hex(StringTool.md5(devBean.getDeviceID().getBytes())).toLowerCase();
         this.appkey = devBean.getAppKey().toLowerCase();
         this.channel = devBean.getChannel();
+        this.version = devBean.getVersion();
         seedConfig = new SeedConfig(context, seed);
         publicConfig = PublicConfig.getInstance(context);
     }
@@ -54,7 +56,7 @@ public class SBox {
                 .put("access", "wifi")
                 .put("req_time", 90 + (int)(Math.random()*20))
                 .put("version_code", publicConfig.getAppVersionCode())
-                .put("app_version", publicConfig.getAppVersion())
+                .put("app_version", version)
                 .put("package_name", publicConfig.getPackageName())
                 .put("display_name", publicConfig.getDisplayName())
                 .put("channel", channel)

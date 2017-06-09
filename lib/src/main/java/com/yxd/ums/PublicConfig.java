@@ -14,14 +14,12 @@ public class PublicConfig {
     }
 
     private int appVersionCode;
-    private String appVersion;
     private String packageName;
     private String displayName;
     private String app_signature;
 
     private PublicConfig(Context context) {
         appVersionCode = Integer.parseInt(SystemUtil.getVersionCode(context));
-        appVersion = SystemUtil.getVersionName(context);
         packageName = SystemUtil.getPackageName(context);
         displayName = SystemUtil.loadLabel(context);
         app_signature = SystemUtil.getAppSignatures(context);
@@ -29,10 +27,6 @@ public class PublicConfig {
 
     public int getAppVersionCode(){
         return appVersionCode;
-    }
-
-    public String getAppVersion(){
-        return appVersion;
     }
 
     public String getPackageName(){

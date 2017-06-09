@@ -176,10 +176,10 @@ public class Simulator {
         devBean.setAppKey(appkey);
         devBean.setChannel("TEST");
         devBean.setOsType("ANDROID");
-        devBean.setVersion("1.4.5");
+        devBean.setVersion("1");
         for (int i=0;i<count;i++){
             devBean.setDeviceID(prefix+i);
-            reportIos(body, devBean);
+            report(body, devBean);
         }
     }
 
