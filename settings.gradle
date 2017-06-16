@@ -1,1 +1,1 @@
-include ':app', ':lib', ':sum', ':sum', ':deviceob'
+include ':app', ':lib', ':sum', ':deviceob'
