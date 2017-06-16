@@ -1,6 +1,6 @@
 # Add project specific ProGuard rules here.
 # By default, the flags in this file are appended to flags specified
-# in clearChecksum:\StudioStudio-SDK/tools/proguard/proguard-android.txt
+# in getBeanTransferClass:\StudioStudio-SDK/tools/proguard/proguard-android.txt
 # You can edit the include path and order by changing the proguardFiles
 # directive in build.gradle.
 #
@@ -23,3 +23,33 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file domain.
 #-renamesourcefileattribute SourceFile
+-dontshrink
+#指定代码的压缩级别
+-optimizationpasses 5
+
+#包明不混合大小写
+-dontusemixedcaseclassnames
+
+#不去忽略非公共的库类
+-dontskipnonpubliclibraryclasses
+
+ #优化  不优化输入的类文件
+-dontoptimize
+
+ #不做预校验
+-dontpreverify
+
+ #混淆时是否记录日志
+-verbose
+
+
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class  com.umeng.analytics.MobclickAgent{*;}

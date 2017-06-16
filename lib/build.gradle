@@ -18,8 +18,26 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions{
+        abortOnError false
     }
     useLibrary 'org.apache.http.legacy'
+}
+
+task makeJar(type: proguard.gradle.ProGuardTask,dependsOn:"build") {
+    delete'build/intermediates/bundles/debug/classes.jar'//项目编译但未混淆的jar
+    delete'build/outputs/jar/umeng-analytics.jar'//删除之前编译混淆jar包
+    injars'build/intermediates/bundles/debug/classes.jar'//项目编译但未混淆的jar
+    outjars'build/outputs/jar/umeng-analytics.jar'//混淆后的jar路径
+
+    configuration'proguard-rules.pro'// 混淆配置文件
+
 }
 
 dependencies {

@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void safeRun() {
                 Simulator simulator = new Simulator(getApplicationContext());
-                simulator.report();
+                simulator.testReport("asddd", "5423af13fd98c5f4b002c8ef", 10);
             }
         });
 

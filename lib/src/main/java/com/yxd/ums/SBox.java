@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.umeng.analytics.g.UMEnvelope;
 import com.umeng.tool.StringTool;
+import com.umeng.tool.SystemUtil;
 import com.umeng.tool.ZipTool;
 
 import org.json.JSONException;
@@ -36,10 +37,6 @@ public class SBox {
         return seedConfig;
     }
 
-    public PublicConfig getPublicConfig() {
-        return publicConfig;
-    }
-
     public JSONObject buildHeader() throws JSONException {
         JSONObject header = new JSONObject();
         header
@@ -51,9 +48,22 @@ public class SBox {
                 .put("vertical_type",0)
                 .put("failed_requests",0)
                 .put("sdk_version","6.0.9")
-                .put("carrier","null")
-                .put("mccmnc","")
-                .put("access", "wifi")
+                .put("carrier",SystemUtil.getNetworkOperatorName(context))
+                .put("mccmnc",getMobileCode());
+
+                String[] ac = SystemUtil.getCurrentNetwork(context);
+                if("Wi-Fi".equals(ac[0])) {
+                    header.put("access", "wifi");
+                } else if("2G/3G".equals(ac[0])) {
+                    header.put("access", "2G/3G");
+                } else {
+                    header.put("access", "unknow");
+                }
+                if(!"".equals(ac[1])) {
+                    header.put("access_subtype", ac[1]);
+                }
+
+                header
                 .put("req_time", 90 + (int)(Math.random()*20))
                 .put("version_code", publicConfig.getAppVersionCode())
                 .put("app_version", version)
@@ -87,7 +97,14 @@ public class SBox {
         return header;
     }
 
-
+    private String getMobileCode(){
+        String mobileCode = SystemUtil.getMobileCode(context);
+        if(!TextUtils.isEmpty(mobileCode)) {
+            return mobileCode;
+        } else {
+            return "";
+        }
+    }
 
 
     public JSONObject buildActiveEntity() throws JSONException {
