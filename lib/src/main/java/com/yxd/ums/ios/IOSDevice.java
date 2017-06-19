@@ -16,17 +16,17 @@ public class IOSDevice {
     };
 
     private static final String[][] ACCESS = {
-            {"wifi", "HSDPA"},
-            {"wifi", "LTE"},
+            {"wifi", ""},
             {"4G", "LTE"},
-            {"3G", "HSDPA"}
+            {"3G", "HSDPA"},
+            {"2G", "GPRS "},
     };
 
     private static final int[][] ACCESS_R = {
-            {10000, 1831},
-            {1830, 1667},
-            {1666, 74},
-            {73, 0}
+            {10000, 1902},
+            {1901, 82},
+            {81, 2},
+            {1, 0}
     };
 
 
