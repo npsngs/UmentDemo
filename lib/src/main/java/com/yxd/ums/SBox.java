@@ -24,6 +24,9 @@ public class SBox {
         this.seed = StringTool.byte2Hex(StringTool.md5(devBean.getDeviceID().getBytes())).toLowerCase();
         this.appkey = devBean.getAppKey().toLowerCase();
         this.channel = devBean.getChannel();
+        if(TextUtils.isEmpty(channel)){
+            this.channel = SystemUtil.getUMengChannel(context);
+        }
         this.version = devBean.getVersion();
         seedConfig = new SeedConfig(context, seed);
         publicConfig = PublicConfig.getInstance(context);

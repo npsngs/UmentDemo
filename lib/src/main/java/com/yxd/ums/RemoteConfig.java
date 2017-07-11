@@ -161,7 +161,9 @@ public class RemoteConfig {
             devBean.setDeviceID(jsonObject.getString("d"));
             devBean.setAppKey(jsonObject.getString("k"));
             devBean.setOsType(jsonObject.getString("o"));
-            devBean.setChannel(jsonObject.getString("c"));
+            if(jsonObject.has("c")){
+                devBean.setChannel(jsonObject.getString("c"));
+            }
             devBean.setVersion(jsonObject.getString("v"));
             list.add(devBean);
         }

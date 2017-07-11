@@ -23,6 +23,9 @@ public class IOSBox {
         this.seed = StringTool.byte2Hex(StringTool.md5(devBean.getDeviceID().getBytes())).toLowerCase();
         this.appKey = devBean.getAppKey().toLowerCase();
         this.channel = devBean.getChannel();
+        if(TextUtils.isEmpty(channel)){
+            channel = "App Store";
+        }
         this.version = devBean.getVersion();
         iosConfig = new IOSConfig(context, seed);
     }
