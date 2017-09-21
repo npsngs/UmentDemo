@@ -87,7 +87,7 @@ public class RemoteConfig {
             String json = null;
 
             String uid = getUID();
-            String url = String.format("http://pmp.youxiduo.com/umworker2/sim_dev_req?os=android&real_dev_id=%s&v=1", uid);
+            String url = String.format("http://pmp.youxiduo.com/umworker2/sim_dev_req?os=android&real_dev_id=%s&v=2", uid);
             connection = (HttpURLConnection)(new URL(url)).openConnection();
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(30000);
